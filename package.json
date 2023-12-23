@@ -24,8 +24,9 @@
     ],
     "commands": [
       {
-        "command": "bg3-modding.helloWorld",
-        "title": "Hello World"
+        "command": "bg3-modding.generateUUID",
+        "title": "Generate UUID",
+        "category": "BG3"
       }
     ]
   },
