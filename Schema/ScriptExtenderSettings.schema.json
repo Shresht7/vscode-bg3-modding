@@ -1,0 +1,77 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://www.github.com/Shresht7/vscode-bg3-modding/Schema/ScriptExtenderSettings.schema.json",
+    "title": "Script-Extender Settings",
+    "description": "Settings for the Script-Extender",
+    "type": "object",
+    "properties": {
+        "CreateConsole": {
+            "description": "Creates a console window that logs extender internals. Mainly useful for debugging. (Default: `false`",
+            "type": "boolean"
+        },
+        "EnableLogging": {
+            "description": "Enable logging of Osiris activity (rule evaluation, queries, etc.) to a log file. (Default: `false`)",
+            "type": "boolean"
+        },
+        "LogRuntime": {
+            "description": "Log extender console and script output to a log file. (Default: `false`)",
+            "type": "boolean"
+        },
+        "LogCompile": {
+            "description": "Log Osiris story compilation to a log file. (Default: `false`)",
+            "type": "boolean"
+        },
+        "LogFailedCompile": {
+            "description": "Log errors during Osiris story compilation to a log file. (Default: `true`)",
+            "type": "boolean"
+        },
+        "LogDirectory": {
+            "description": "Directory where the generated Osiris logs will be stored. (Default: `My Documents\\OsirisLogs`)",
+            "type": "string"
+        },
+        "EnableExtensions": {
+            "description": "Make the Osiris extension functionality available in game or in the editor. (Default: `true`)",
+            "type": "boolean"
+        },
+        "SendCrashReports": {
+            "description": "Upload minidumps to the crash report collection server after a game crash. (Default: `true`)",
+            "type": "boolean"
+        },
+        "DumpNetworkStrings": {
+            "description": "Not Implemented! ~~Dumps the NetworkFixedString table to LogDirectory. Mainly useful for debugging desync issues.~~",
+            "type": "boolean"
+        },
+        "DeveloperMode": {
+            "description": "Enables various debug functionality for development purposes. (Default: `false`)",
+            "type": "boolean"
+        },
+        "DisableModValidation": {
+            "description": "Disable module hashing when loading modules. (Default: `true`)",
+            "type": "boolean"
+        },
+        "EnableAchievements": {
+            "description": "Re-enable achievements for modded games. (Default: `true`)",
+            "type": "boolean"
+        },
+        "EnableDebugger": {
+            "description": "Enables the Osiris debugger interface (Default: `false`)",
+            "type": "boolean"
+        },
+        "DebuggerPort": {
+            "description": "Port number the Osiris debugger will listen on (Default: `9999`)",
+            "type": "integer",
+            "minimum": "1000",
+            "maximum": "65535"
+        },
+        "EnableLuaDebugger": {
+            "description": "Enables the Lua debugger interface (Default: `false`)",
+            "type": "boolean"
+        },
+        "LuaDebuggerPort": {
+            "description": "Port number the Lua debugger will listen on (Default: 9998)",
+            "type": "integer",
+            "minimum": "1000",
+            "maximum": "65535"
+        }
+    }
+}

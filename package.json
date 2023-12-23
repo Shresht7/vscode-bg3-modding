@@ -38,6 +38,10 @@
       {
         "fileMatch": "ScriptExtender/Config.json",
         "url": "./Schema/Config.schema.json"
+      },
+      {
+        "fileMatch": "ScriptExtenderSettings.json",
+        "url": "./Schema/ScriptExtenderSettings.schema.json"
       }
     ],
     "configurationDefaults": {
