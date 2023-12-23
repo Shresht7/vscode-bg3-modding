@@ -16,6 +16,11 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "snippets": [
+      {
+        "path": "./snippets/bg3.code-snippets"
+      }
+    ],
     "commands": [
       {
         "command": "bg3-modding.helloWorld",
