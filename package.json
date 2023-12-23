@@ -25,7 +25,7 @@
     "commands": [
       {
         "command": "bg3-modding.generateUUID",
-        "title": "Generate UUID",
+        "title": "Generate UUID and insert at selection",
         "category": "BG3"
       }
     ]
