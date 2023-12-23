@@ -14,10 +14,12 @@ import * as vscode from 'vscode';
 export function insertAtSelection(text: string) {
     const editor = vscode.window.activeTextEditor;
     editor?.edit(editBuilder => {
-        if (editor.selection.isEmpty) {
-            editBuilder.insert(editor.selection.active, text);
-        } else {
-            editBuilder.replace(editor.selection, text);
-        }
+        editor.selections.forEach(selection => {
+            if (selection.isEmpty) {
+                editBuilder.insert(selection.active, text);
+            } else {
+                editBuilder.replace(selection, text);
+            }
+        });
     });
 }
