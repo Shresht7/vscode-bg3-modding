@@ -27,6 +27,11 @@
         "command": "bg3-modding.generateUUID",
         "title": "Generate UUID and insert at selection",
         "category": "BG3"
+      },
+      {
+        "command": "bg3-modding.generateHandle",
+        "title": "Generate Handle and insert at selection",
+        "category": "BG3"
       }
     ]
   },
