@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('bg3-modding.generateUUID', () => {
 		// The code you place here will be executed every time your command is executed
 		const uuid = webcrypto.randomUUID();
-		editor.insertAtCursorLocation(uuid);
+		editor.insertAtSelection(uuid);
 	});
 
 	context.subscriptions.push(disposable);
