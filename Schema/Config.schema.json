@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://www.github.com/Shresht7/vscode-bg3-modding/Schema/Config.schema.json",
+    "title": "Script-Extender Configuration",
+    "description": "Configuration for the Script-Extender",
+    "type": "object",
+    "properties": {
+        "RequiredVersion": {
+            "description": "Osiris Extender version required to run the mod. It is recommended to use the version number of the Script Extender you used for developing the mod since the behavior of new features and backwards compatibility functions depends on this version number.",
+            "type": "number",
+            "minimum": 1
+        },
+        "ModTable": {
+            "description": "Name of the mod in the global mod table (`Mods`) when using Lua. This name is required to use Lua scripting, and must be unique.",
+            "type": "string"
+        },
+        "FeatureFlags": {
+            "description": "A list of features that the mod is using. For performance reasons it is recommended to only list features that are actually in use.",
+            "type": "array",
+            "items": {
+                "enum": [
+                    "Lua"
+                ]
+            },
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "RequiredVersion",
+        "ModTable",
+        "FeatureFlags"
+    ]
+}

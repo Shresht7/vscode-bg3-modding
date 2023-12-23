@@ -34,6 +34,12 @@
         "category": "BG3"
       }
     ],
+    "jsonValidation": [
+      {
+        "fileMatch": "ScriptExtender/Config.json",
+        "url": "./Schema/Config.schema.json"
+      }
+    ],
     "configurationDefaults": {
       "files.associations": {
         "*.lsx": "xml",
