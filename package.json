@@ -33,7 +33,19 @@
         "title": "Generate Handle and insert at selection",
         "category": "BG3"
       }
-    ]
+    ],
+    "configurationDefaults": {
+      "files.associations": {
+        "*.lsx": "xml",
+        "*.lsj": "json"
+      },
+      "search.exclude": {
+        "**/*.raw": true,
+        "**/Story/*.div": true,
+        "**/*.osi": true,
+        "**/*.dat": true
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
