@@ -14,7 +14,9 @@
     "Snippets",
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:/**/meta.lsx"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "snippets": [
@@ -31,6 +33,11 @@
       {
         "command": "bg3-modding.generateHandle",
         "title": "Generate Handle and insert at selection",
+        "category": "BG3"
+      },
+      {
+        "command": "bg3-modding.convertVersionNumber",
+        "title": "Convert BG3 Version Number",
         "category": "BG3"
       }
     ],

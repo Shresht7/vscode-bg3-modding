@@ -1,7 +1,3 @@
-// ====================
-// BG3 HELPER FUNCTIONS
-// ====================
-
 /**
  * Converts a UUID to a BG3 handle
  * @param uuid The UUID to convert to a handle
