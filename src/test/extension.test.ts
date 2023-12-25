@@ -44,4 +44,23 @@ suite('Extension Test Suite', () => {
 			assert.strictEqual(actualHandle, t.expectedHandle);
 		}
 	});
+
+
+	test('Conversion of Version Numbers', () => {
+
+		const testSuite = [
+			{
+				int64Version: 36028797018963968n,
+				expected: "1.0.0.0"
+			}
+			// TODO: Add more tests here ...
+		];
+
+		for (const t of testSuite) {
+			const version = new bg3.Version(t.int64Version);
+			const actual = version.toString();
+			assert.strictEqual(actual, t.expected);
+		}
+
+	});
 });
