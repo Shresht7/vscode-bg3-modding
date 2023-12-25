@@ -17,18 +17,23 @@ export class Version {
     constructor(x: bigint);
     constructor(x: string);
     constructor(x: bigint | string) {
+
+        // Use the string constructor ...
         if (typeof x === 'string') {
             const v = x.split(".");
             this.major = parseInt(v[0]);
             this.minor = parseInt(v[1]);
             this.revision = parseInt(v[2]);
             this.build = parseInt(v[3]);
-        } else {
+        }
+        // ... else, use the bigint constructor.
+        else {
             this.major = Number(x >> 55n);
             this.minor = Number((x >> 47n) & 0xFFn);
             this.revision = Number((x >> 31n) & 0xFFFFn);
             this.build = Number(x & 0xFFFFFFn);
         }
+
     }
 
     /** @returns  Int64 representation of the version number */
