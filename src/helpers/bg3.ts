@@ -23,6 +23,9 @@ export class Version {
     /** Build Number */
     private readonly build: number = 0;
 
+    /** Regular expression to match the version line in `meta.lsx` */
+    public static readonly lsxRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
+
     /**
      * Parse the Version number
      * @param num The long Int64 Version number as specified in the `meta.lsx` file
