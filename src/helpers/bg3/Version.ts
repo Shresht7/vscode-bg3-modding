@@ -1,16 +1,3 @@
-// ====================
-// BG3 HELPER FUNCTIONS
-// ====================
-
-/**
- * Converts a UUID to a BG3 handle
- * @param uuid The UUID to convert to a handle
- * @returns A BG3 handle (e.g. h853caddag9fb3g4690ga2cfg56bb76f8543d)
- */
-export function convertToHandle(uuid: string) {
-    return "h" + uuid.replaceAll('-', 'g');
-}
-
 /** A class to represent the BG3 Version numbers */
 export class Version {
 
@@ -22,6 +9,9 @@ export class Version {
     private readonly revision: number = 0;
     /** Build Number */
     private readonly build: number = 0;
+
+    /** Regular expression to match the version line in `meta.lsx` */
+    public static readonly lsxRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
 
     /**
      * Parse the Version number
@@ -38,4 +28,5 @@ export class Version {
     toString(): string {
         return `${this.major}.${this.minor}.${this.revision}.${this.build}`;
     }
+
 }

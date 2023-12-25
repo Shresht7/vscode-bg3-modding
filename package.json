@@ -14,7 +14,9 @@
     "Snippets",
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:/**/meta.lsx"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "snippets": [
