@@ -39,9 +39,9 @@ export class Version {
     /** @returns  Int64 representation of the version number */
     toInt64(): bigint {
         const major = BigInt(this.major) << 55n;
-        const minor = (BigInt(this.minor) << 47n) & 0xFFn;
-        const revision = (BigInt(this.revision) << 31n) & 0xFFFFn;
-        const build = (BigInt(this.build)) & 0xFFFFFFn;
+        const minor = (BigInt(this.minor) << 47n);
+        const revision = (BigInt(this.revision) << 31n);
+        const build = (BigInt(this.build));
         return major + minor + revision + build;
     }
 
