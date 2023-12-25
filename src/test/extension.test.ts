@@ -43,40 +43,53 @@ suite('Extension Test Suite', () => {
 			const actualHandle = bg3.convertToHandle(t.testUUID);
 			assert.strictEqual(actualHandle, t.expectedHandle);
 		}
+
 	});
 
 
 	test('Conversion of Version Numbers', () => {
 
-		const testSuite1 = [
+		const testSuiteInt64 = [
 			{
 				int64Version: 36028797018963968n,
 				expected: "1.0.0.0"
+			},
+			{
+				int64Version: 36310278438125572n,
+				expected: "1.2.3.4"
+			},
+			{
+				int64Version: 36451024516415602n,
+				expected: "1.3.7.114"
 			}
-			// TODO: Add more tests here ...
 		];
 
-		for (const t of testSuite1) {
+		for (const t of testSuiteInt64) {
 			const version = new bg3.Version(t.int64Version);
 			const actual = version.toString();
 			assert.strictEqual(actual, t.expected);
 		}
 
-		const testSuite2 = [
+		const testSuiteStrings = [
 			{
 				stringVersion: "1.0.0.0",
 				expected: 36028797018963968n
+			},
+			{
+				stringVersion: "1.2.3.4",
+				expected: 36310278438125572n
+			},
+			{
+				stringVersion: "1.3.7.114",
+				expected: 36451024516415602n
 			}
-			// TODO: Add more tests here ...
-
 		];
 
-		for (const t of testSuite2) {
+		for (const t of testSuiteStrings) {
 			const version = new bg3.Version(t.stringVersion);
 			const actual = version.toInt64();
 			assert.strictEqual(actual, t.expected);
 		}
-
 
 	});
 });
