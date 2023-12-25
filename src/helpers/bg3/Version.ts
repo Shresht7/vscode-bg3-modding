@@ -13,18 +13,39 @@ export class Version {
     /** Regular expression to match the version line in `meta.lsx` */
     public static readonly lsxRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
 
-    /**
-     * Parse the Version number
-     * @param num The long Int64 Version number as specified in the `meta.lsx` file
-     */
-    constructor(num: bigint) {
-        this.major = Number(num >> 55n);
-        this.minor = Number((num >> 47n) & 0xFFn);
-        this.revision = Number((num >> 31n) & 0xFFFFn);
-        this.build = Number(num & 0xFFFFFFn);
+    /** Parse the Version number */
+    constructor(x: bigint);
+    constructor(x: string);
+    constructor(x: bigint | string) {
+
+        // Use the string constructor ...
+        if (typeof x === 'string') {
+            const v = x.split(".");
+            this.major = parseInt(v[0]);
+            this.minor = parseInt(v[1]);
+            this.revision = parseInt(v[2]);
+            this.build = parseInt(v[3]);
+        }
+        // ... else, use the bigint constructor.
+        else {
+            this.major = Number(x >> 55n);
+            this.minor = Number((x >> 47n) & 0xFFn);
+            this.revision = Number((x >> 31n) & 0xFFFFn);
+            this.build = Number(x & 0xFFFFFFn);
+        }
+
     }
 
-    /** Return the string representation of the Version number. (e.g `1.0.0.0`) */
+    /** @returns  Int64 representation of the version number */
+    toInt64(): bigint {
+        const major = BigInt(this.major) << 55n;
+        const minor = (BigInt(this.minor) << 47n);
+        const revision = (BigInt(this.revision) << 31n);
+        const build = (BigInt(this.build));
+        return major + minor + revision + build;
+    }
+
+    /** @returns String representation of the Version number. (e.g `1.0.0.0`) */
     toString(): string {
         return `${this.major}.${this.minor}.${this.revision}.${this.build}`;
     }
