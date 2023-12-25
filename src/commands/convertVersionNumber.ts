@@ -13,7 +13,7 @@ export async function convertVersionNumber() {
         prompt: "Version Number",
         placeHolder: 'Example: 1.0.0.0 or 36028797018963968',
         // Pre-fill the value with the currently selected text
-        value: vscode.window.activeTextEditor?.document.getText(vscode.window.activeTextEditor.selection),
+        value: editor.getSelection(),
         // Perform validation on the input value
         validateInput: (value) => {
             if (value.includes(".")) { // String version format (1.0.0.0)
