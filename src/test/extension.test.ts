@@ -3,9 +3,7 @@
 // as well as import your extension to test it
 import * as vscode from 'vscode';
 import * as assert from 'assert';
-
-// Helpers
-import { bg3 } from '../helpers';
+import { bg3 } from '../library';
 
 // =====
 // TESTS

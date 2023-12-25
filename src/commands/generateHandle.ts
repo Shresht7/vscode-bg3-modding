@@ -1,8 +1,9 @@
 // Library
 import { webcrypto } from "crypto";
+import { bg3 } from "../library";
 
 // Helpers
-import { bg3, editor } from "../helpers";
+import { editor } from "../helpers";
 
 /**
  * Generate a random handle

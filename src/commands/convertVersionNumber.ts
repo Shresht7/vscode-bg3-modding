@@ -1,8 +1,9 @@
 // Library
 import * as vscode from 'vscode';
+import { bg3 } from '../library';
 
 // Helpers
-import { bg3, editor } from '../helpers';
+import { editor } from '../helpers';
 
 /** Convert Int64 version number to string format or vice-versa */
 export async function convertVersionNumber() {

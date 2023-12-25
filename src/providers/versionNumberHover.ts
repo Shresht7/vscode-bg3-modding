@@ -1,8 +1,6 @@
 // Library
 import * as vscode from 'vscode';
-
-// Helpers
-import { bg3 } from "../helpers";
+import { bg3 } from "../library";
 
 // Hover Provider for the version number in `meta.lsx` file
 export default vscode.languages.registerHoverProvider(['xml'], {
