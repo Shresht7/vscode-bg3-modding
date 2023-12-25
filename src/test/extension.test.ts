@@ -48,7 +48,7 @@ suite('Extension Test Suite', () => {
 
 	test('Conversion of Version Numbers', () => {
 
-		const testSuite = [
+		const testSuite1 = [
 			{
 				int64Version: 36028797018963968n,
 				expected: "1.0.0.0"
@@ -56,11 +56,27 @@ suite('Extension Test Suite', () => {
 			// TODO: Add more tests here ...
 		];
 
-		for (const t of testSuite) {
+		for (const t of testSuite1) {
 			const version = new bg3.Version(t.int64Version);
 			const actual = version.toString();
 			assert.strictEqual(actual, t.expected);
 		}
+
+		const testSuite2 = [
+			{
+				stringVersion: "1.0.0.0",
+				expected: 36028797018963968n
+			}
+			// TODO: Add more tests here ...
+
+		];
+
+		for (const t of testSuite2) {
+			const version = new bg3.Version(t.stringVersion);
+			const actual = version.toInt64();
+			assert.strictEqual(actual, t.expected);
+		}
+
 
 	});
 });
