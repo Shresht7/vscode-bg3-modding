@@ -23,3 +23,11 @@ export function insertAtSelection(text: string) {
         });
     });
 }
+
+/**
+ * Returns the currently selected text in the editor. Returns `undefined`
+ * if nothing has been selected.
+ */
+export function getSelection(): string | undefined {
+    return vscode.window.activeTextEditor?.document.getText(vscode.window.activeTextEditor.selection);
+}
