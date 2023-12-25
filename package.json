@@ -36,8 +36,8 @@
         "category": "BG3"
       },
       {
-        "command": "bg3-modding.generateVersionNumber",
-        "title": "Generate the Int64 Version Number",
+        "command": "bg3-modding.convertVersionNumber",
+        "title": "Convert BG3 Version Number",
         "category": "BG3"
       }
     ],

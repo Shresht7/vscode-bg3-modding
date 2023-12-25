@@ -7,7 +7,7 @@ import * as vscode from 'vscode';
 
 import { generateUUID } from "./generateUUID";
 import { generateHandle } from './generateHandle';
-import { generateVersionNumber } from './generateVersionNumber';
+import { convertVersionNumber } from './convertVersionNumber';
 
 
 /** Enumeration of the command IDs */
@@ -21,5 +21,5 @@ enum Command {
 export const commands: vscode.Disposable[] = [
     vscode.commands.registerCommand(Command.GenerateUUID, generateUUID),
     vscode.commands.registerCommand(Command.GenerateHandle, generateHandle),
-    vscode.commands.registerCommand(Command.GenerateVersionNumber, generateVersionNumber),
+    vscode.commands.registerCommand(Command.GenerateVersionNumber, convertVersionNumber),
 ];

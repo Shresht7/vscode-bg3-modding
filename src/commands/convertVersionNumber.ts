@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 import { bg3, editor } from '../helpers';
 
 /** Convert Int64 version number to string format or vice-versa */
-export async function generateVersionNumber() {
+export async function convertVersionNumber() {
 
     // Prompt the user for the version number
     const v = await vscode.window.showInputBox({
