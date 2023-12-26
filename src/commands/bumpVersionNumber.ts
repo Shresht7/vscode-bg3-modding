@@ -6,6 +6,11 @@ import { utils } from '../helpers';
 /** Convert Int64 version number to string format or vice-versa */
 export async function bumpVersionNumber() {
 
+    // Exit early if no folder or workspace is open
+    if (!vscode.workspace.workspaceFolders?.length) {
+        return vscode.window.showErrorMessage("No folder or workspace opened");
+    }
+
     // Prompt the user for the kind of version bump
     const options: bg3.VersionKind[] = [
         bg3.VersionKind.MAJOR,
