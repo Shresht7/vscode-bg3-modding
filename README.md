@@ -28,9 +28,17 @@ This VS Code extension contains useful tools, snippets and helpers for creating 
 
 ## ⚡ Activation Events
 
+The extension activates when:
+
 - `workspaceContains:/**/meta.lsx`
   
-  The extension activates for a workspace that contains the `meta.lsx` file.
+  A workspace contains the `meta.lsx` file.
+
+- `onCommand:workbench.action.tasks.runTask`
+
+  The Run Tasks command is called.
+
+- Whenever a BG3 [command](#⌨️-commands) is used.
 
 ## ⭐ Features
 

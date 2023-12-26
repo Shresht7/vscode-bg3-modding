@@ -15,7 +15,8 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:/**/meta.lsx"
+    "workspaceContains:/**/meta.lsx",
+    "onCommand:workbench.action.tasks.runTask"
   ],
   "main": "./out/extension.js",
   "contributes": {
