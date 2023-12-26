@@ -32,7 +32,7 @@ export async function bumpVersionNumber() {
 
     // Read the fist `meta.lsx` file
     let fileBuffer = await vscode.workspace.fs.readFile(metaLsxPath);
-    let fileContents = new Buffer(fileBuffer).toString();
+    let fileContents = Buffer.from(fileBuffer).toString();
 
     // Perform regex match for the version attribute line in the file contents
     const regexExecArray = bg3.Version.lsxRegex.exec(fileContents);
