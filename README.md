@@ -16,6 +16,8 @@ This VS Code extension contains useful tools, snippets and helpers for creating 
     - [`Generate Handle`](#generate-handle)
     - [`Convert Version Number`](#convert-version-number)
       - [Input: Version Number](#input-version-number)
+    - [`Bump Version Number`](#bump-version-number)
+      - [Input: Kind](#input-kind)
   - [✅ JSON Validation](#-json-validation)
   - [⚙️ Default Configurations](#️-default-configurations)
     - [`files.associations`](#filesassociations)
@@ -37,13 +39,8 @@ This VS Code extension contains useful tools, snippets and helpers for creating 
 <!-- no toc -->
 - [Snippets](#snippets)
 - [Commands](#commands)
-  - [`Generate UUID`](#generate-uuid)
-  - [`Generate Handle`](#generate-handle)
-  - [`Convert Version Number`](#convert-version-number)
 - [JSON Validation](#json-validation)
 - [Default Configurations](#default-configurations)
-  - [`files.associations`](#filesassociations)
-  - [`search.exclude`](#searchexclude)
 
 <!-- 
 `TODO`
@@ -103,6 +100,22 @@ Convert between BG3 version numbers.
 ##### Input: Version Number
 
 Takes the version number as input in either the string format (e.g. `1.0.0.0`) or bigint format (e.g. `36028797018963968`).
+
+#### `Bump Version Number`
+
+Bumps the version number in the `meta.lsx` by the specified type.
+
+```
+1.0.0.0 --- Bump Minor Version --> 1.1.0.0
+1.2.0.7 --- Bump Major Version --> 2.0.0.0
+```
+
+##### Input: Kind
+
+- `Major`
+- `Minor`
+- `Revision`
+- `Build`
 
 ### ✅ JSON Validation
 
