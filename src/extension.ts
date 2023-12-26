@@ -12,6 +12,8 @@ import { commands } from './commands';
 // Providers
 import { providers } from './providers';
 
+// Helpers
+import constants from './constants';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -48,15 +50,15 @@ function setupLuaConfiguration(context: vscode.ExtensionContext) {
 	// Get VS Code configuration object
 	const config = vscode.workspace.getConfiguration();
 
-	// Enumeration to hold the settings
-	enum SETTINGS {
-		WORKSPACE_LIBRARY = "Lua.workspace.library",
-	};
+	// Lua Extension Settings
+	const Settings = {
+		WorkspaceLibrary: "Lua.workspace.library",
+	} as const;
 
 	// Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
-	const workspaceLibrarySetting = config.get<string[]>(SETTINGS.WORKSPACE_LIBRARY);
-	workspaceLibrarySetting?.push(path.join(context.extensionPath, "references"));
-	config.update(SETTINGS.WORKSPACE_LIBRARY, workspaceLibrarySetting, vscode.ConfigurationTarget.Workspace);
+	const workspaceLibrarySetting = config.get<string[]>(Settings.WorkspaceLibrary);
+	workspaceLibrarySetting?.push(path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER));
+	config.update(Settings.WorkspaceLibrary, workspaceLibrarySetting, vscode.ConfigurationTarget.Workspace);
 }
 
 // This method is called when your extension is deactivated
