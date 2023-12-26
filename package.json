@@ -46,6 +46,11 @@
         "category": "BG3"
       }
     ],
+    "taskDefinitions": [
+      {
+        "type": "exampleProvider"
+      }
+    ],
     "jsonValidation": [
       {
         "fileMatch": "ScriptExtender/Config.json",
