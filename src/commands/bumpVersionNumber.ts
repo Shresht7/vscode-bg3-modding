@@ -52,8 +52,13 @@ export async function bumpVersionNumber() {
     if (!regexExecArray?.length) { return; }    // Return early if no match was found
 
     // Parse the bigint version from the regex capture
-    // TODO: Handle case where BigInt() fails to parse the regex capture
-    const bigIntVersion = BigInt(regexExecArray[1]);
+    let bigIntVersion;
+    try {
+        bigIntVersion = BigInt(regexExecArray[1]);
+    } catch (e) {
+        const message = `Failed to parse version from the meta.lsx file (${metaLsxPath})`;
+        return vscode.window.showErrorMessage(message);
+    }
 
     // Determine the updated version
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
