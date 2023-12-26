@@ -36,8 +36,19 @@ export async function activate(context: vscode.ExtensionContext) {
 		...providers
 	);
 
-	// Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
+	// Perform Lua Configuration Setup
+	setupLuaConfiguration(context);
+}
+
+/**
+ * Performs default configurations for the Lua extension (sumneko.lua)
+ * @param context Context for this extension
+ */
+function setupLuaConfiguration(context: vscode.ExtensionContext) {
+	// Get VS Code configuration object
 	const config = vscode.workspace.getConfiguration();
+
+	// Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
 	const setting = config.get<string[]>("Lua.workspace.library");
 	setting?.push(path.join(context.extensionPath, "references"));
 	config.update("Lua.workspace.library", setting, vscode.ConfigurationTarget.Workspace);
