@@ -48,10 +48,15 @@ function setupLuaConfiguration(context: vscode.ExtensionContext) {
 	// Get VS Code configuration object
 	const config = vscode.workspace.getConfiguration();
 
+	// Enumeration to hold the settings
+	enum SETTINGS {
+		WORKSPACE_LIBRARY = "Lua.workspace.library",
+	};
+
 	// Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
-	const setting = config.get<string[]>("Lua.workspace.library");
-	setting?.push(path.join(context.extensionPath, "references"));
-	config.update("Lua.workspace.library", setting, vscode.ConfigurationTarget.Workspace);
+	const workspaceLibrarySetting = config.get<string[]>(SETTINGS.WORKSPACE_LIBRARY);
+	workspaceLibrarySetting?.push(path.join(context.extensionPath, "references"));
+	config.update(SETTINGS.WORKSPACE_LIBRARY, workspaceLibrarySetting, vscode.ConfigurationTarget.Workspace);
 }
 
 // This method is called when your extension is deactivated
