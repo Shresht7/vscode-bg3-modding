@@ -1,6 +1,7 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
+import * as path from 'node:path';
 
 // Initializers
 import { initialize } from './initializers';
@@ -35,6 +36,11 @@ export async function activate(context: vscode.ExtensionContext) {
 		...providers
 	);
 
+	// Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
+	const config = vscode.workspace.getConfiguration();
+	const setting = config.get<string[]>("Lua.workspace.library");
+	setting?.push(path.join(context.extensionPath, "references"));
+	config.update("Lua.workspace.library", setting, vscode.ConfigurationTarget.Workspace);
 }
 
 // This method is called when your extension is deactivated
