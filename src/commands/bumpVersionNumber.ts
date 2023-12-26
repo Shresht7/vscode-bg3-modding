@@ -32,7 +32,7 @@ export async function bumpVersionNumber() {
 
     // Read the fist `meta.lsx` file
     let fileBuffer = await vscode.workspace.fs.readFile(metaLsxPath);
-    let fileContents = Buffer.from(fileBuffer).toString();
+    let fileContents = Buffer.from(fileBuffer).toString('utf8');
 
     // Perform regex match for the version attribute line in the file contents
     const regexExecArray = bg3.Version.lsxRegex.exec(fileContents);
@@ -47,7 +47,7 @@ export async function bumpVersionNumber() {
 
     // Replace file contents with the new version
     fileContents = fileContents.replace(bg3.Version.lsxRegex, `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}"/>`);
-    fileBuffer = new TextEncoder().encode(fileContents);
+    fileBuffer = Buffer.from(fileContents, 'utf8');
 
     // Write the new file contents back to the `meta.lsx` file
     vscode.workspace.fs.writeFile(metaLsxPath, fileBuffer);
