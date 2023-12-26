@@ -64,7 +64,10 @@ export async function bumpVersionNumber() {
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
 
     // Replace file contents with the new version
-    fileContents = fileContents.replace(bg3.Version.lsxRegex, `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}"/>`);
+    fileContents = fileContents.replace(
+        bg3.Version.lsxRegex,
+        `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}"/>`
+    );
     fileBuffer = Buffer.from(fileContents, 'utf8');
 
     // Write the new file contents back to the `meta.lsx` file
