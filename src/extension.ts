@@ -1,7 +1,6 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import * as path from 'node:path';
 
 // Initializers
 import { initialize } from './initializers';
@@ -12,8 +11,8 @@ import { commands } from './commands';
 // Providers
 import { providers } from './providers';
 
-// Helpers
-import constants from './constants';
+// Configuration
+import { LuaConfiguration } from './configs/Lua';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -39,28 +38,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	);
 
 	// Perform Lua Configuration Setup
-	setupLuaConfiguration(context);
-}
-
-/**
- * Performs default configurations for the Lua extension (sumneko.lua)
- * @param context Context for this extension
- */
-function setupLuaConfiguration(context: vscode.ExtensionContext) {
-	// Get VS Code configuration object
-	const config = vscode.workspace.getConfiguration();
-
-	// Lua Extension Settings
-	const Lua = {
-		workspace: {
-			library: "Lua.workspace.library",
-		},
-	} as const;
-
-	// Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
-	const workspaceLibrarySetting = config.get<string[]>(Lua.workspace.library);
-	workspaceLibrarySetting?.push(path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER));
-	config.update(Lua.workspace.library, workspaceLibrarySetting, vscode.ConfigurationTarget.Workspace);
+	LuaConfiguration.setup(context);
 }
 
 // This method is called when your extension is deactivated
