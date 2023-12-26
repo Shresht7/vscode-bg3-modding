@@ -7,9 +7,9 @@ import * as vscode from 'vscode';
 
 import build from './build';
 
-// ----------------------------
-const type = "exampleProvider";
-// ----------------------------
+// ------------------
+const type = "build";
+// ------------------
 
 /** The list of tasks for this provider */
 const tasks = [

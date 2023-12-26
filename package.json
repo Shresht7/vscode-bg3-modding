@@ -49,7 +49,7 @@
     ],
     "taskDefinitions": [
       {
-        "type": "exampleProvider"
+        "type": "build"
       }
     ],
     "jsonValidation": [
