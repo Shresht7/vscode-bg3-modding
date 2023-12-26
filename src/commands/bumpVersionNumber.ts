@@ -32,8 +32,16 @@ export async function bumpVersionNumber() {
 
     // Find the `meta.lsx` file in the workspace
     // TODO: Handle case where multiple meta.lsx files are found
-    // TODO: Handle case where none are found
-    const metaLsxPath = await vscode.workspace.findFiles("**/meta.lsx", null, 1).then(x => x[0]);
+    const metaLsxPaths = await vscode.workspace.findFiles("**/meta.lsx", null, 1);
+
+    // Return if no `meta.lsx` was found
+    if (!metaLsxPaths?.length) {
+        return vscode.window.showErrorMessage("Could not find any `meta.lsx` files in this workspace");
+    }
+
+    // Get the first `meta.lsx` path
+    // ? Not sure if this is the best way to deal with the problem
+    const metaLsxPath = metaLsxPaths[0];
 
     // Read the fist `meta.lsx` file
     let fileBuffer = await vscode.workspace.fs.readFile(metaLsxPath);
