@@ -39,6 +39,11 @@
         "command": "bg3-modding.convertVersionNumber",
         "title": "Convert BG3 Version Number",
         "category": "BG3"
+      },
+      {
+        "command": "bg3-modding.bumpVersionNumber",
+        "title": "Bump Version Number",
+        "category": "BG3"
       }
     ],
     "jsonValidation": [

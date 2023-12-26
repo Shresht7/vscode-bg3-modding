@@ -1,14 +1,22 @@
+/** Version Kind */
+export enum VersionKind {
+    MAJOR = "major",
+    MINOR = "minor",
+    REVISION = "revision",
+    BUILD = "build"
+}
+
 /** A class to represent the BG3 Version numbers */
 export class Version {
 
     /** Major Number */
-    private readonly major: number = 1;
+    private major: number = 1;
     /** Minor Number */
-    private readonly minor: number = 0;
+    private minor: number = 0;
     /** Revision Number */
-    private readonly revision: number = 0;
+    private revision: number = 0;
     /** Build Number */
-    private readonly build: number = 0;
+    private build: number = 0;
 
     /** Regular expression to match the version line in `meta.lsx` */
     public static readonly lsxRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
@@ -34,6 +42,35 @@ export class Version {
             this.build = Number(x & 0xFFFFFFn);
         }
 
+    }
+
+    /**
+     * Bumps the version number according to the given version kind
+     * @param kind The version kind
+     * @returns self
+     */
+    bump(kind: VersionKind): Version {
+        switch (kind) {
+            case VersionKind.MAJOR:
+                this.major++;
+                this.minor = 0;
+                this.revision = 0;
+                this.build = 0;
+                break;
+            case VersionKind.MINOR:
+                this.minor++;
+                this.revision = 0;
+                this.build = 0;
+                break;
+            case VersionKind.REVISION:
+                this.revision++;
+                this.build = 0;
+                break;
+            case VersionKind.BUILD:
+            default:
+                this.build++;
+        }
+        return this;
     }
 
     /** @returns  Int64 representation of the version number */

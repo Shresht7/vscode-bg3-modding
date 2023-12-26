@@ -9,6 +9,7 @@ import * as constants from '../constants';
 import { generateUUID } from "./generateUUID";
 import { generateHandle } from './generateHandle';
 import { convertVersionNumber } from './convertVersionNumber';
+import { bumpVersionNumber } from './bumpVersionNumber';
 
 /** Registers the command to VS Code */
 function registerCommand(command: (...args: any[]) => any): vscode.Disposable {
@@ -20,4 +21,5 @@ export const commands: vscode.Disposable[] = [
     registerCommand(generateUUID),
     registerCommand(generateHandle),
     registerCommand(convertVersionNumber),
+    registerCommand(bumpVersionNumber),
 ];
