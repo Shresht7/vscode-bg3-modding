@@ -5,31 +5,24 @@ import * as vscode from 'vscode';
 // TASKS PROVIDER
 // ==============
 
-import build from './build';
+import { createBuildTask } from './build';
 
 // ------------------
 const type = "build";
 // ------------------
 
-/** The list of tasks for this provider */
-const tasks = [
-    build
-];
+export function registerTaskProvider(context: vscode.ExtensionContext): vscode.Disposable {
 
-export default vscode.tasks.registerTaskProvider(type, {
+    const build = createBuildTask(context);
 
-    provideTasks(token) {
-        return tasks.map(task => new vscode.Task(
-            { type },
-            task.scope,
-            task.name,
-            task.source,
-            task.execution
-        ));
-    },
-
-    resolveTask(task, token) {
-        return task;
-    }
-
-});
+    return vscode.tasks.registerTaskProvider(type, {
+        provideTasks(token) {
+            return [
+                build
+            ];
+        },
+        resolveTask(task, token) {
+            return task;
+        }
+    });
+}
