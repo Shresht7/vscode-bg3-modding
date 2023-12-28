@@ -10,7 +10,7 @@ import constants from './constants';
 import { initialize } from './initializers';
 
 // Commands
-import { commands } from './commands';
+import { registerCommands } from './commands';
 
 // Providers
 import { providers } from './providers';
@@ -37,7 +37,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(
-		...commands,
 		...providers
 	);
 
