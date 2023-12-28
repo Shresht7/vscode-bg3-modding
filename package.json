@@ -15,7 +15,8 @@
     "Other"
   ],
   "activationEvents": [
-    "workspaceContains:/**/meta.lsx"
+    "workspaceContains:/**/meta.lsx",
+    "onCommand:workbench.action.tasks.runTask"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -44,6 +45,11 @@
         "command": "bg3-modding.bumpVersionNumber",
         "title": "Bump Version Number",
         "category": "BG3"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "build"
       }
     ],
     "jsonValidation": [
