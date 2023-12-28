@@ -1,6 +1,10 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
+import * as path from 'node:path';
+
+// Constants
+import constants from './constants';
 
 // Initializers
 import { initialize } from './initializers';
@@ -38,7 +42,8 @@ export async function activate(context: vscode.ExtensionContext) {
 	);
 
 	// Perform Lua Configuration Setup
-	LuaConfiguration.setup(context);
+	const luaReferenceLibrary = path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER);
+	LuaConfiguration.setup({ luaReferenceLibrary });
 }
 
 // This method is called when your extension is deactivated
