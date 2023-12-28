@@ -1,9 +1,5 @@
 // Library
 import * as vscode from 'vscode';
-import * as path from 'node:path';
-
-// Constants
-import constants from '../constants';
 
 // -----------------
 // LUA CONFIGURATION
@@ -40,14 +36,17 @@ export class LuaConfiguration {
 
     /**
      * Performs default configurations for the Lua extension (sumneko.lua)
-     * @param context Context for this extension
+     * @param options Setup configuration options
      */
-    static setup(context: vscode.ExtensionContext) {
+    static setup(options: {
+        /** Path to the Lua workspace library */
+        luaReferenceLibrary: string
+    }) {
         // Instantiate the VS Code configuration settings
         const settings = new LuaConfiguration();
 
         // Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
-        settings.push("workspace.library", path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER));
+        settings.push("workspace.library", options.luaReferenceLibrary);
 
         // Set workspace `preloadFileSize`
         settings.set("workspace.preloadFileSize", 10000);
