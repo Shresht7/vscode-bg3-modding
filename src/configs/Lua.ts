@@ -33,9 +33,9 @@ export class LuaConfiguration {
      * @param items Items to push to the configuration array
      */
     push<T>(section: string, ...items: T[]) {
-        const settings = this.config.get<T[]>(section) || [];
-        settings.push(...items);
-        this.config.update(section, settings, this.configurationTarget);
+        const settings = new Set(this.config.get<T[]>(section) || []);
+        items.forEach(item => settings.add(item));
+        this.config.update(section, Array.from(settings), this.configurationTarget);
     }
 
     /**
