@@ -13,7 +13,7 @@ export class LuaConfiguration {
 
     protected constructor(
         /** VS Code Workspace Configuration */
-        private config = vscode.workspace.getConfiguration(),
+        private config = vscode.workspace.getConfiguration("Lua"),
         /** VS Code Configuration Target */
         private configurationTarget = vscode.ConfigurationTarget.Workspace,
     ) { }
@@ -47,20 +47,20 @@ export class LuaConfiguration {
         const settings = new LuaConfiguration();
 
         // Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
-        settings.push("Lua.workspace.library", path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER));
+        settings.push("workspace.library", path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER));
 
         // Set workspace `preloadFileSize`
-        settings.set("Lua.workspace.preloadFileSize", 10000);
+        settings.set("workspace.preloadFileSize", 10000);
 
         // Disable `libraryFiles` diagnostics
-        settings.set("Lua.diagnostics.libraryFiles", "Disable");
+        settings.set("diagnostics.libraryFiles", "Disable");
 
         // Set `workspaceRate` and `workspaceDelay`
-        settings.set("Lua.diagnostics.workspaceRate", 25);
-        settings.set("Lua.diagnostics.workspaceDelay", 5000);
+        settings.set("diagnostics.workspaceRate", 25);
+        settings.set("diagnostics.workspaceDelay", 5000);
 
         // Add Osi and Ext to globals
-        settings.push("Lua.diagnostics.globals", "Osi", "Ext");
+        settings.push("diagnostics.globals", "Osi", "Ext");
     }
 
 }
