@@ -40,9 +40,6 @@ export async function activate(context: vscode.ExtensionContext) {
 		...providers
 	);
 
-	// Perform Lua Configuration Setup
-	const luaReferenceLibrary = path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER);
-	LuaConfiguration.setup({ luaReferenceLibrary });
 }
 
 // This method is called when your extension is deactivated

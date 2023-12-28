@@ -11,6 +11,7 @@ import { generateUUID } from "./generateUUID";
 import { generateHandle } from './generateHandle';
 import { convertVersionNumber } from './convertVersionNumber';
 import { bumpVersionNumber } from './bumpVersionNumber';
+import { initializeLuaConfiguration } from './initializeLuaConfiguration';
 
 /** Registers the command to VS Code */
 function registerCommand(command: (...args: any[]) => any): vscode.Disposable {
@@ -24,4 +25,5 @@ export const commands: vscode.Disposable[] = [
     registerCommand(generateHandle),
     registerCommand(convertVersionNumber),
     registerCommand(bumpVersionNumber),
+    registerCommand(initializeLuaConfiguration)
 ];
