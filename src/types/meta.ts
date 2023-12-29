@@ -28,6 +28,7 @@ type Node<T extends string = string> = {
 };
 
 type NodeAttributeType =
+    | 'LSString'
     | 'LSWString'
     | 'FixedString'
     | 'uint8'
@@ -54,8 +55,32 @@ type NodeRoot = {
 };
 
 export type NodeDependencies = {
-    id: 'Dependencies'
+    id: 'Dependencies',
+    children?: {
+        node: NodeDependency[]
+    }
 };
+
+export type NodeDependency = {
+    id: "ModuleShortDesc",
+    attribute: NodeDependencyAttribute<NodeDependencyAttributeID>[]
+};
+
+export type NodeDependencyAttributeID =
+    | 'Folder'
+    | 'MD5'
+    | 'Name'
+    | 'UUID'
+    | 'Version64'
+    ;
+
+export type NodeDependencyAttribute<T extends NodeDependencyAttributeID> = { id: T, type: NodeAttributeType, value: string } & (
+    | { id: 'Folder', type: 'LSString', value: string }
+    | { id: 'MD5', type: 'LSString', value: string }
+    | { id: 'Name', type: 'LSString', value: string }
+    | { id: 'UUID', type: 'FixedString', value: string }
+    | { id: 'Version64', type: 'int64', value: string }
+);
 
 export type NodeModuleInfo = {
     id: 'ModuleInfo',

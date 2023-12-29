@@ -7,6 +7,8 @@ import type {
     ModuleInfoAttribute,
     ModuleInfoAttributeID,
     NodeDependencies,
+    NodeDependencyAttribute,
+    NodeDependencyAttributeID,
     NodeModuleInfo
 } from "../types";
 
@@ -36,8 +38,18 @@ export class MetaLSX {
     }
 
     /** The dependencies as specified in the `meta.lsx` file */
-    get dependencies(): NodeDependencies {
-        return this._meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
+    get dependencies(): Dependency[] {
+        const dependencies: Dependency[] = [];
+
+        const deps = this._meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
+        if (deps?.children?.node?.length) {
+            for (const node of deps.children.node) {
+                const entries = node.attribute.map(a => [a.id, a.value]);
+                dependencies.push(Object.fromEntries(entries));
+            }
+        }
+
+        return dependencies;
     }
 
     /** The module information as specified in the `meta.lsx` file */
@@ -57,4 +69,8 @@ export class MetaLSX {
 /** Direct mappings from ModuleInfoAttributeID to their corresponding ModuleInfoAttribute */
 type ModuleInfo = {
     [k in ModuleInfoAttributeID]: ModuleInfoAttribute<k>
+};
+
+type Dependency = {
+    [k in NodeDependencyAttributeID]: Pick<NodeDependencyAttribute<k>, "value">
 };
