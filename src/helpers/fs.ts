@@ -41,7 +41,7 @@ export async function getModRootFolderUri(): Promise<vscode.Uri> {
         "..",   // [ModFolder]
         "..",   // Mods
         "..",   // [RootFolder]
-    );
+    );  // Traversing up 3 directories like this should be safe as the game expects this folder structure
     return rootPath;
 }
 
