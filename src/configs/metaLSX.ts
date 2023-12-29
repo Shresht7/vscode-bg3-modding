@@ -67,10 +67,10 @@ export class MetaLSX {
 
 }
 
-type ModuleInfo = {
+export type ModuleInfo = {
     [k in ModuleInfoAttribute["id"]]: Extract<ModuleInfoAttribute, { id: k }>["value"]
 };
 
-type Dependency = {
+export type Dependency = {
     [k in NodeDependencyAttribute["id"]]: Extract<NodeDependencyAttribute, { id: k }>["value"]
 };
