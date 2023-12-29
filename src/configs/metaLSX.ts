@@ -60,7 +60,7 @@ export class MetaLSX {
         // Create a proxy object so that the attributes can be accessed directly using dot notation
         return new Proxy(moduleInfo, {
             get(target, property: ModuleInfoAttribute["id"], receiver) {
-                return target.attribute.find(a => a.id === property);
+                return target.attribute.find(a => a.id === property)?.value;
             },
         }) as unknown as ModuleInfo;
     }
