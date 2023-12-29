@@ -29,26 +29,26 @@ export async function getMetaLsxContents(): Promise<string> {
 
 /**
  * Retraces the path from the `meta.lsx` file up to the root folder. This is the folder that contains
- * the Mods and Public folders.
+ * the Mods and Public folders. This is achieved by going up 3 directories from the path of the `meta.lsx`
+ * file (as this is the folder structure the game expects).
  * @returns Uri of the mod's root folder. This is the folder containing the Mods and Public folders
  */
 export async function getModRootFolderUri(): Promise<vscode.Uri> {
+    // Get the path to the `meta.lsx` file
     const metaLsxPaths = await findMetaLsxUris();
     if (!metaLsxPaths?.length) { throw new Error("Failed to find the `meta.lsx` file"); }
     const metaLsxPath = metaLsxPaths[0];
+    // Traverse up 3 directories to get to the root folder. This should be okay to do as the game expects this folder structure
     const rootPath = vscode.Uri.joinPath(
         metaLsxPath,
         "..",   // [ModFolder]
         "..",   // Mods
         "..",   // [RootFolder]
-    );  // Traversing up 3 directories like this should be safe as the game expects this folder structure
+    );
     return rootPath;
 }
 
-/**
- * Retrieve the mod's root folder's name
- * @returns Name of the mod's root folder
- */
+/** @returns Name of the mod's root folder */
 export async function getModRootFolderName(): Promise<string | undefined> {
     const rootPath = await getModRootFolderUri();
     return rootPath?.fsPath.split("\\").at(-1);
