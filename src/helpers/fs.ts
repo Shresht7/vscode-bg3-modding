@@ -14,6 +14,19 @@ export async function findMetaLsxUris(maxResults: number = 1) {
     return vscode.workspace.findFiles("**/meta.lsx", null, maxResults);
 }
 
+/** @returns The file contents of the `meta.lsx` file */
+export async function getMetaLsxContents(): Promise<string> {
+    // Get the path to the `meta.lsx` file
+    const metaLsxPaths = await findMetaLsxUris();
+    if (!metaLsxPaths?.length) { throw new Error("Failed to find the `meta.lsx` file"); }
+    const metaLsxPath = metaLsxPaths[0];
+
+    // Read the file contents
+    const buf = await vscode.workspace.fs.readFile(metaLsxPath);
+    const contents = Buffer.from(buf).toString("utf8");
+    return contents;
+}
+
 /**
  * Retraces the path from the `meta.lsx` file up to the root folder. This is the folder that contains
  * the Mods and Public folders.
