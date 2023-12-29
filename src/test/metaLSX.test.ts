@@ -1,9 +1,10 @@
 // Library
 import * as assert from 'node:assert';
-import { MetaLSX, ModuleInfo } from '../configs/metaLSX';
+import { Dependency, getMetadata, MetaLSX, ModuleInfo } from '../configs/metaLSX';
 
 // Fixture - File contents of a `meta.lsx` file
 import fileContents from './fixtures/meta.lsx';
+import { Meta } from '../types';
 
 /** The ModuleInfo we expect the {@link MetaLSX} parser to extract from the `meta.lsx` file */
 const expectedModuleInfo = {
@@ -48,8 +49,8 @@ suite("Parse `meta.lsx` metadata file", () => {
     let meta: MetaLSX;
 
     test("Does not throw when calling the constructor", () => {
-        assert.doesNotThrow(() => {
-            meta = new MetaLSX(fileContents);
+        assert.doesNotThrow(async () => {
+            meta = await getMetadata();
         });
     });
 

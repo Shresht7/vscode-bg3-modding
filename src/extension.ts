@@ -1,16 +1,13 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import { MetaLSX } from './configs/metaLSX';
+import { getMetadata } from './configs/metaLSX';
 
 // Commands
 import { commands } from './commands';
 
 // Providers
 import { providers } from './providers';
-
-// Helpers
-import { fs } from './helpers';
 
 
 // This method is called when your extension is activated
@@ -21,12 +18,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	// Show Information Message when the extension is activated
 	vscode.window.showInformationMessage("BG3 Modding Extension Activated!");
 
-	// Get the path to the `meta.lsx` file
-	const metaLsxFile = (await fs.findMetaLsxUris(1))[0];
-	const fileBuffer = await vscode.workspace.fs.readFile(metaLsxFile);
-	const fileContents = Buffer.from(fileBuffer).toString("utf8");
-
-	const meta = new MetaLSX(fileContents);
+	const meta = await getMetadata();
 
 	vscode.window.showInformationMessage(meta.ModuleInfo.Author);
 
@@ -40,4 +32,3 @@ export async function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() { }
-
