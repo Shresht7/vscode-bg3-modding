@@ -1,9 +1,8 @@
 // Library
-import * as vscode from 'vscode';
 import { XMLParser } from "fast-xml-parser";
 
 // Helpers
-import { fs } from '../helpers';
+import * as helpers from '../helpers';
 
 // Type Definitions
 import type {
@@ -20,11 +19,8 @@ import type {
 
 export async function getMetadata(): Promise<MetaLSX> {
 
-    // Get the path to the `meta.lsx` file
-    const metaLsxFile = (await fs.findMetaLsxUris(1))[0];
-    // Read the file contents
-    const buf = await vscode.workspace.fs.readFile(metaLsxFile);
-    const contents = Buffer.from(buf).toString("utf8");
+    // Get `meta.lsx` contents
+    const contents = await helpers.fs.getMetaLsxContents();
 
     // Parse the XML data
     // Parse the xml data with the provided options ...
