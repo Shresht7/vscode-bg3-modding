@@ -17,6 +17,7 @@ import type {
 // META.LSX CONFIGURATION
 // ----------------------
 
+/** Get metadata from the `meta.lsx` file */
 export async function getMetadata(): Promise<MetaLSX> {
 
     // Get `meta.lsx` contents
