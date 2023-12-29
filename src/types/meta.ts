@@ -59,13 +59,33 @@ type NodeDependencies = {
 
 type NodeModuleInfo = {
     id: 'ModuleInfo',
-    attribute: ModuleInfoAttribute[],
+    attribute: ModuleInfoAttribute<ModuleInfoAttributeID>[],
     children: {
         node: ModuleInfoChildren[],
     },
 };
 
-type ModuleInfoAttribute =
+export type ModuleInfoAttributeID =
+    | 'Author'
+    | 'CharacterCreationLevelName'
+    | 'Description'
+    | 'Folder'
+    | 'GMTemplate'
+    | 'LobbyLevelName'
+    | 'MD5'
+    | 'MainMenuBackgroundVideo'
+    | 'MenuLevelName'
+    | 'Name'
+    | 'NumPlayers'
+    | 'PhotoBooth'
+    | 'StartupLevelName'
+    | 'Tags'
+    | 'Type'
+    | 'UUID'
+    | 'Version64'
+    ;
+
+export type ModuleInfoAttribute<T extends ModuleInfoAttributeID> = { id: T, type: NodeAttributeType, value: string | number } & (
     | { id: 'Author', type: 'LSWString', value: string }
     | { id: 'CharacterCreationLevelName', type: 'FixedString', value: string }
     | { id: 'Description', type: 'LSWString', value: string }
@@ -83,7 +103,7 @@ type ModuleInfoAttribute =
     | { id: 'Type', type: 'FixedString', value: 'Adventure' | 'Add-on' }
     | { id: 'UUID', type: 'FixedString', value: string }
     | { id: 'Version64', type: 'int64', value: string }
-    ;
+);
 
 type ModuleInfoChildren =
     | NodePublishVersion
