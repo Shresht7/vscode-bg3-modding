@@ -19,31 +19,6 @@ export type Version = {
     build: number
 };
 
-type Node<T extends string = string> = {
-    id: T,
-    attribute?: NodeAttribute | NodeAttribute[]
-    children?: {
-        node: Node | Node[]
-    }
-};
-
-type NodeAttributeType =
-    | { type: 'LSString', value: string }
-    | { type: 'LSWString', value: string }
-    | { type: 'FixedString', value: string }
-    | { type: 'uint8', value: string }
-    | { type: 'int64', value: string }
-    ;
-
-type NodeAttribute = {
-    id: string,
-    type: NodeAttributeType,
-    value: string
-} & {
-    type: 'uint8',
-    value: number
-};
-
 type NodeRoot = {
     id: 'root',
     children: {
