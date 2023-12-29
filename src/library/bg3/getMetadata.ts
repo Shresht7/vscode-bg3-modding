@@ -60,14 +60,9 @@ export function parseMetadata(contents: string): MetaLSX {
 
         /** The module information as specified in the `meta.lsx` file */
         get ModuleInfo(): ModuleInfo {
-            // Retrieve the ModuleInfo from the parsed xml data
             const moduleInfo = meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
-            // Create a proxy object so that the attributes can be accessed directly using dot notation
-            return new Proxy(moduleInfo, {
-                get(target, property: ModuleInfoAttribute["id"], receiver) {
-                    return target.attribute.find(a => a.id === property)?.value;
-                },
-            }) as unknown as ModuleInfo;
+            const entries = moduleInfo.attribute.map(a => [a.id, a.value]);
+            return Object.fromEntries(entries);
         }
     };
 }
