@@ -1,7 +1,7 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import { getMetadata } from './configs/metaLSX';
+import { getMetadata } from './library/bg3/getMetadata';
 
 // Commands
 import { commands } from './commands';

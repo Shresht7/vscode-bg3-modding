@@ -2,7 +2,7 @@
 import { XMLParser } from "fast-xml-parser";
 
 // Helpers
-import { fs } from '../helpers';
+import { fs } from '../../helpers';
 
 // Type Definitions
 import type {
@@ -11,7 +11,7 @@ import type {
     NodeDependencies,
     NodeDependencyAttribute,
     NodeModuleInfo
-} from "../types";
+} from "../../types";
 
 // ----------------------
 // META.LSX CONFIGURATION

@@ -1,10 +1,8 @@
 // Library
 import * as assert from 'node:assert';
-import { Dependency, getMetadata, MetaLSX, ModuleInfo } from '../configs/metaLSX';
+import { getMetadata, MetaLSX, ModuleInfo } from '../library/bg3/getMetadata';
 
 // Fixture - File contents of a `meta.lsx` file
-import fileContents from './fixtures/meta.lsx';
-import { Meta } from '../types';
 
 /** The ModuleInfo we expect the {@link MetaLSX} parser to extract from the `meta.lsx` file */
 const expectedModuleInfo = {
