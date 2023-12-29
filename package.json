@@ -26,6 +26,11 @@
     ],
     "commands": [
       {
+        "command": "bg3-modding.copyModUUID",
+        "title": "Copy the Mod's UUID to the clipboard",
+        "category": "BG3"
+      },
+      {
         "command": "bg3-modding.generateUUID",
         "title": "Generate UUID and insert at selection",
         "category": "BG3"

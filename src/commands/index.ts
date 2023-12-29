@@ -6,6 +6,7 @@ import * as constants from '../constants';
 // COMMANDS
 // ========
 
+import { copyModUUID } from './copyModUUID';
 import { generateUUID } from "./generateUUID";
 import { generateHandle } from './generateHandle';
 import { convertVersionNumber } from './convertVersionNumber';
@@ -18,6 +19,7 @@ function registerCommand(command: (...args: any[]) => any): vscode.Disposable {
 
 /** An array of disposables for the registered commands */
 export const commands: vscode.Disposable[] = [
+    registerCommand(copyModUUID),
     registerCommand(generateUUID),
     registerCommand(generateHandle),
     registerCommand(convertVersionNumber),
