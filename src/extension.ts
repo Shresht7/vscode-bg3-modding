@@ -12,6 +12,9 @@ import { providers } from './providers';
 // Helpers
 import { fs } from './helpers';
 
+// Type Definitions
+import type { Meta } from './types/meta';
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 // or when `meta.lsx` file is detected in the workspace 
@@ -25,7 +28,19 @@ export async function activate(context: vscode.ExtensionContext) {
 	const fileBuffer = await vscode.workspace.fs.readFile(metaLsxFile);
 	const fileContents = Buffer.from(fileBuffer).toString("utf8");
 
-	const meta = new XMLParser({ ignoreAttributes: false }).parse(fileContents);
+	const meta = new XMLParser({
+		ignoreDeclaration: true,
+		ignoreAttributes: false,
+		attributeNamePrefix: "",
+		parseAttributeValue: true,
+		numberParseOptions: {
+			leadingZeros: true,
+			hex: true,
+		},
+		isArray(tagName, jPath, isLeafNode, isAttribute) {
+			return jPath.endsWith('children.node') || jPath.endsWith('node.attribute');
+		},
+	}).parse(fileContents);
 
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(
@@ -37,3 +52,4 @@ export async function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() { }
+
