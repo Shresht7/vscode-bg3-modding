@@ -53,11 +53,11 @@ type NodeRoot = {
     }
 };
 
-type NodeDependencies = {
+export type NodeDependencies = {
     id: 'Dependencies'
 };
 
-type NodeModuleInfo = {
+export type NodeModuleInfo = {
     id: 'ModuleInfo',
     attribute: ModuleInfoAttribute<ModuleInfoAttributeID>[],
     children: {
