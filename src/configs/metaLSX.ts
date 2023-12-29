@@ -37,11 +37,14 @@ export class MetaLSX {
 
     /** The dependencies as specified in the `meta.lsx` file */
     get dependencies(): Dependency[] {
+        /** An array to contain the dependencies */
         const dependencies: Dependency[] = [];
 
+        // Iterate over the dependencies specified in the `meta.lsx` and push them to the dependencies array
         const deps = this._meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
         if (deps?.children?.node?.length) {
             for (const node of deps.children.node) {
+                // Convert the dependency attributes array to an object directly mapping the id to the value
                 const entries = node.attribute.map(a => [a.id, a.value]);
                 dependencies.push(Object.fromEntries(entries));
             }
