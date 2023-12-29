@@ -5,10 +5,8 @@ import { XMLParser } from "fast-xml-parser";
 import type {
     Meta as MetaDefinition,
     ModuleInfoAttribute,
-    ModuleInfoAttributeID,
     NodeDependencies,
     NodeDependencyAttribute,
-    NodeDependencyAttributeID,
     NodeModuleInfo
 } from "../types";
 
@@ -58,7 +56,7 @@ export class MetaLSX {
         const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
         // Create a proxy object so that the attributes can be accessed directly using dot notation
         return new Proxy(moduleInfo, {
-            get(target, property: ModuleInfoAttributeID, receiver) {
+            get(target, property: ModuleInfoAttribute["id"], receiver) {
                 return target.attribute.find(a => a.id === property);
             },
         }) as unknown as ModuleInfo;
@@ -68,9 +66,9 @@ export class MetaLSX {
 
 /** Direct mappings from ModuleInfoAttributeID to their corresponding ModuleInfoAttribute */
 type ModuleInfo = {
-    [k in ModuleInfoAttributeID]: ModuleInfoAttribute<k>
+    [k in ModuleInfoAttribute["id"]]: Extract<ModuleInfoAttribute, { id: k }>
 };
 
 type Dependency = {
-    [k in NodeDependencyAttributeID]: Pick<NodeDependencyAttribute<k>, "value">
+    [k in NodeDependencyAttribute["id"]]: NodeDependencyAttribute["value"]
 };

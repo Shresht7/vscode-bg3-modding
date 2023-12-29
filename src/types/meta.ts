@@ -28,11 +28,11 @@ type Node<T extends string = string> = {
 };
 
 type NodeAttributeType =
-    | 'LSString'
-    | 'LSWString'
-    | 'FixedString'
-    | 'uint8'
-    | 'int64'
+    | { type: 'LSString', value: string }
+    | { type: 'LSWString', value: string }
+    | { type: 'FixedString', value: string }
+    | { type: 'uint8', value: string }
+    | { type: 'int64', value: string }
     ;
 
 type NodeAttribute = {
@@ -65,56 +65,30 @@ export type NodeDependencies = {
 
 export type NodeDependency = {
     id: "ModuleShortDesc",
-    attribute: NodeDependencyAttribute<NodeDependencyAttributeID>[]
+    attribute: NodeDependencyAttribute[]
 };
 
-export type NodeDependencyAttributeID =
-    | 'Folder'
-    | 'MD5'
-    | 'Name'
-    | 'UUID'
-    | 'Version64'
-    ;
-
-export type NodeDependencyAttribute<T extends NodeDependencyAttributeID> = { id: T, type: NodeAttributeType, value: string } & (
+export type NodeDependencyAttribute =
     | { id: 'Folder', type: 'LSString', value: string }
     | { id: 'MD5', type: 'LSString', value: string }
     | { id: 'Name', type: 'LSString', value: string }
     | { id: 'UUID', type: 'FixedString', value: string }
     | { id: 'Version64', type: 'int64', value: string }
-);
+    ;
 
-//#endregion
+// #endregion
+
+// #region MODULE INFO
 
 export type NodeModuleInfo = {
     id: 'ModuleInfo',
-    attribute: ModuleInfoAttribute<ModuleInfoAttributeID>[],
+    attribute: ModuleInfoAttribute[],
     children: {
         node: ModuleInfoChildren[],
     },
 };
 
-export type ModuleInfoAttributeID =
-    | 'Author'
-    | 'CharacterCreationLevelName'
-    | 'Description'
-    | 'Folder'
-    | 'GMTemplate'
-    | 'LobbyLevelName'
-    | 'MD5'
-    | 'MainMenuBackgroundVideo'
-    | 'MenuLevelName'
-    | 'Name'
-    | 'NumPlayers'
-    | 'PhotoBooth'
-    | 'StartupLevelName'
-    | 'Tags'
-    | 'Type'
-    | 'UUID'
-    | 'Version64'
-    ;
-
-export type ModuleInfoAttribute<T extends ModuleInfoAttributeID> = { id: T, type: NodeAttributeType, value: string | number } & (
+export type ModuleInfoAttribute =
     | { id: 'Author', type: 'LSWString', value: string }
     | { id: 'CharacterCreationLevelName', type: 'FixedString', value: string }
     | { id: 'Description', type: 'LSWString', value: string }
@@ -132,7 +106,9 @@ export type ModuleInfoAttribute<T extends ModuleInfoAttributeID> = { id: T, type
     | { id: 'Type', type: 'FixedString', value: 'Adventure' | 'Add-on' }
     | { id: 'UUID', type: 'FixedString', value: string }
     | { id: 'Version64', type: 'int64', value: string }
-);
+    ;
+
+// #endregion MODULE INFO
 
 // #region MODULE INFO - CHILDREN
 
