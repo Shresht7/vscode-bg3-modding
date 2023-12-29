@@ -1,8 +1,9 @@
 // Library
 import * as assert from 'node:assert';
-import { getMetadata, MetaLSX, ModuleInfo } from '../library/bg3/getMetadata';
+import { parseMetadata, MetaLSX, ModuleInfo } from '../library/bg3/getMetadata';
 
 // Fixture - File contents of a `meta.lsx` file
+import contents from './fixtures/meta.lsx';
 
 /** The ModuleInfo we expect the {@link MetaLSX} parser to extract from the `meta.lsx` file */
 const expectedModuleInfo = {
@@ -44,13 +45,7 @@ const expectedDependenciesOrder = ['3d0c5ff8-c95d-c907-ff3e-34b204f1c630', '05f7
 suite("Parse `meta.lsx` metadata file", () => {
 
     /** The parsed metadata from the `meta.lsx` file */
-    let meta: MetaLSX;
-
-    test("Does not throw when calling the constructor", () => {
-        assert.doesNotThrow(async () => {
-            meta = await getMetadata();
-        });
-    });
+    let meta: MetaLSX = parseMetadata(contents);
 
     // MODULE INFO
 
