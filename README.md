@@ -67,6 +67,12 @@ The extension contributes the following snippets:
 | Script-Extender Config          | `cfg`, `Config.json` | Generates the boilerplate Script-Extender `Config.json`   |
 | `meta.lsx`                      |               `meta` | Generates the boilerplate template for `meta.lsx`         |
 
+<div align="right">
+
+  [Back to Top ⬆️](#bg3-modding-support-for-visual-studio-code)
+
+</div>
+
 ### ⌨️ Commands
 
 The extension contributes the following commands:
@@ -77,6 +83,7 @@ The extension contributes the following commands:
 - [`Copy Mod UUID`](#copy-mod-uuid)
 - [`Convert Version Number`](#convert-version-number)
 - [`Bump Version Number`](#bump-version-number)
+
 #### `Generate UUID`
 
 Generate a random UUID and insert at the current selection.
@@ -96,6 +103,7 @@ hb7b98e25gff34g40ddgb019gab25521ae5a0
 #### `Copy Mod UUID`
 
 Copies the Mod's UUID to the clipboard.
+
 #### `Convert Version Number`
 
 Convert between BG3 version numbers.
@@ -125,6 +133,12 @@ Bumps the version number in the `meta.lsx` by the specified type.
 - `Revision`
 - `Build`
 
+<div align="right">
+
+  [Back to Top ⬆️](#bg3-modding-support-for-visual-studio-code)
+
+</div>
+
 ### ✅ JSON Validation
 
 The extension contributes JSON validation schemas for:
@@ -132,6 +146,12 @@ The extension contributes JSON validation schemas for:
 - [`ScriptExtenderSettings.json`](./schema/ScriptExtenderSettings.schema.json)
 
 This will enable intellisense and provide validation for these files.
+
+<div align="right">
+
+  [Back to Top ⬆️](#bg3-modding-support-for-visual-studio-code)
+
+</div>
 
 ### ⚙️ Default Configurations
 
@@ -157,6 +177,12 @@ The extension provides default configuration settings for:
 }
 ```
 
+<div align="right">
+
+  [Back to Top ⬆️](#bg3-modding-support-for-visual-studio-code)
+
+</div>
+
 ---
 
 ## ⚙️ Extension Settings
@@ -169,6 +195,12 @@ This extension contributes the following settings:
 
 * `myExtension.enable`: Enable/disable this extension.
 * `myExtension.thing`: Set to `blah` to do something.
+
+<div align="right">
+
+  [Back to Top ⬆️](#bg3-modding-support-for-visual-studio-code)
+
+</div>
 
 ---
 
