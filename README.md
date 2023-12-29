@@ -14,6 +14,7 @@ This VS Code extension contains useful tools, snippets and helpers for creating 
   - [⌨️ Commands](#️-commands)
     - [`Generate UUID`](#generate-uuid)
     - [`Generate Handle`](#generate-handle)
+    - [`Copy Mod UUID`](#copy-mod-uuid)
     - [`Convert Version Number`](#convert-version-number)
     - [`Bump Version Number`](#bump-version-number)
   - [✅ JSON Validation](#-json-validation)
@@ -35,10 +36,10 @@ This VS Code extension contains useful tools, snippets and helpers for creating 
 ## ⭐ Features
 
 <!-- no toc -->
-- [Snippets](#snippets)
-- [Commands](#commands)
-- [JSON Validation](#json-validation)
-- [Default Configurations](#default-configurations)
+- [📄 Snippets](#-snippets)
+- [⌨️ Commands](#️-commands)
+- [✅ JSON Validation](#-json-validation)
+- [⚙️ Default Configurations](#️-default-configurations)
 
 <!-- 
 `TODO`
@@ -70,6 +71,12 @@ The extension contributes the following snippets:
 
 The extension contributes the following commands:
 
+<!-- no toc -->
+- [`Generate UUID`](#generate-uuid)
+- [`Generate Handle`](#generate-handle)
+- [`Copy Mod UUID`](#copy-mod-uuid)
+- [`Convert Version Number`](#convert-version-number)
+- [`Bump Version Number`](#bump-version-number)
 #### `Generate UUID`
 
 Generate a random UUID and insert at the current selection.
@@ -86,6 +93,9 @@ Generate Handle and insert at the current selection.
 hb7b98e25gff34g40ddgb019gab25521ae5a0
 ```
 
+#### `Copy Mod UUID`
+
+Copies the Mod's UUID to the clipboard.
 #### `Convert Version Number`
 
 Convert between BG3 version numbers.
