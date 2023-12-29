@@ -2,7 +2,7 @@
 import { XMLParser } from "fast-xml-parser";
 
 // Helpers
-import * as helpers from '../helpers';
+import { fs } from '../helpers';
 
 // Type Definitions
 import type {
@@ -20,7 +20,7 @@ import type {
 export async function getMetadata(): Promise<MetaLSX> {
 
     // Get `meta.lsx` contents
-    const contents = await helpers.fs.getMetaLsxContents();
+    const contents = await fs.getMetaLsxContents();
 
     // Parse the XML data
     // Parse the xml data with the provided options ...
