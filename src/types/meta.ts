@@ -54,6 +54,8 @@ type NodeRoot = {
     }
 };
 
+// #region DEPENDENCIES
+
 export type NodeDependencies = {
     id: 'Dependencies',
     children?: {
@@ -81,6 +83,8 @@ export type NodeDependencyAttribute<T extends NodeDependencyAttributeID> = { id:
     | { id: 'UUID', type: 'FixedString', value: string }
     | { id: 'Version64', type: 'int64', value: string }
 );
+
+//#endregion
 
 export type NodeModuleInfo = {
     id: 'ModuleInfo',
@@ -130,13 +134,15 @@ export type ModuleInfoAttribute<T extends ModuleInfoAttributeID> = { id: T, type
     | { id: 'Version64', type: 'int64', value: string }
 );
 
+// #region MODULE INFO - CHILDREN
+
 type ModuleInfoChildren =
-    | NodePublishVersion
-    | NodeScripts
-    | NodeTargetModes
+    | ModuleInfoPublishVersion
+    | ModuleInfoScripts
+    | ModuleInfoTargetModes
     ;
 
-type NodePublishVersion = {
+type ModuleInfoPublishVersion = {
     id: 'PublishVersion',
     attribute: {
         id: 'Version64',
@@ -145,11 +151,11 @@ type NodePublishVersion = {
     }
 };
 
-type NodeScripts = {
+type ModuleInfoScripts = {
     id: 'Scripts'
 };
 
-type NodeTargetModes = {
+type ModuleInfoTargetModes = {
     id: 'TargetModes',
     children: {
         node: {
@@ -162,3 +168,5 @@ type NodeTargetModes = {
         }
     }
 };
+
+//#endregion
