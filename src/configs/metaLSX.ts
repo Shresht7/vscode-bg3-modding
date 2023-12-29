@@ -36,7 +36,7 @@ export class MetaLSX {
     }
 
     /** The dependencies as specified in the `meta.lsx` file */
-    get dependencies(): Dependency[] {
+    get Dependencies(): Dependency[] {
         /** An array to contain the dependencies */
         const dependencies: Dependency[] = [];
 
@@ -54,7 +54,7 @@ export class MetaLSX {
     }
 
     /** The module information as specified in the `meta.lsx` file */
-    get moduleInfo() {
+    get ModuleInfo() {
         // Retrieve the ModuleInfo from the parsed xml data
         const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
         // Create a proxy object so that the attributes can be accessed directly using dot notation

@@ -59,7 +59,7 @@ suite("Parse `meta.lsx` metadata file", () => {
 
         Object.entries(expectedModuleInfo).forEach(([key, value]) => {
             test(key, () => {
-                assert.strictEqual(meta.moduleInfo[key as keyof ModuleInfo], value);
+                assert.strictEqual(meta.ModuleInfo[key as keyof ModuleInfo], value);
             });
         });
 
@@ -70,18 +70,18 @@ suite("Parse `meta.lsx` metadata file", () => {
     suite("Successfully parses the Dependencies", () => {
 
         test(`The length of the dependencies array should be ${expectedDependencies.length}`, () => {
-            assert.strictEqual(meta.dependencies.length, expectedDependencies.length);
+            assert.strictEqual(meta.Dependencies.length, expectedDependencies.length);
         });
 
         test("The dependencies should appear in the same order", () => {
             expectedDependenciesOrder.forEach((uuid, idx) => {
-                assert.strictEqual(meta.dependencies[idx].UUID, uuid);
+                assert.strictEqual(meta.Dependencies[idx].UUID, uuid);
             });
         });
 
         expectedDependencies.forEach((x, idx) => {
             test(x.Name, () => {
-                assert.deepStrictEqual(meta.dependencies[idx], x);
+                assert.deepStrictEqual(meta.Dependencies[idx], x);
             });
         });
 
