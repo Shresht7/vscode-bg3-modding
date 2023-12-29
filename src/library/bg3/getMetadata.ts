@@ -19,11 +19,14 @@ import type {
 
 /** Get metadata from the `meta.lsx` file */
 export async function getMetadata(): Promise<MetaLSX> {
-
     // Get `meta.lsx` contents
     const contents = await fs.getMetaLsxContents();
+    // Parse and return the metadata
+    return parseMetadata(contents);
+}
 
-    // Parse the XML data
+/** Parse the metadata from the given contents of the `meta.lsx` file */
+export function parseMetadata(contents: string): MetaLSX {
     // Parse the xml data with the provided options ...
     const meta = new XMLParser({
         ignoreDeclaration: true,    // ignore the ?xml declaration at the top
