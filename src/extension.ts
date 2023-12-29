@@ -28,7 +28,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	const meta = new MetaLSX(fileContents);
 
-	vscode.window.showInformationMessage(meta.moduleInfo.Author.value);
+	vscode.window.showInformationMessage(meta.moduleInfo.Author);
 
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(

@@ -67,11 +67,10 @@ export class MetaLSX {
 
 }
 
-/** Direct mappings from ModuleInfoAttributeID to their corresponding ModuleInfoAttribute */
 type ModuleInfo = {
-    [k in ModuleInfoAttribute["id"]]: Extract<ModuleInfoAttribute, { id: k }>
+    [k in ModuleInfoAttribute["id"]]: Extract<ModuleInfoAttribute, { id: k }>["value"]
 };
 
 type Dependency = {
-    [k in NodeDependencyAttribute["id"]]: NodeDependencyAttribute["value"]
+    [k in NodeDependencyAttribute["id"]]: Extract<NodeDependencyAttribute, { id: k }>["value"]
 };
