@@ -1,7 +1,6 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import { getMetadata } from './library/bg3/getMetadata';
 
 // Commands
 import { commands } from './commands';
@@ -17,10 +16,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Show Information Message when the extension is activated
 	vscode.window.showInformationMessage("BG3 Modding Extension Activated!");
-
-	const meta = await getMetadata();
-
-	vscode.window.showInformationMessage(meta.ModuleInfo.Author);
 
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(
