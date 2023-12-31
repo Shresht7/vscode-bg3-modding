@@ -15,10 +15,13 @@ import type { LocalizationXML } from '../../types';
 /**
  * Reads all localization xml files in the workspace and adds the handles and
  * their corresponding text content to the references.
+ * @param files (Optional) An array of {@link vscode.Uri}s of the localization xml files.
+ * If `undefined`, all localization files from the workspace will be used. 
  */
-export async function buildLocalizationReference() {
+export async function buildLocalizationReference(files?: vscode.Uri[]) {
     // TODO: Should probably clear the map here to prevent duplicates, incase this function is called multiple times.
-    const files = await vscode.workspace.findFiles("**/Localization/**/*.xml");
+    // If no argument was passed, get all localization files from the workspace
+    files = files || await vscode.workspace.findFiles("**/Localization/**/*.xml");
     for (const file of files) {
         const localizationXML = await xml.read<LocalizationXML>(file);
         localizationXML.contentList.content.forEach(item => {
