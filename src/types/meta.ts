@@ -1,7 +1,8 @@
-// -------------------------
-// META.LSX TYPE DEFINITIONS
-// -------------------------
+// ---------------------------
+// META.LSX - TYPE DEFINITIONS
+// ---------------------------
 
+/** The shape of the `meta.lsx` file */
 export type Meta = {
     save: {
         version: Version,
