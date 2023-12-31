@@ -44,11 +44,10 @@ function initializeLocalizationFSWatcher() {
 
     // Remove localization references when a xml is deleted
     localizationXMLFileWatcher.onDidDelete(e => {
-        /**
-         * // TODO: Remove references. May also have to dispose off the registered hover provider
-         * ? (if I decide to register separate providers for each file)
-         */
-        throw new Error("TODO: Implementation pending!");
+        // Since this clears the references anyway, rebuilding the entire thing will effectively remove
+        // the localization handles from the deleted file. A little excessive, but very straightforward
+        // considering deletion of localization xml files shouldn't be a common occurrence.
+        bg3.buildLocalizationReference();
     });
 
 }
