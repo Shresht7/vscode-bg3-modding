@@ -1,6 +1,6 @@
 // Library
 import * as vscode from 'vscode';
-import { XMLBuilder, XMLParser, XmlBuilderOptions } from "fast-xml-parser";
+import { XMLBuilder, XMLParser, X2jOptions, XmlBuilderOptions } from "fast-xml-parser";
 
 // --------------------
 // XML HELPER FUNCTIONS
@@ -15,12 +15,12 @@ const defaultOptions: Partial<XmlBuilderOptions> = {
 /**
  * Reads the xml file at the given path and parses it as an object
  * @param path The path (vscode.Uri) of the xml file to read
- * @param options {@link XmlBuilderOptions}
+ * @param options {@link X2jOptions}
  * @returns The parsed XML object
  */
 export async function read<T extends Record<string, any>>(
     path: vscode.Uri,
-    options: Partial<XmlBuilderOptions> = defaultOptions
+    options: Partial<X2jOptions> = defaultOptions
 ): Promise<T> {
     const buf = await vscode.workspace.fs.readFile(path);
     const contents = Buffer.from(buf).toString('utf8');
