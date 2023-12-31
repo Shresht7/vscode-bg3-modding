@@ -3,7 +3,7 @@
 import * as vscode from 'vscode';
 
 // Initializers
-import initialize from './initializers';
+import { initialize } from './initializers';
 
 // Commands
 import { commands } from './commands';

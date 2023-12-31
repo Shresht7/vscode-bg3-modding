@@ -5,6 +5,6 @@ import { initializeLocalization } from './localization';
 // INITIALIZERS
 // ============
 
-export default {
+export const initialize = {
     localization: initializeLocalization
 };
