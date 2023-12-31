@@ -19,7 +19,7 @@ import type { LocalizationXML } from '../../types';
 export async function buildLocalizationReference() {
     // TODO: Should probably clear the map here to prevent duplicates, incase this function is called multiple times.
     const files = await vscode.workspace.findFiles("**/Localization/**/*.xml");
-    for await (const file of files) {
+    for (const file of files) {
         const localizationXML = await xml.read<LocalizationXML>(file);
         localizationXML.contentList.content.forEach(item => {
             LocalizationHoverProvider.setContent(item["contentuid"], item["#text"]);
