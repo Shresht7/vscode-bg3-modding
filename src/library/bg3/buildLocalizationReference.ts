@@ -19,7 +19,7 @@ import type { LocalizationXML } from '../../types';
  * If `undefined`, all localization files from the workspace will be used. 
  */
 export async function buildLocalizationReference(files?: vscode.Uri[]) {
-    // TODO: Should probably clear the map here to prevent duplicates, incase this function is called multiple times.
+    LocalizationHoverProvider.clearContent();
     // If no argument was passed, get all localization files from the workspace
     files = files || await vscode.workspace.findFiles("**/Localization/**/*.xml");
     for (const file of files) {
