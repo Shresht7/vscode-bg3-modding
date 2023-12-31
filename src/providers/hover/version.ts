@@ -1,11 +1,18 @@
 // Library
 import * as vscode from 'vscode';
-import { bg3 } from "../library";
+import { bg3 } from '../../library';
 
-// Hover Provider for the version number in `meta.lsx` file
-export default vscode.languages.registerHoverProvider(['xml'], {
+// ----------------------
+// VERSION HOVER PROVIDER
+// ----------------------
+
+/**
+ * Shows the string representation of the version number
+ * when hovering over the int64 version number in the `meta.lsx` file 
+ */
+export const VersionHoverProvider: vscode.HoverProvider = {
+
     provideHover(document, position, token) {
-
         // Get the line that is currently being hovered over
         const line = document.lineAt(position.line);
         // Check if the line matches the version number regex
@@ -24,6 +31,6 @@ export default vscode.languages.registerHoverProvider(['xml'], {
             const version = new bg3.Version(bigIntVersion);
             return new vscode.Hover(version.toString());
         }
-
     },
-});
+
+};
