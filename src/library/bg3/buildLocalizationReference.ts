@@ -19,13 +19,20 @@ import type { LocalizationXML } from '../../types';
  * If `undefined`, all localization files from the workspace will be used. 
  */
 export async function buildLocalizationReference(files?: vscode.Uri[]) {
+
+    // Clear existing localization references
     LocalizationHoverProvider.clearContent();
+
     // If no argument was passed, get all localization files from the workspace
+    // otherwise, use the provided array of file uris
     files = files || await vscode.workspace.findFiles("**/Localization/**/*.xml");
+
+    // Iterate over the files and build the localization references
     for (const file of files) {
         const localizationXML = await xml.read<LocalizationXML>(file);
         localizationXML.contentList.content.forEach(item => {
             LocalizationHoverProvider.setContent(item["contentuid"], item["#text"]);
         });
     }
+
 }
