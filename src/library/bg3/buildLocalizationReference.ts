@@ -13,7 +13,7 @@ import type { LocalizationXML } from '../../types';
 // ----------------------------
 
 /**
- * Reads all localization xml files in the workspace and adds the handles and
+ * Reads localization xml files and adds the handles and
  * their corresponding text content to the references.
  * @param files (Optional) An array of {@link vscode.Uri}s of the localization xml files.
  * If `undefined`, all localization files from the workspace will be used. 
