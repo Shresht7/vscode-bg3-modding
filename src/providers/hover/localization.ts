@@ -32,6 +32,14 @@ export class LocalizationHoverProvider implements vscode.HoverProvider {
         return this.references.get(handle);
     }
 
+    /** Set the content value to correspond to the given localization handle
+ * @param handle The localization handle you want to set the content of
+ * @param content The string to associate with the localization handle
+*/
+    static setContent(handle: string, content: string) {
+        this.references.set(handle, content);
+    }
+
     provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
 
         // Get the word that is currently being hovered over
