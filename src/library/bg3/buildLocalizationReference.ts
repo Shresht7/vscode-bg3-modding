@@ -29,10 +29,20 @@ export async function buildLocalizationReference(files?: vscode.Uri[]) {
 
     // Iterate over the files and build the localization references
     for (const file of files) {
-        const localizationXML = await xml.read<LocalizationXML>(file);
+
+        // Parse localization xml
+        const localizationXML = await xml.read<LocalizationXML>(file, {
+            ignoreDeclaration: true,
+            ignoreAttributes: false,
+            attributeNamePrefix: "",
+            isArray: (tagName, jPath, isLeafNode, isAttribute) => tagName === 'content',
+        });
+
+        // Set localization references
         localizationXML.contentList.content.forEach(item => {
             LocalizationHoverProvider.setContent(item["contentuid"], item["#text"]);
         });
+
     }
 
 }
