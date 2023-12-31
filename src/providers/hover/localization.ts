@@ -8,7 +8,9 @@ import { bg3 } from '../../library';
 
 class _LocalizationHoverProvider implements vscode.HoverProvider {
 
-    // 55e8dd17-b5c8-4d34-ac23-d8616a2c1925
+    /** Regular expression to match localization handles
+     * @example h55e8dd17gb5c8g4d34gac23gd8616a2c1925
+    */
     private static handleRegex = /h[\da-fA-F]{8}g[\da-fA-F]{4}g[\da-fA-F]{4}g[\da-fA-F]{4}g[\da-fA-F]{12}/;
 
     constructor() {
@@ -21,11 +23,12 @@ class _LocalizationHoverProvider implements vscode.HoverProvider {
         const range = document.getWordRangeAtPosition(position);
         const word = document.getText(range);
 
-        if (_LocalizationHoverProvider.handleRegex.test(word)) {
-            return new vscode.Hover("HANDLE");
-        }
+        // Return early if the word is not a localization handle
+        if (_LocalizationHoverProvider.handleRegex.test(word)) { return; }
 
-        return;
+        // Return the content to be shown on hover
+        return new vscode.Hover("HANDLE");
+
     }
 }
 
