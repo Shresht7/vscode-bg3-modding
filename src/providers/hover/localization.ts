@@ -40,6 +40,11 @@ export class LocalizationHoverProvider implements vscode.HoverProvider {
         this.references.set(handle, content);
     }
 
+    /** Clears out any existing localization references */
+    static clearContent() {
+        this.references.clear();
+    }
+
     provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
 
         // Get the word that is currently being hovered over
