@@ -12,7 +12,7 @@ export abstract class HoverProvider implements vscode.HoverProvider, vscode.Disp
 
     constructor(
         /** A selector that defines the documents this provider is applicable to */
-        private documentSelector: vscode.DocumentSelector
+        private readonly documentSelector: vscode.DocumentSelector
     ) { }
 
     /**

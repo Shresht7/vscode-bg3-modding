@@ -14,7 +14,7 @@ import { HoverProvider } from './_base';
 export class VersionHoverProvider extends HoverProvider {
 
     /** A selector that defines the documents this provider is applicable to */
-    private static documentSelector = ['xml'];
+    private static readonly documentSelector = ['xml'];
 
     constructor() {
         super(VersionHoverProvider.documentSelector);

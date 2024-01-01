@@ -18,7 +18,7 @@ export class LocalizationHoverProvider extends HoverProvider {
     private static references: Map<string, string> = new Map();
 
     /** A selector that defines the documents this provider is applicable to */
-    private static documentSelector: vscode.DocumentSelector = ['xml'];
+    private static readonly documentSelector: vscode.DocumentSelector = ['xml'];
 
     constructor() {
         super(LocalizationHoverProvider.documentSelector);
