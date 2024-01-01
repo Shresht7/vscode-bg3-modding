@@ -1,7 +1,11 @@
 // Library
 import * as vscode from 'vscode';
 import { bg3 } from '../library';
-import { utils } from '../helpers';
+import { utils, fs } from '../helpers';
+import { VersionHoverProvider } from '../providers/hover';
+
+// Type Definitions
+import type { VersionKind } from '../types';
 
 /** Convert Int64 version number to string format or vice-versa */
 export async function bumpVersionNumber() {
@@ -12,11 +16,11 @@ export async function bumpVersionNumber() {
     }
 
     // Prompt the user for the kind of version bump
-    const options: bg3.VersionKind[] = [
-        bg3.VersionKind.MAJOR,
-        bg3.VersionKind.MINOR,
-        bg3.VersionKind.REVISION,
-        bg3.VersionKind.BUILD,
+    const options: VersionKind[] = [
+        "major",
+        "minor",
+        "revision",
+        "build",
     ];
     const response = await vscode.window.showQuickPick(options.map(opt => ({
         label: utils.capitalize(opt),
@@ -30,45 +34,23 @@ export async function bumpVersionNumber() {
 
     // ! Warning: Hacky code ahead. Several points of failure. Needs a second pass of improvement.
 
-    // Find the `meta.lsx` file in the workspace
-    // TODO: Handle case where multiple meta.lsx files are found
-    const metaLsxPaths = await vscode.workspace.findFiles("**/meta.lsx", null, 1);
-
-    // Return if no `meta.lsx` was found
-    if (!metaLsxPaths?.length) {
-        return vscode.window.showErrorMessage("Could not find any `meta.lsx` files in this workspace");
-    }
-
-    // Get the first `meta.lsx` path
-    // ? Not sure if this is the best way to deal with the problem
-    const metaLsxPath = metaLsxPaths[0];
-
-    // Read the fist `meta.lsx` file
-    let fileBuffer = await vscode.workspace.fs.readFile(metaLsxPath);
-    let fileContents = Buffer.from(fileBuffer).toString('utf8');
+    const metaLsxPath = (await fs.findMetaLsxUris())[0];
+    const fileContents = await fs.getMetaLsxContents();
 
     // Perform regex match for the version attribute line in the file contents
-    const regexExecArray = bg3.Version.lsxRegex.exec(fileContents);
-    if (!regexExecArray?.length) { return; }    // Return early if no match was found
-
-    // Parse the bigint version from the regex capture
-    let bigIntVersion;
-    try {
-        bigIntVersion = BigInt(regexExecArray[1]);
-    } catch (e) {
-        const message = `Failed to parse version from the meta.lsx file (${metaLsxPath})`;
-        return vscode.window.showErrorMessage(message);
-    }
+    const capture = VersionHoverProvider.execRegex(fileContents);
+    if (!capture?.length) { return; }    // Return early if no match was found
+    const bigIntVersion = BigInt(capture);
 
     // Determine the updated version
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
 
     // Replace file contents with the new version
-    fileContents = fileContents.replace(
-        bg3.Version.lsxRegex,
+    const newFileContents = fileContents.replace(
+        VersionHoverProvider.versionRegex,
         `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}"/>`
     );
-    fileBuffer = Buffer.from(fileContents, 'utf8');
+    const fileBuffer = Buffer.from(newFileContents, 'utf8');
 
     // Write the new file contents back to the `meta.lsx` file
     vscode.workspace.fs.writeFile(metaLsxPath, fileBuffer);

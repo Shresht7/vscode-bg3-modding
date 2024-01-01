@@ -33,7 +33,7 @@ export class VersionHoverProvider extends HoverProvider {
         const line = document.lineAt(position.line);
 
         // Capture the int64 version number from the line and parse as BigInt
-        const capture = this.execRegex(line.text);
+        const capture = VersionHoverProvider.execRegex(line.text);
         if (!capture) { return; }
         const bigIntVersion = BigInt(capture);
 
@@ -43,7 +43,7 @@ export class VersionHoverProvider extends HoverProvider {
 
         // If hovering over the version number, show its string representation
         if (word === capture) {
-            const version = this.transformVersion(bigIntVersion);
+            const version = VersionHoverProvider.transformVersion(bigIntVersion);
             return new vscode.Hover(version);
         }
 
@@ -53,12 +53,12 @@ export class VersionHoverProvider extends HoverProvider {
     // -------
 
     /** Transform version number from BigInt representation (e.g. ) to a string representation (e.g. 1.0.0.0) */
-    private transformVersion(bigIntVersion: bigint): string {
+    static transformVersion(bigIntVersion: bigint): string {
         return new bg3.Version(bigIntVersion).toString();
     }
 
     /** Perform the regex operation and capture the version64 number */
-    private execRegex(line: string): string | undefined {
+    static execRegex(line: string): string | undefined {
         // Check if the line matches the version regex
         if (!VersionHoverProvider.versionRegex.test(line)) { return; };
         // Capture version64 from the line
