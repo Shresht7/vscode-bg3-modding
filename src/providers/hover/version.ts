@@ -13,6 +13,9 @@ import { HoverProvider } from './_base';
  */
 export class VersionHoverProvider extends HoverProvider {
 
+    /** Regular expression to match the version line in `meta.lsx` */
+    public static readonly versionRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
+
     /** A selector that defines the documents this provider is applicable to */
     private static readonly documentSelector = ['xml'];
 
@@ -26,10 +29,10 @@ export class VersionHoverProvider extends HoverProvider {
         // Get the line that is currently being hovered over
         const line = document.lineAt(position.line);
         // Check if the line matches the version number regex
-        if (!bg3.Version.lsxRegex.test(line.text)) { return; };
+        if (!VersionHoverProvider.versionRegex.test(line.text)) { return; };
 
         // Capture the int64 version number from the line and parse as BigInt
-        const capture = bg3.Version.lsxRegex.exec(line.text)?.at(1) || '0';
+        const capture = VersionHoverProvider.versionRegex.exec(line.text)?.at(1) || '0';
         const bigIntVersion = BigInt(capture);
 
         // Get the word that is being currently hovered over

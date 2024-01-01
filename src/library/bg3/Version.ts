@@ -18,9 +18,6 @@ export class Version {
     /** Build Number */
     private build: number = 0;
 
-    /** Regular expression to match the version line in `meta.lsx` */
-    public static readonly lsxRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
-
     /** Parse the Version number */
     constructor(x: bigint);
     constructor(x: string);
