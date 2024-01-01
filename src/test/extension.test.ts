@@ -5,6 +5,9 @@ import * as vscode from 'vscode';
 import * as assert from 'assert';
 import { bg3 } from '../library';
 
+// Type Definitions
+import type { VersionKind } from '../types';
+
 // =====
 // TESTS
 // =====
@@ -93,48 +96,52 @@ suite('Extension Test Suite', () => {
 
 	test("Bump Version", () => {
 
-		const testSuite = [
-			{
-				v: "1.0.0.0",
-				kind: bg3.VersionKind.MAJOR,
-				expected: "2.0.0.0",
-			},
-			{
-				v: "1.0.0.0",
-				kind: bg3.VersionKind.MINOR,
-				expected: "1.1.0.0",
-			},
-			{
-				v: "1.0.0.0",
-				kind: bg3.VersionKind.REVISION,
-				expected: "1.0.1.0",
-			},
-			{
-				v: "1.0.0.0",
-				kind: bg3.VersionKind.BUILD,
-				expected: "1.0.0.1",
-			},
-			{
-				v: "1.2.3.4",
-				kind: bg3.VersionKind.BUILD,
-				expected: "1.2.3.5",
-			},
-			{
-				v: "1.2.3.4",
-				kind: bg3.VersionKind.REVISION,
-				expected: "1.2.4.0",
-			},
-			{
-				v: "1.2.3.4",
-				kind: bg3.VersionKind.MINOR,
-				expected: "1.3.0.0",
-			},
-			{
-				v: "1.2.3.4",
-				kind: bg3.VersionKind.MAJOR,
-				expected: "2.0.0.0",
-			},
-		];
+		const testSuite: {
+			v: string,
+			kind: VersionKind,
+			expected: string
+		}[] = [
+				{
+					v: "1.0.0.0",
+					kind: "major",
+					expected: "2.0.0.0",
+				},
+				{
+					v: "1.0.0.0",
+					kind: "minor",
+					expected: "1.1.0.0",
+				},
+				{
+					v: "1.0.0.0",
+					kind: "revision",
+					expected: "1.0.1.0",
+				},
+				{
+					v: "1.0.0.0",
+					kind: "build",
+					expected: "1.0.0.1",
+				},
+				{
+					v: "1.2.3.4",
+					kind: "build",
+					expected: "1.2.3.5",
+				},
+				{
+					v: "1.2.3.4",
+					kind: "revision",
+					expected: "1.2.4.0",
+				},
+				{
+					v: "1.2.3.4",
+					kind: "minor",
+					expected: "1.3.0.0",
+				},
+				{
+					v: "1.2.3.4",
+					kind: "major",
+					expected: "2.0.0.0",
+				},
+			];
 
 		for (const t of testSuite) {
 			const version = new bg3.Version(t.v).bump(t.kind);

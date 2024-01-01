@@ -1,3 +1,6 @@
+// Type Definitions
+import type { VersionKind } from "./version";
+
 // ---------------------------
 // META.LSX - TYPE DEFINITIONS
 // ---------------------------
@@ -14,10 +17,7 @@ export type Meta = {
 };
 
 export type Version = {
-    major: number,
-    minor: number,
-    revision: number,
-    build: number
+    [k in VersionKind]: number
 };
 
 type NodeRoot = {

@@ -1,10 +1,5 @@
-/** Version Kind */
-export enum VersionKind {
-    MAJOR = "major",
-    MINOR = "minor",
-    REVISION = "revision",
-    BUILD = "build"
-}
+// Type Definitions
+import type { VersionKind } from "../../types";
 
 /** A class to represent the BG3 Version numbers */
 export class Version {
@@ -48,22 +43,22 @@ export class Version {
      */
     bump(kind: VersionKind): Version {
         switch (kind) {
-            case VersionKind.MAJOR:
+            case "major":
                 this.major++;
                 this.minor = 0;
                 this.revision = 0;
                 this.build = 0;
                 break;
-            case VersionKind.MINOR:
+            case "minor":
                 this.minor++;
                 this.revision = 0;
                 this.build = 0;
                 break;
-            case VersionKind.REVISION:
+            case "revision":
                 this.revision++;
                 this.build = 0;
                 break;
-            case VersionKind.BUILD:
+            case "build":
             default:
                 this.build++;
         }
