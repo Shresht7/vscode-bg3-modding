@@ -53,7 +53,7 @@
       },
       {
         "command": "bg3-modding.initializeLuaConfiguration",
-        "title": "Initialize Lua Configuration in Workspace settings",
+        "title": "Initialize Lua Configuration Settings",
         "category": "BG3"
       }
     ],
