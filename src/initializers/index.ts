@@ -1,4 +1,5 @@
 // Library
+import { initializeCommands } from './commands';
 import { initializeLocalization } from './localization';
 
 // ============
@@ -6,5 +7,6 @@ import { initializeLocalization } from './localization';
 // ============
 
 export const initialize = {
-    localization: initializeLocalization
+    localization: initializeLocalization,
+    commands: initializeCommands,
 };
