@@ -7,7 +7,7 @@ import { fs } from '../helpers';
 // Configuration
 import { LuaConfiguration } from "../configs/Lua";
 
-/** Initialize {@link LuaConfiguration} in the workspace settings */
+/** Initialize {@link LuaConfiguration} Settings */
 export async function initializeLuaConfiguration() {
 
     // Get the path to the extension's directory
