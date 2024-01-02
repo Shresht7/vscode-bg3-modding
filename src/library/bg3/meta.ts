@@ -1,6 +1,5 @@
 // Library
 import * as vscode from 'vscode';
-import * as fs from './fs';
 import { xml } from '../../helpers';
 
 // Type Definitions
