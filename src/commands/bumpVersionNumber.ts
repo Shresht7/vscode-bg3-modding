@@ -23,7 +23,6 @@ export async function bumpVersionNumber() {
     if (!response?.selection) { return; }; // Exit early if no response
 
     // Get the current version number
-    const contents = await bg3.metaLsx.getContents();
     const meta = await bg3.metaLsx.parse();
     const bigIntVersion = BigInt(meta.ModuleInfo.Version64);
 
@@ -31,11 +30,8 @@ export async function bumpVersionNumber() {
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
 
     // Update the version number in the `meta.lsx` file
-    const newContents = contents.replace(
-        meta.versionRegex,
-        `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}" />`
-    );
-    await bg3.metaLsx.setContents(newContents);
+    meta.updateModuleInfo("Version64", version.toInt64().toString());
+    await bg3.metaLsx.save();
 
     // Show an information message for the version bump
     vscode.window.showInformationMessage(`Version bumped to ${version.toString()}`);
