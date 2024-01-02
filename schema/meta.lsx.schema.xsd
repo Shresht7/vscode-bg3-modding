@@ -1,0 +1,238 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- <save> -->
+  <xs:element name="save">
+    <xs:complexType>
+      <xs:sequence>
+
+        <!-- <version .../> -->
+        <xs:element name="version">
+          <xs:complexType>
+            <xs:attribute name="major" type="xs:int" use="required"/>
+            <xs:attribute name="minor" type="xs:int" use="required"/>
+            <xs:attribute name="revision" type="xs:int" use="required"/>
+            <xs:attribute name="build" type="xs:int" use="required" />
+          </xs:complexType>
+        </xs:element>
+
+        <!-- <region id="Config"> -->
+        <xs:element name="region">
+          <xs:complexType>
+            <xs:sequence>
+
+              <!-- <node id="root"> -->
+              <xs:element name="node">
+                <xs:complexType>
+                  <xs:sequence>
+
+                    <!-- <children> -->
+                    <xs:element name="children">
+                      <xs:complexType>
+                        <xs:sequence>
+
+                          <!-- <node id="Dependencies"> -->
+                          <xs:element name="node">
+                            <xs:complexType>
+                              <xs:sequence minOccurs="0">
+
+                                <!-- <children> -->
+                                <xs:element name="children">
+                                  <xs:complexType>
+                                    <xs:sequence>
+
+                                      <!-- <node id="ModuleShortDesc" -->
+                                      <xs:element name="node" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:sequence>
+
+                                            <!-- <attribute .../> -->
+                                            <xs:element name="attribute" maxOccurs="unbounded">
+                                              <xs:complexType>
+
+                                                <!-- id -->
+                                                <xs:attribute name="id" use="required">
+                                                  <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                      <xs:enumeration value="Folder"/>
+                                                      <xs:enumeration value="MD5"/>
+                                                      <xs:enumeration value="Name"/>
+                                                      <xs:enumeration value="UUID"/>
+                                                      <xs:enumeration value="Version64"/>
+                                                    </xs:restriction>
+                                                  </xs:simpleType>
+                                                </xs:attribute>
+
+                                                <!-- type -->
+                                                <xs:attribute name="type" use="required">
+                                                  <xs:simpleType>
+                                                    <xs:restriction base="xs:string">
+                                                      <xs:enumeration value="LSWString"/>
+                                                      <xs:enumeration value="LSString"/>
+                                                      <xs:enumeration value="FixedString"/>
+                                                      <xs:enumeration value="int64"/>
+                                                    </xs:restriction>
+                                                  </xs:simpleType>
+                                                </xs:attribute>
+
+                                                <!-- value -->
+                                                <xs:attribute name="value" type="xs:string" use="required"/>
+
+                                              </xs:complexType>
+                                            </xs:element>
+
+                                          </xs:sequence>
+                                          <xs:attribute name="id" type="xs:string" fixed="ModuleShortDesc"/>
+                                        </xs:complexType>
+                                      </xs:element>
+
+
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+
+                              </xs:sequence>
+                              <xs:attribute name="id" type="xs:string" fixed="Dependencies"/>
+                            </xs:complexType>
+                          </xs:element>
+
+                          <!-- <node id="ModuleInfo"> -->
+                          <xs:element name="node">
+                            <xs:complexType>
+                              <xs:sequence>
+
+                                <!-- <attribute .../>  -->
+                                <xs:element name="attribute" maxOccurs="unbounded">
+                                  <xs:complexType>
+
+                                    <!-- id -->
+                                    <xs:attribute name="id" use="required">
+                                      <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                          <xs:enumeration value="Author" />
+                                          <xs:enumeration value="CharacterCreationLevelName" />
+                                          <xs:enumeration value="Description" />
+                                          <xs:enumeration value="Folder" />
+                                          <xs:enumeration value="GMTemplate" />
+                                          <xs:enumeration value="LobbyLevelName" />
+                                          <xs:enumeration value="MD5" />
+                                          <xs:enumeration value="MainMenuBackgroundVideo" />
+                                          <xs:enumeration value="MenuLevelName" />
+                                          <xs:enumeration value="Name" />
+                                          <xs:enumeration value="NumPlayers" />
+                                          <xs:enumeration value="PhotoBooth" />
+                                          <xs:enumeration value="StartupLevelName" />
+                                          <xs:enumeration value="Tags" />
+                                          <xs:enumeration value="Type" />
+                                          <xs:enumeration value="UUID" />
+                                          <xs:enumeration value="Version64" />
+                                        </xs:restriction>
+                                      </xs:simpleType>
+                                    </xs:attribute>
+
+                                    <!-- type -->
+                                    <xs:attribute name="type" use="required">
+                                      <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                          <xs:enumeration value="LSWString" />
+                                          <xs:enumeration value="LSString"/>
+                                          <xs:enumeration value="FixedString"/>
+                                          <xs:enumeration value="int64"/>
+                                          <xs:enumeration value="uint8"/>
+                                        </xs:restriction>
+                                      </xs:simpleType>
+                                    </xs:attribute>
+
+                                    <!-- value -->
+                                    <xs:attribute name="value" type="xs:string" use="required"/>
+
+                                  </xs:complexType>
+                                </xs:element>
+
+                                <!-- <children> -->
+                                <xs:element name="children">
+                                  <xs:complexType>
+                                    <xs:all>
+
+                                      <!-- <node id="PublishVersion"> -->
+                                      <xs:element name="node">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="attribute">
+                                              <xs:complexType>
+                                                <xs:attribute name="id" type="xs:string" fixed="Version64"/>
+                                                <xs:attribute name="type" type="xs:string" fixed="int64"/>
+                                                <xs:attribute name="value" type="xs:string"/>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute name="id" type="xs:string" fixed="PublishVersion"/>
+                                        </xs:complexType>
+                                      </xs:element>
+
+                                      <!-- <node id="Scripts"> -->
+                                      <xs:element name="node">
+                                        <xs:complexType>
+                                          <xs:attribute name="id" type="xs:string" fixed="Scripts" />
+                                        </xs:complexType>
+                                      </xs:element>
+
+                                      <!-- <node id="TargetModes"> -->
+                                      <xs:element name="node">
+                                        <xs:complexType>
+                                          <xs:sequence>
+                                            <xs:element name="children">
+                                              <xs:complexType>
+                                                <xs:sequence>
+
+                                                  <!-- <node id="Target"> -->
+                                                  <xs:element name="node">
+                                                    <xs:complexType>
+                                                      <xs:sequence>
+                                                        <xs:element name="attribute">
+                                                          <xs:complexType>
+                                                            <xs:attribute name="id" type="xs:string" fixed="Object"/>
+                                                            <xs:attribute name="type" type="xs:string" fixed="FixedString"/>
+                                                            <xs:attribute name="value" type="xs:string"/>
+                                                          </xs:complexType>
+                                                        </xs:element>
+                                                      </xs:sequence>
+                                                      <xs:attribute name="id" type="xs:string" fixed="Target"/>
+                                                    </xs:complexType>
+                                                  </xs:element>
+
+                                                </xs:sequence>
+                                              </xs:complexType>
+                                            </xs:element>
+                                          </xs:sequence>
+                                          <xs:attribute name="id" type="xs:string" fixed="TargetModes"/>
+                                        </xs:complexType>
+                                      </xs:element>
+
+                                    </xs:all>
+                                  </xs:complexType>
+                                </xs:element>
+
+                              </xs:sequence>
+                              <xs:attribute name="id" type="xs:string" fixed="ModuleInfo"/>
+                            </xs:complexType>
+                          </xs:element>
+
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+
+                  </xs:sequence>
+                  <xs:attribute name="id" fixed="root" use="required"/>
+                </xs:complexType>
+              </xs:element>
+
+            </xs:sequence>
+            <xs:attribute name="id" fixed="Config" use="required" />
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
