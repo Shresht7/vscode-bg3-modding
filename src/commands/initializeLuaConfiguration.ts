@@ -32,9 +32,9 @@ export async function initializeLuaConfiguration() {
 async function promptForConfigurationScope(): Promise<vscode.ConfigurationTarget | undefined> {
     // Prompt the user to select the scope of the configuration
     const response = await vscode.window.showQuickPick([
-        { label: "Workspace", description: "Workspace settings" },
+        { label: "Workspace", description: "Workspace settings --- `.vscode/settings.json`" },
         // { label: "Workspace Folder", description: "Workspace folder settings" },
-        { label: "User", description: "User settings" },
+        { label: "User", description: "User settings --- Global `settings.json`" },
     ], {
         title: "Lua Configuration",
         placeHolder: "Select the scope of the configuration",
