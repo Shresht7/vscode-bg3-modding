@@ -18,11 +18,14 @@ import type {
 
 export class MetaLsx {
 
-    /** The metadata from the `meta.lsx` file */
-    private _meta?: MetaDefinition;
+    /** The dependencies as specified in the `meta.lsx` file */
+    Dependencies: Dependency[] = [];
+
+    /** The module information as specified in the `meta.lsx` file */
+    ModuleInfo: ModuleInfo = {} as ModuleInfo;
 
     /** Regular expressions to match the version line in `meta.lsx` */
-    readonly versionRegex: RegExp = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
+    readonly versionRegex: RegExp = /\s*<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\s*\/>/;
 
     constructor(
         /** Uri of the `meta.lsx` file */
@@ -61,7 +64,7 @@ export class MetaLsx {
     /** Parse the metadata from the given contents of the `meta.lsx` file */
     public async parse(): Promise<this> {
         if (!this.path) { this.path = await this.find(); }
-        this._meta = await xml.read<MetaDefinition>(this.path, {
+        const _meta = await xml.read<MetaDefinition>(this.path, {
             ignoreDeclaration: true,    // ignore the ?xml declaration at the top
             ignoreAttributes: false,    // do not ignore attributes as they hold valuable information
             attributeNamePrefix: "",    // do not prefix attributes with any special characters
@@ -71,19 +74,18 @@ export class MetaLsx {
                 return jPath.endsWith('children.node') || jPath.endsWith('node.attribute');
             }
         });
+        this.Dependencies = this.parseDependencies(_meta);
+        this.ModuleInfo = this.parseModuleInfo(_meta);
         return this;
-
     }
 
     /** The dependencies as specified in the `meta.lsx` file */
-    public get Dependencies(): Dependency[] {
-        if (!this._meta) { throw new Error("Metadata not parsed"); }
-
+    private parseDependencies(meta: MetaDefinition) {
         /** An array to contain the dependencies */
         const dependencies: Dependency[] = [];
 
         // Iterate over the dependencies specified in the `meta.lsx` and push them to the dependencies array
-        const deps = this._meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
+        const deps = meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
         if (deps?.children?.node?.length) {
             for (const node of deps.children.node) {
                 // Convert the dependency attributes array to an object directly mapping the id to the value
@@ -96,10 +98,8 @@ export class MetaLsx {
     }
 
     /** The module information as specified in the `meta.lsx` file */
-    public get ModuleInfo(): ModuleInfo {
-        if (!this._meta) { throw new Error("Metadata not parsed"); }
-
-        const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
+    private parseModuleInfo(meta: MetaDefinition): ModuleInfo {
+        const moduleInfo = meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
         const entries = moduleInfo.attribute.map(a => [a.id, a.value]);
         return Object.fromEntries(entries);
     }
