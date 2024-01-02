@@ -62,6 +62,12 @@
       }
     ],
     "configurationDefaults": {
+      "xml.fileAssociations": [
+        {
+          "pattern": "**/Localization/**/*.xml",
+          "systemId": "https://github.com/Shresht7/vscode-bg3-modding/blob/xsd/Schema/localization.xml.schema.xsd"
+        }
+      ],
       "files.associations": {
         "*.lsx": "xml",
         "*.lsj": "json"
