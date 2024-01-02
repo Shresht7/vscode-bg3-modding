@@ -9,5 +9,9 @@
     // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
     "typescript.tsc.autoDetect": "off",
     // Limit the markdown table of contents to levels 2 through 4 
-    "markdown.extension.toc.levels": "2..4"
+    "markdown.extension.toc.levels": "2..4",
+    // List of words to be considered correct by the spell checker
+    "cSpell.words": [
+        "contentuid"
+    ]
 }
