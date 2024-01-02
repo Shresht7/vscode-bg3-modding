@@ -15,7 +15,7 @@ import constants from '../constants';
  * const pathToMyFile = path.join(extensionPath, 'myFile.txt');
  */
 export async function getExtensionPath(): Promise<string> {
-    const extension = vscode.extensions.getExtension(constants.EXTENSION_ID);
+    const extension = vscode.extensions.getExtension(`${constants.PUBLISHER}.${constants.EXTENSION_ID}`);
     if (!extension) {
         throw new Error('Extension not found');
     }
