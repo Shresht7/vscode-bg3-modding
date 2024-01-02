@@ -14,8 +14,6 @@ export class Version {
     private build: number = 0;
 
     /** Parse the Version number */
-    constructor(x: bigint);
-    constructor(x: string);
     constructor(x: bigint | string) {
 
         // Use the string constructor ...
