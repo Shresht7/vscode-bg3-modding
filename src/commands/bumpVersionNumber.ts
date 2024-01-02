@@ -1,6 +1,8 @@
 // Library
 import * as vscode from 'vscode';
 import { bg3 } from '../library';
+
+// Helpers
 import { utils } from '../helpers';
 
 // Type Definitions
@@ -22,19 +24,38 @@ export async function bumpVersionNumber() {
     const response = await promptForVersion();
     if (!response?.selection) { return; }; // Exit early if no response
 
+    // Parse the `meta.lsx` file so we can get the current version number
+    let meta: bg3.MetaLsx;
+    try {
+        meta = await bg3.metaLsx.parse();
+    } catch (e) {
+        vscode.window.showErrorMessage("No `meta.lsx` file found in the workspace");
+        return;
+    }
+
     // Get the current version number
-    const meta = await bg3.metaLsx.parse();
-    const bigIntVersion = BigInt(meta.ModuleInfo.Version64);
+    let bigIntVersion: bigint;
+    try {
+        bigIntVersion = BigInt(meta.ModuleInfo.Version64);
+    } catch (e) {
+        vscode.window.showErrorMessage(`The \`meta.lsx\` file does not contain a valid version number (${meta.ModuleInfo.Version64})`);
+        return;
+    }
 
     // Bump the version number
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
+    meta.updateModuleInfo("Version64", version.toInt64().toString());
 
     // Update the version number in the `meta.lsx` file
-    meta.updateModuleInfo("Version64", version.toInt64().toString());
-    await bg3.metaLsx.save();
+    try {
+        await bg3.metaLsx.save();
+    } catch (e) {
+        vscode.window.showErrorMessage(`Failed to save the updated version number (${version}) to the \`meta.lsx\` file`);
+        return;
+    }
 
     // Show an information message for the version bump
-    vscode.window.showInformationMessage(`Version bumped to ${version.toString()}`);
+    vscode.window.showInformationMessage(`Version bumped to ${version}`);
 
 }
 
@@ -43,14 +64,13 @@ export async function bumpVersionNumber() {
 
 /** Prompt the user for the kind of version bump */
 async function promptForVersion() {
-    // Prompt the user for the kind of version bump
+    /** The set of version options */
     const options: VersionKind[] = ["major", "minor", "revision", "build"];
-    const response = await vscode.window.showQuickPick(options.map(opt => ({
-        label: utils.capitalize(opt),
-        selection: opt
-    })), {
+    /** The options to show to the user in the quick pick menu */
+    const quickPickOptions = options.map(opt => ({ label: utils.capitalize(opt), selection: opt }));
+    // Prompt the user to select the kind of version bump
+    return vscode.window.showQuickPick(quickPickOptions, {
         title: "Kind",
         placeHolder: "Select the kind of version bump"
     });
-    return response;
 }
