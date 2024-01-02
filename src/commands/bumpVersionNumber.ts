@@ -10,7 +10,7 @@ import type { VersionKind } from '../types';
 // BUMP VERSION NUMBER COMMAND
 // ---------------------------
 
-/** Convert Int64 version number to string format or vice-versa */
+/** Bump the version number of the current project */
 export async function bumpVersionNumber() {
 
     // Exit early if no folder or workspace is open
@@ -37,6 +37,9 @@ export async function bumpVersionNumber() {
     vscode.window.showInformationMessage(`Version bumped to ${version.toString()}`);
 
 }
+
+// HELPER FUNCTIONS
+// ----------------
 
 /** Prompt the user for the kind of version bump */
 async function promptForVersion() {
