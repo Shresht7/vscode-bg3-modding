@@ -5,7 +5,7 @@ import { bg3 } from "../library";
 /** Copies the mod's UUID to the clipboard */
 export async function copyModUUID() {
     // Get mod's metadata from the `meta.lsx` file
-    const meta = await bg3.getMetadata();
+    const meta = await bg3.metaLsx.parse();
 
     // Copy the UUID to the clipboard
     const uuid = meta.ModuleInfo.UUID;

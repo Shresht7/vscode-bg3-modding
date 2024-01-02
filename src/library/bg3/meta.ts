@@ -1,28 +1,41 @@
 // Library
 import * as vscode from 'vscode';
+import * as fs from './fs';
+import { xml } from '../../helpers';
 
-// --------
-// META LSX
-// --------
+// Type Definitions
+import type {
+    Meta as MetaDefinition,
+    ModuleInfoAttribute,
+    NodeDependencies,
+    NodeDependencyAttribute,
+    NodeModuleInfo
+} from "../../types";
 
-class MetaLsx {
+// ----------------------
+// META.LSX CONFIGURATION
+// ----------------------
 
-    /** Uri of the `meta.lsx` file */
-    private path: vscode.Uri | undefined;
+export class MetaLsx {
+
+    /** The metadata from the `meta.lsx` file */
+    private _meta?: MetaDefinition;
 
     /** Regular expressions to match the version line in `meta.lsx` */
     readonly versionRegex: RegExp = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
 
-    constructor() { }
+    constructor(
+        /** Uri of the `meta.lsx` file */
+        private path?: vscode.Uri
+    ) { }
 
     /**
      * Finds the `meta.lsx` file in the workspace and returns its {@link vscode.Uri}
      * @returns The Uri of the `meta.lsx` file
      */
     public async find(): Promise<vscode.Uri> {
-        const paths = await vscode.workspace.findFiles("**/meta.lsx");
-        if (!paths?.length) { throw new Error("Failed to find the `meta.lsx` file"); }
-        return paths[0];
+        this.path = await fs.findMetaLsx();
+        return this.path;
     }
 
     /** @returns The file contents of the `meta.lsx` file */
@@ -43,31 +56,71 @@ class MetaLsx {
         await vscode.workspace.fs.writeFile(this.path, buf);
     }
 
-    /**
-     * Retraces the path from the `meta.lsx` file up to the root folder. This is the folder that contains
-     * the Mods and Public folders. This is achieved by going up 3 directories from the path of the `meta.lsx`
-     * file (as this is the folder structure the game expects).
-     * @returns Uri of the mod's root folder. This is the folder containing the Mods and Public folders
-     */
-    public async getRootFolderUri(): Promise<vscode.Uri> {
-        // Get the path to the `meta.lsx` file
-        const metaLsxPath = await this.find();
-        // Traverse up 3 directories to get to the root folder. This should be okay to do as the game expects this folder structure
-        const rootPath = vscode.Uri.joinPath(
-            metaLsxPath,
-            "..",   // [ModFolder]
-            "..",   // Mods
-            "..",   // [RootFolder]
-        );
-        return rootPath;
+    /** Parse the metadata from the given contents of the `meta.lsx` file */
+    public async parse(): Promise<this> {
+        if (!this.path) { this.path = await this.find(); }
+        this._meta = await xml.read<MetaDefinition>(this.path, {
+            ignoreDeclaration: true,    // ignore the ?xml declaration at the top
+            ignoreAttributes: false,    // do not ignore attributes as they hold valuable information
+            attributeNamePrefix: "",    // do not prefix attributes with any special characters
+            parseAttributeValue: true,  // parse attribute values as strings, number and booleans
+            isArray(tagName, jPath, isLeafNode, isAttribute) {
+                // single elements under `children.node` and `node.attribute` are part of an array
+                return jPath.endsWith('children.node') || jPath.endsWith('node.attribute');
+            }
+        });
+        return this;
+
     }
 
-    /** @returns Name of the mod's root folder */
-    public async getRootFolderName(): Promise<string | undefined> {
-        const rootPath = await this.getRootFolderUri();
-        return rootPath?.fsPath.split("\\").at(-1);
+    /** The dependencies as specified in the `meta.lsx` file */
+    public get Dependencies(): Dependency[] {
+        if (!this._meta) { throw new Error("Metadata not parsed"); }
+
+        /** An array to contain the dependencies */
+        const dependencies: Dependency[] = [];
+
+        // Iterate over the dependencies specified in the `meta.lsx` and push them to the dependencies array
+        const deps = this._meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
+        if (deps?.children?.node?.length) {
+            for (const node of deps.children.node) {
+                // Convert the dependency attributes array to an object directly mapping the id to the value
+                const entries = node.attribute.map(a => [a.id, a.value]);
+                dependencies.push(Object.fromEntries(entries));
+            }
+        }
+
+        return dependencies;
+    }
+
+    /** The module information as specified in the `meta.lsx` file */
+    public get ModuleInfo(): ModuleInfo {
+        if (!this._meta) { throw new Error("Metadata not parsed"); }
+
+        const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
+        const entries = moduleInfo.attribute.map(a => [a.id, a.value]);
+        return Object.fromEntries(entries);
     }
 
 }
 
+// ----------------------------------
 export const metaLsx = new MetaLsx();
+// ----------------------------------
+
+// ----------------
+// TYPE DEFINITIONS
+// ----------------
+
+export type MetaLSX = {
+    Dependencies: Dependency[],
+    ModuleInfo: ModuleInfo,
+};
+
+export type ModuleInfo = {
+    [k in ModuleInfoAttribute["id"]]: Extract<ModuleInfoAttribute, { id: k }>["value"]
+};
+
+export type Dependency = {
+    [k in NodeDependencyAttribute["id"]]: Extract<NodeDependencyAttribute, { id: k }>["value"]
+};
