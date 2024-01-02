@@ -12,7 +12,7 @@ export async function copyModUUID() {
     // Get mod's metadata from the `meta.lsx` file
     let meta: bg3.MetaLsx;
     try {
-        meta = await bg3.metaLsx.parse();
+        meta = await bg3.metaLsx.load();
     } catch (e) {
         vscode.window.showErrorMessage("No `meta.lsx` file found in the workspace");
         return;

@@ -43,26 +43,8 @@ export class MetaLsx {
         return this.path;
     }
 
-    /** @returns The file contents of the `meta.lsx` file */
-    public async getContents(): Promise<string> {
-        if (!this.path) { this.path = await this.find(); }
-        const buf = await vscode.workspace.fs.readFile(this.path);
-        const contents = Buffer.from(buf).toString("utf8");
-        return contents;
-    }
-
-    /**
-     * Writes the provided contents to the `meta.lsx` file
-     * @param contents The contents to write to the `meta.lsx` file
-     */
-    public async setContents(contents: string): Promise<void> {
-        if (!this.path) { this.path = await this.find(); }
-        const buf = Buffer.from(contents, "utf8");
-        await vscode.workspace.fs.writeFile(this.path, buf);
-    }
-
-    /** Parse the metadata from the given contents of the `meta.lsx` file */
-    public async parse(): Promise<this> {
+    /** Load the metadata from the `meta.lsx` file */
+    public async load(): Promise<this> {
         if (!this.path) { this.path = await this.find(); }
         this._meta = await xml.read<MetaDefinition>(this.path, {
             ignoreAttributes: false,    // do not ignore attributes as they hold valuable information
@@ -76,17 +58,6 @@ export class MetaLsx {
         this.Dependencies = this.parseDependencies();
         this.ModuleInfo = this.parseModuleInfo();
         return this;
-    }
-
-    /**
-     * Updates the module information in the `meta.lsx` file
-     * @param attribute The attribute to update
-     * @param value The value to set the attribute to
-     */
-    public updateModuleInfo<T extends ModuleInfoAttribute["id"]>(attribute: T, value: ModuleInfo[T]): void {
-        this.ModuleInfo[attribute] = value;
-        const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
-        moduleInfo.attribute.find(a => a.id === attribute)!.value = value;
     }
 
     /** Save the metadata to the `meta.lsx` file */
@@ -125,6 +96,17 @@ export class MetaLsx {
         const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
         const entries = moduleInfo.attribute.map(a => [a.id, a.value]);
         return Object.fromEntries(entries);
+    }
+
+    /**
+     * Updates the module information in the `meta.lsx` file
+     * @param attribute The attribute to update
+     * @param value The value to set the attribute to
+     */
+    public updateModuleInfo<T extends ModuleInfoAttribute["id"]>(attribute: T, value: ModuleInfo[T]): void {
+        this.ModuleInfo[attribute] = value;
+        const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
+        moduleInfo.attribute.find(a => a.id === attribute)!.value = value;
     }
 
 }

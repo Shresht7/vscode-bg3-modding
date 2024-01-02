@@ -52,7 +52,7 @@ suite("Parse `meta.lsx` metadata file", () => {
     let meta = new MetaLsx(metaLsxPath);
 
     setup(async () => {
-        await meta.parse();
+        await meta.load();
     });
 
     // MODULE INFO

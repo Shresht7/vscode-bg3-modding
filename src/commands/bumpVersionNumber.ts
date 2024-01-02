@@ -27,7 +27,7 @@ export async function bumpVersionNumber() {
     // Parse the `meta.lsx` file so we can get the current version number
     let meta: bg3.MetaLsx;
     try {
-        meta = await bg3.metaLsx.parse();
+        meta = await bg3.metaLsx.load();
     } catch (e) {
         vscode.window.showErrorMessage("No `meta.lsx` file found in the workspace");
         return;
