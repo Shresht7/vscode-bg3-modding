@@ -24,16 +24,15 @@ export async function bumpVersionNumber() {
 
     // Get the current version number
     const contents = await bg3.metaLsx.getContents();
-    const capture = bg3.metaLsx.versionRegex.exec(contents);
-    if (!capture) { return; }
-    const bigIntVersion = BigInt(capture[1]);
+    const meta = await bg3.metaLsx.parse();
+    const bigIntVersion = BigInt(meta.ModuleInfo.Version64);
 
     // Bump the version number
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
 
     // Update the version number in the `meta.lsx` file
     const newContents = contents.replace(
-        capture[0],
+        meta.versionRegex,
         `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}" />`
     );
     await bg3.metaLsx.setContents(newContents);
