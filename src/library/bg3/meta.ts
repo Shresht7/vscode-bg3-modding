@@ -27,9 +27,6 @@ export class MetaLsx {
     /** The module information as specified in the `meta.lsx` file */
     ModuleInfo: ModuleInfo = {} as ModuleInfo;
 
-    /** Regular expressions to match the version line in `meta.lsx` */
-    readonly versionRegex: RegExp = /\s*<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\s*\/>/;
-
     constructor(
         /** Uri of the `meta.lsx` file */
         private path?: vscode.Uri
