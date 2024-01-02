@@ -1,7 +1,3 @@
-// Library
-import * as vscode from 'vscode';
-import constants from '../constants';
-
 // ========
 // COMMANDS
 // ========

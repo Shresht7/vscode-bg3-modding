@@ -1,16 +1,19 @@
 // Library
-import * as vscode from 'vscode';
 import * as path from 'node:path';
 import constants from '../constants';
+import { fs } from '../helpers';
 
 // Configuration
 import { LuaConfiguration } from "../configs/Lua";
 
 /** Initialize {@link LuaConfiguration} in the workspace settings */
-export async function initializeLuaConfiguration(context: vscode.ExtensionContext) {
+export async function initializeLuaConfiguration() {
+
+    // Get the path to the extension's directory
+    const extensionPath = await fs.getExtensionPath();
 
     // Get the path to the extension's lua references folder
-    const luaReferenceLibrary = path.join(context.extensionPath, constants.LUA_REFERENCES_FOLDER);
+    const luaReferenceLibrary = path.join(extensionPath, constants.LUA_REFERENCES_FOLDER);
 
     // Initialize the Lua Configuration
     LuaConfiguration.setup({ luaReferenceLibrary });
