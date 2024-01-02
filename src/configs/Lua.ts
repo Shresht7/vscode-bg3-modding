@@ -7,11 +7,12 @@ import * as vscode from 'vscode';
 
 export class LuaConfiguration {
 
+    /** VS Code Workspace Configuration */
+    private config = vscode.workspace.getConfiguration("Lua");
+
     protected constructor(
-        /** VS Code Workspace Configuration */
-        private config = vscode.workspace.getConfiguration("Lua"),
         /** VS Code Configuration Target */
-        private configurationTarget = vscode.ConfigurationTarget.Workspace,
+        private configurationTarget: vscode.ConfigurationTarget = vscode.ConfigurationTarget.Workspace,
     ) { }
 
     /**
@@ -40,10 +41,12 @@ export class LuaConfiguration {
      */
     static setup(options: {
         /** Path to the Lua workspace library */
-        luaReferenceLibrary: string
+        luaReferenceLibrary: string,
+        /** VS Code Configuration Target */
+        configurationTarget?: vscode.ConfigurationTarget
     }) {
         // Instantiate the VS Code configuration settings
-        const settings = new LuaConfiguration();
+        const settings = new LuaConfiguration(options.configurationTarget);
 
         // Add the references to the `Lua.workspace.library` configuration to enable IDEHelpers
         settings.push("workspace.library", options.luaReferenceLibrary);
