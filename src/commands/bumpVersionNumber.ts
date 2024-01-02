@@ -1,9 +1,18 @@
 // Library
 import * as vscode from 'vscode';
 import { bg3 } from '../library';
+
+// Helpers
 import { utils } from '../helpers';
 
-/** Convert Int64 version number to string format or vice-versa */
+// Type Definitions
+import type { VersionKind } from '../types';
+
+// ---------------------------
+// BUMP VERSION NUMBER COMMAND
+// ---------------------------
+
+/** Bump the version number of the current project */
 export async function bumpVersionNumber() {
 
     // Exit early if no folder or workspace is open
@@ -12,68 +21,56 @@ export async function bumpVersionNumber() {
     }
 
     // Prompt the user for the kind of version bump
-    const options: bg3.VersionKind[] = [
-        bg3.VersionKind.MAJOR,
-        bg3.VersionKind.MINOR,
-        bg3.VersionKind.REVISION,
-        bg3.VersionKind.BUILD,
-    ];
-    const response = await vscode.window.showQuickPick(options.map(opt => ({
-        label: utils.capitalize(opt),
-        selection: opt
-    })), {
-        title: "Kind"
-    });
+    const response = await promptForVersion();
+    if (!response?.selection) { return; }; // Exit early if no response
 
-    // Exit early if no selection was made
-    if (!response?.selection) { return; };
-
-    // ! Warning: Hacky code ahead. Several points of failure. Needs a second pass of improvement.
-
-    // Find the `meta.lsx` file in the workspace
-    // TODO: Handle case where multiple meta.lsx files are found
-    const metaLsxPaths = await vscode.workspace.findFiles("**/meta.lsx", null, 1);
-
-    // Return if no `meta.lsx` was found
-    if (!metaLsxPaths?.length) {
-        return vscode.window.showErrorMessage("Could not find any `meta.lsx` files in this workspace");
-    }
-
-    // Get the first `meta.lsx` path
-    // ? Not sure if this is the best way to deal with the problem
-    const metaLsxPath = metaLsxPaths[0];
-
-    // Read the fist `meta.lsx` file
-    let fileBuffer = await vscode.workspace.fs.readFile(metaLsxPath);
-    let fileContents = Buffer.from(fileBuffer).toString('utf8');
-
-    // Perform regex match for the version attribute line in the file contents
-    const regexExecArray = bg3.Version.lsxRegex.exec(fileContents);
-    if (!regexExecArray?.length) { return; }    // Return early if no match was found
-
-    // Parse the bigint version from the regex capture
-    let bigIntVersion;
+    // Parse the `meta.lsx` file so we can get the current version number
+    let meta: bg3.MetaLsx;
     try {
-        bigIntVersion = BigInt(regexExecArray[1]);
+        meta = await bg3.metaLsx.load();
     } catch (e) {
-        const message = `Failed to parse version from the meta.lsx file (${metaLsxPath})`;
-        return vscode.window.showErrorMessage(message);
+        vscode.window.showErrorMessage("No `meta.lsx` file found in the workspace");
+        return;
     }
 
-    // Determine the updated version
+    // Get the current version number
+    let bigIntVersion: bigint;
+    try {
+        bigIntVersion = BigInt(meta.ModuleInfo.Version64);
+    } catch (e) {
+        vscode.window.showErrorMessage(`The \`meta.lsx\` file does not contain a valid version number (${meta.ModuleInfo.Version64})`);
+        return;
+    }
+
+    // Bump the version number
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
+    meta.updateModuleInfo("Version64", version.toInt64().toString());
 
-    // Replace file contents with the new version
-    fileContents = fileContents.replace(
-        bg3.Version.lsxRegex,
-        `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}"/>`
-    );
-    fileBuffer = Buffer.from(fileContents, 'utf8');
-
-    // Write the new file contents back to the `meta.lsx` file
-    vscode.workspace.fs.writeFile(metaLsxPath, fileBuffer);
+    // Update the version number in the `meta.lsx` file
+    try {
+        await bg3.metaLsx.save();
+    } catch (e) {
+        vscode.window.showErrorMessage(`Failed to save the updated version number (${version}) to the \`meta.lsx\` file`);
+        return;
+    }
 
     // Show an information message for the version bump
-    vscode.window.showInformationMessage(`Version bumped to ${version.toString()}`);
+    vscode.window.showInformationMessage(`Version bumped to ${version}`);
 
+}
+
+// HELPER FUNCTIONS
+// ----------------
+
+/** Prompt the user for the kind of version bump */
+async function promptForVersion() {
+    /** The set of version options */
+    const options: VersionKind[] = ["major", "minor", "revision", "build"];
+    /** The options to show to the user in the quick pick menu */
+    const quickPickOptions = options.map(opt => ({ label: utils.capitalize(opt), selection: opt }));
+    // Prompt the user to select the kind of version bump
+    return vscode.window.showQuickPick(quickPickOptions, {
+        title: "Kind",
+        placeHolder: "Select the kind of version bump"
+    });
 }

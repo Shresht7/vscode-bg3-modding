@@ -1,10 +1,5 @@
-/** Version Kind */
-export enum VersionKind {
-    MAJOR = "major",
-    MINOR = "minor",
-    REVISION = "revision",
-    BUILD = "build"
-}
+// Type Definitions
+import type { VersionKind } from "../../types";
 
 /** A class to represent the BG3 Version numbers */
 export class Version {
@@ -18,12 +13,7 @@ export class Version {
     /** Build Number */
     private build: number = 0;
 
-    /** Regular expression to match the version line in `meta.lsx` */
-    public static readonly lsxRegex = /<attribute\s+id="Version64"\s+type="int64"\s+value="(\d+)"\/>/;
-
     /** Parse the Version number */
-    constructor(x: bigint);
-    constructor(x: string);
     constructor(x: bigint | string) {
 
         // Use the string constructor ...
@@ -51,22 +41,22 @@ export class Version {
      */
     bump(kind: VersionKind): Version {
         switch (kind) {
-            case VersionKind.MAJOR:
+            case "major":
                 this.major++;
                 this.minor = 0;
                 this.revision = 0;
                 this.build = 0;
                 break;
-            case VersionKind.MINOR:
+            case "minor":
                 this.minor++;
                 this.revision = 0;
                 this.build = 0;
                 break;
-            case VersionKind.REVISION:
+            case "revision":
                 this.revision++;
                 this.build = 0;
                 break;
-            case VersionKind.BUILD:
+            case "build":
             default:
                 this.build++;
         }

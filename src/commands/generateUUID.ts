@@ -4,6 +4,10 @@ import { webcrypto } from "crypto";
 // Helpers
 import { editor } from "../helpers";
 
+// ---------------------
+// GENERATE UUID COMMAND
+// ---------------------
+
 /**
  * Generate a random v4 UUID
  * and inserts it at the active editor selection

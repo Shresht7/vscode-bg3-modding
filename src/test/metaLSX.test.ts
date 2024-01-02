@@ -1,9 +1,11 @@
 // Library
+import * as vscode from 'vscode';
+import * as path from 'node:path';
 import * as assert from 'node:assert';
-import { parseMetadata, MetaLSX, ModuleInfo } from '../library/bg3/getMetadata';
+import { MetaLSX, MetaLsx, ModuleInfo } from '../library/bg3';
 
 // Fixture - File contents of a `meta.lsx` file
-import contents from './fixtures/meta.lsx';
+// import contents from './fixtures/meta.lsx';
 
 /** The ModuleInfo we expect the {@link MetaLSX} parser to extract from the `meta.lsx` file */
 const expectedModuleInfo = {
@@ -44,8 +46,14 @@ const expectedDependenciesOrder = ['3d0c5ff8-c95d-c907-ff3e-34b204f1c630', '05f7
 
 suite("Parse `meta.lsx` metadata file", () => {
 
+    const relPath = path.join(__dirname, "..", "..", "src", "test", "fixtures", "meta.lsx");
+    const metaLsxPath = vscode.Uri.from({ scheme: "file", path: relPath });
     /** The parsed metadata from the `meta.lsx` file */
-    let meta: MetaLSX = parseMetadata(contents);
+    let meta = new MetaLsx(metaLsxPath);
+
+    setup(async () => {
+        await meta.load();
+    });
 
     // MODULE INFO
 

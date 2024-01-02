@@ -5,17 +5,38 @@ import { bg3 } from '../library';
 // Helpers
 import { editor } from '../helpers';
 
+// ------------------------------
+// CONVERT VERSION NUMBER COMMAND
+// ------------------------------
+
 /** Convert Int64 version number to string format or vice-versa */
 export async function convertVersionNumber() {
 
     // Prompt the user for the version number
-    const v = await vscode.window.showInputBox({
+    const v = await promptForVersion();
+    if (!v) { return; } // Exit early if no response
+
+    // Convert the version from one format to the other
+    const result = v.includes(".")
+        ? new bg3.Version(v).toInt64().toString()
+        : new bg3.Version(BigInt(v)).toString();
+
+    // Insert the version at the cursor selection
+    editor.insertAtSelection(result);
+
+}
+
+// HELPER FUNCTIONS
+// ----------------
+
+/** Prompt the user for the version number */
+async function promptForVersion() {
+    return vscode.window.showInputBox({
+
         title: "Version",
         prompt: "Version Number",
         placeHolder: 'Example: 1.0.0.0 or 36028797018963968',
-
-        // Pre-fill the value with the currently selected text
-        value: editor.getSelection(),
+        value: editor.getSelection(), // Pre-fill the value with the currently selected text
 
         // Perform validation on the input value
         validateInput: (value) => {
@@ -31,17 +52,6 @@ export async function convertVersionNumber() {
                 }
             }
         }
+
     });
-
-    // Return early if the input is empty
-    if (!v) { return; }
-
-    // Convert the version from one format to the other
-    const result = v.includes(".")
-        ? new bg3.Version(v).toInt64().toString()
-        : new bg3.Version(BigInt(v)).toString();
-
-    // Insert the version at the cursor selection
-    editor.insertAtSelection(result);
-
 }

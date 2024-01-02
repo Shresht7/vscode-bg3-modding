@@ -2,6 +2,9 @@
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
 
+// Initializers
+import { initialize } from './initializers';
+
 // Commands
 import { commands } from './commands';
 
@@ -16,6 +19,9 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	// Show Information Message when the extension is activated
 	vscode.window.showInformationMessage("BG3 Modding Extension Activated!");
+
+	// Initialize Localization Contributions
+	initialize.localization();
 
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(

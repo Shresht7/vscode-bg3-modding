@@ -1,7 +1,11 @@
-// -------------------------
-// META.LSX TYPE DEFINITIONS
-// -------------------------
+// Type Definitions
+import type { VersionKind } from "./version";
 
+// ---------------------------
+// META.LSX - TYPE DEFINITIONS
+// ---------------------------
+
+/** The shape of the `meta.lsx` file */
 export type Meta = {
     save: {
         version: Version,
@@ -13,10 +17,7 @@ export type Meta = {
 };
 
 export type Version = {
-    major: number,
-    minor: number,
-    revision: number,
-    build: number
+    [k in VersionKind]: number
 };
 
 type NodeRoot = {
