@@ -19,12 +19,14 @@ export async function activate(context: vscode.ExtensionContext) {
 	// Show Information Message when the extension is activated
 	vscode.window.showInformationMessage("BG3 Modding Extension Activated!");
 
+	// Initialize Commands
+	initialize.commands(context);
+
 	// Initialize Localization Contributions
 	initialize.localization();
 
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(
-		...commands,
 		...providers
 	);
 
