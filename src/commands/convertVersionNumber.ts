@@ -10,7 +10,7 @@ import { editor } from '../helpers';
 // ------------------------------
 
 /** Convert Int64 version number to string format or vice-versa */
-export async function convertVersionNumber(context?: vscode.ExtensionContext) {
+export async function convertVersionNumber() {
 
     // Prompt the user for the version number
     const v = await promptForVersion();

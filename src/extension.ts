@@ -1,22 +1,12 @@
 // Library
 // The module `vscode` contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import * as path from 'node:path';
-
-// Constants
-import constants from './constants';
 
 // Initializers
 import { initialize } from './initializers';
 
-// Commands
-import { registerCommands } from './commands';
-
 // Providers
 import { providers } from './providers';
-
-// Configuration
-import { LuaConfiguration } from './configs/Lua';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
