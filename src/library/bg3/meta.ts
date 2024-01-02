@@ -18,6 +18,9 @@ import type {
 
 export class MetaLsx {
 
+    /** The metadata as specified in the `meta.lsx` file */
+    private _meta: MetaDefinition = {} as MetaDefinition;
+
     /** The dependencies as specified in the `meta.lsx` file */
     Dependencies: Dependency[] = [];
 
@@ -64,8 +67,7 @@ export class MetaLsx {
     /** Parse the metadata from the given contents of the `meta.lsx` file */
     public async parse(): Promise<this> {
         if (!this.path) { this.path = await this.find(); }
-        const _meta = await xml.read<MetaDefinition>(this.path, {
-            ignoreDeclaration: true,    // ignore the ?xml declaration at the top
+        this._meta = await xml.read<MetaDefinition>(this.path, {
             ignoreAttributes: false,    // do not ignore attributes as they hold valuable information
             attributeNamePrefix: "",    // do not prefix attributes with any special characters
             parseAttributeValue: true,  // parse attribute values as strings, number and booleans
@@ -74,18 +76,42 @@ export class MetaLsx {
                 return jPath.endsWith('children.node') || jPath.endsWith('node.attribute');
             }
         });
-        this.Dependencies = this.parseDependencies(_meta);
-        this.ModuleInfo = this.parseModuleInfo(_meta);
+        this.Dependencies = this.parseDependencies();
+        this.ModuleInfo = this.parseModuleInfo();
         return this;
     }
 
+    /**
+     * Updates the module information in the `meta.lsx` file
+     * @param attribute The attribute to update
+     * @param value The value to set the attribute to
+     */
+    public updateModuleInfo<T extends ModuleInfoAttribute["id"]>(attribute: T, value: ModuleInfo[T]): void {
+        this.ModuleInfo[attribute] = value;
+        const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
+        moduleInfo.attribute.find(a => a.id === attribute)!.value = value;
+    }
+
+    /** Save the metadata to the `meta.lsx` file */
+    public async save(): Promise<void> {
+        if (!this.path) { this.path = await this.find(); }
+        await xml.write<MetaDefinition>(this.path, this._meta, {
+            ignoreAttributes: false,    // do not ignore attributes as they hold valuable information
+            attributeNamePrefix: "",    // do not prefix attributes with any special characters
+            format: true,
+            indentBy: "    ",
+            suppressEmptyNode: true,
+            suppressUnpairedNode: true,
+        });
+    }
+
     /** The dependencies as specified in the `meta.lsx` file */
-    private parseDependencies(meta: MetaDefinition) {
+    private parseDependencies() {
         /** An array to contain the dependencies */
         const dependencies: Dependency[] = [];
 
         // Iterate over the dependencies specified in the `meta.lsx` and push them to the dependencies array
-        const deps = meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
+        const deps = this._meta.save.region.node.children.node.find(n => n.id === 'Dependencies') as NodeDependencies;
         if (deps?.children?.node?.length) {
             for (const node of deps.children.node) {
                 // Convert the dependency attributes array to an object directly mapping the id to the value
@@ -98,8 +124,8 @@ export class MetaLsx {
     }
 
     /** The module information as specified in the `meta.lsx` file */
-    private parseModuleInfo(meta: MetaDefinition): ModuleInfo {
-        const moduleInfo = meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
+    private parseModuleInfo(): ModuleInfo {
+        const moduleInfo = this._meta.save.region.node.children.node.find(n => n.id === 'ModuleInfo') as NodeModuleInfo;
         const entries = moduleInfo.attribute.map(a => [a.id, a.value]);
         return Object.fromEntries(entries);
     }
