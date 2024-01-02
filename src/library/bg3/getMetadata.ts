@@ -1,8 +1,7 @@
 // Library
 import { XMLParser } from "fast-xml-parser";
+import { metaLsx } from "./meta";
 
-// Helpers
-import { fs } from '../../helpers';
 
 // Type Definitions
 import type {
@@ -20,7 +19,7 @@ import type {
 /** Get metadata from the `meta.lsx` file */
 export async function getMetadata(): Promise<MetaLSX> {
     // Get `meta.lsx` contents
-    const contents = await fs.getMetaLsxContents();
+    const contents = await metaLsx.getContents();
     // Parse and return the metadata
     return parseMetadata(contents);
 }

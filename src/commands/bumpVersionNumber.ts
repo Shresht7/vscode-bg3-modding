@@ -1,11 +1,14 @@
 // Library
 import * as vscode from 'vscode';
 import { bg3 } from '../library';
-import { utils, fs } from '../helpers';
-import { VersionHoverProvider } from '../providers/hover';
+import { utils } from '../helpers';
 
 // Type Definitions
 import type { VersionKind } from '../types';
+
+// ---------------------------
+// BUMP VERSION NUMBER COMMAND
+// ---------------------------
 
 /** Convert Int64 version number to string format or vice-versa */
 export async function bumpVersionNumber() {
@@ -16,46 +19,40 @@ export async function bumpVersionNumber() {
     }
 
     // Prompt the user for the kind of version bump
-    const options: VersionKind[] = [
-        "major",
-        "minor",
-        "revision",
-        "build",
-    ];
-    const response = await vscode.window.showQuickPick(options.map(opt => ({
-        label: utils.capitalize(opt),
-        selection: opt
-    })), {
-        title: "Kind"
-    });
+    const response = await promptForVersion();
+    if (!response?.selection) { return; }; // Exit early if no response
 
-    // Exit early if no selection was made
-    if (!response?.selection) { return; };
+    // Get the current version number
+    const contents = await bg3.metaLsx.getContents();
+    const capture = bg3.metaLsx.versionRegex.exec(contents);
+    if (!capture) { return; }
+    const bigIntVersion = BigInt(capture[1]);
 
-    // ! Warning: Hacky code ahead. Several points of failure. Needs a second pass of improvement.
-
-    const metaLsxPath = (await fs.findMetaLsxUris())[0];
-    const fileContents = await fs.getMetaLsxContents();
-
-    // Perform regex match for the version attribute line in the file contents
-    const capture = VersionHoverProvider.execRegex(fileContents);
-    if (!capture?.length) { return; }    // Return early if no match was found
-    const bigIntVersion = BigInt(capture);
-
-    // Determine the updated version
+    // Bump the version number
     const version = new bg3.Version(bigIntVersion).bump(response.selection);
 
-    // Replace file contents with the new version
-    const newFileContents = fileContents.replace(
-        VersionHoverProvider.versionRegex,
-        `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}"/>`
+    // Update the version number in the `meta.lsx` file
+    const newContents = contents.replace(
+        capture[0],
+        `<attribute id="Version64" type="int64" value="${version.toInt64().toString()}" />`
     );
-    const fileBuffer = Buffer.from(newFileContents, 'utf8');
-
-    // Write the new file contents back to the `meta.lsx` file
-    vscode.workspace.fs.writeFile(metaLsxPath, fileBuffer);
+    await bg3.metaLsx.setContents(newContents);
 
     // Show an information message for the version bump
     vscode.window.showInformationMessage(`Version bumped to ${version.toString()}`);
 
+}
+
+/** Prompt the user for the kind of version bump */
+async function promptForVersion() {
+    // Prompt the user for the kind of version bump
+    const options: VersionKind[] = ["major", "minor", "revision", "build"];
+    const response = await vscode.window.showQuickPick(options.map(opt => ({
+        label: utils.capitalize(opt),
+        selection: opt
+    })), {
+        title: "Kind",
+        placeHolder: "Select the kind of version bump"
+    });
+    return response;
 }
