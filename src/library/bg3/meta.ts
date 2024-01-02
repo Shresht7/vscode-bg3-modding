@@ -34,7 +34,9 @@ export class MetaLsx {
      * @returns The Uri of the `meta.lsx` file
      */
     public async find(): Promise<vscode.Uri> {
-        this.path = await fs.findMetaLsx();
+        const paths = await vscode.workspace.findFiles("**/meta.lsx");
+        if (!paths?.length) { throw new Error("Failed to find the `meta.lsx` file"); }
+        this.path = paths[0];
         return this.path;
     }
 
