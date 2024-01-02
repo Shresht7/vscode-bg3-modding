@@ -32,18 +32,21 @@ export async function initializeLuaConfiguration() {
 async function promptForConfigurationScope(): Promise<vscode.ConfigurationTarget | undefined> {
     // Prompt the user to select the scope of the configuration
     const response = await vscode.window.showQuickPick([
-        { label: "User", description: "User settings" },
         { label: "Workspace", description: "Workspace settings" },
-        { label: "Workspace Folder", description: "Workspace folder settings" },
-    ], { placeHolder: "Select the scope of the configuration" });
+        // { label: "Workspace Folder", description: "Workspace folder settings" },
+        { label: "User", description: "User settings" },
+    ], {
+        title: "Lua Configuration",
+        placeHolder: "Select the scope of the configuration",
+    });
 
     // Return if the user canceled the prompt
     if (!response) { return; }
 
     // Return the configuration target
     switch (response.label) {
-        case "User": return vscode.ConfigurationTarget.Global;
         case "Workspace": return vscode.ConfigurationTarget.Workspace;
-        case "Workspace Folder": return vscode.ConfigurationTarget.WorkspaceFolder;
+        case "User": return vscode.ConfigurationTarget.Global;
+        // case "Workspace Folder": return vscode.ConfigurationTarget.WorkspaceFolder;
     }
 }
