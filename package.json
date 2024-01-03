@@ -70,6 +70,10 @@
         {
           "pattern": "**/Localization/**/*.xml",
           "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/localization.xml.schema.xsd"
+        },
+        {
+          "pattern": "modsettings.lsx",
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/modsettings.lsx.schema.xsd"
         }
       ],
       "files.associations": {
