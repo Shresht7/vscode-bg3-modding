@@ -1,0 +1,48 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- contentList -->
+  <xs:element name="contentList">
+    <xs:complexType>
+      <xs:sequence>
+
+        <!-- content -->
+        <xs:element name="content" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+
+                <!-- attr: contentuid -->
+                <xs:attribute name="contentuid" use="required">
+                  <xs:simpleType>
+
+                    <xs:annotation>
+                      <xs:documentation>
+                        **Localization Handle** - a unique identifier for the content in the localization system.
+                        Localization handles are essentially UUIDs (Universally Unique Identifiers) with a slightly different format.
+                        They start with the letter `h` and have the `-` replaced with the letter `g`.
+                      </xs:documentation>
+                      <xs:documentation>
+                        _@example_: `h548effdeg9fbdg4d4ega35ag690fadd6a7fc`
+                      </xs:documentation>
+                    </xs:annotation>
+
+                    <xs:restriction base="xs:string">
+                      <xs:pattern value="h[\da-fA-F]{8}g[\da-fA-F]{4}g[\da-fA-F]{4}g[\da-fA-F]{4}g[\da-fA-F]{12}"></xs:pattern>
+                    </xs:restriction>
+
+                  </xs:simpleType>
+                </xs:attribute>
+
+                <!-- attr: version -->
+                <xs:attribute name="version" type="xs:positiveInteger" use="required"/>
+
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
