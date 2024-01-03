@@ -36,7 +36,7 @@
                               <xs:sequence>
 
                                 <!-- <children> -->
-                                <xs:element name="children">
+                                <xs:element name="children" minOccurs="0">
                                   <xs:complexType>
                                     <xs:sequence>
 
@@ -74,7 +74,7 @@
                               <xs:sequence>
 
                                 <!-- <children> -->
-                                <xs:element name="children">
+                                <xs:element name="children" minOccurs="0">
                                   <xs:complexType>
                                     <xs:sequence>
 
