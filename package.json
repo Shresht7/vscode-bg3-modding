@@ -62,6 +62,10 @@
       }
     ],
     "configurationDefaults": {
+      "files.associations": {
+        "*.lsx": "xml",
+        "*.lsj": "json"
+      },
       "xml.fileAssociations": [
         {
           "pattern": "**/meta.lsx",
@@ -76,10 +80,6 @@
           "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/modsettings.lsx.schema.xsd"
         }
       ],
-      "files.associations": {
-        "*.lsx": "xml",
-        "*.lsj": "json"
-      },
       "search.exclude": {
         "**/*.raw": true,
         "**/Story/*.div": true,
