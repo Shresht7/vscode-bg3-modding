@@ -1,4 +1,5 @@
 // Library
+import { initializeDiagnostics } from './diagnostics';
 import { initializeLocalization } from './localization';
 
 // ============
@@ -6,5 +7,6 @@ import { initializeLocalization } from './localization';
 // ============
 
 export const initialize = {
+    diagnostics: initializeDiagnostics,
     localization: initializeLocalization
 };
