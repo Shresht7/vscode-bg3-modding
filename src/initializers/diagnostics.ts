@@ -7,20 +7,20 @@ import * as vscode from 'vscode';
 
 /** Initializes the diagnostics contributions provided by the extension */
 export function initializeDiagnostics(context: vscode.ExtensionContext) {
-    return new Diagnostics("BG3XML", context);
+    return new ModSettingsLsxDiagnostics(context);
 }
 
 // XML DIAGNOSTICS
 // ---------------
 
-class Diagnostics {
+abstract class Diagnostics {
 
     /** The diagnostics collection */
     private diagnostics: vscode.DiagnosticCollection;
 
     constructor(
         /** The name of the diagnostics collection */
-        private name: string,
+        protected name: string,
         context: vscode.ExtensionContext,
     ) {
         this.diagnostics = vscode.languages.createDiagnosticCollection(this.name);
@@ -51,7 +51,7 @@ class Diagnostics {
      * Update the diagnostics for the given document
      * @param document The document to update diagnostics for
      */
-    updateDiagnostics(document: vscode.TextDocument) {
+    private updateDiagnostics(document: vscode.TextDocument) {
         if (document && this.allowDiagnostics(document)) {
             const diagnostics: vscode.Diagnostic[] = [];
 
@@ -65,11 +65,11 @@ class Diagnostics {
     }
 
     /**
-     * Determine whether diagnostics should be allowed for the given document
+     * Whether or not diagnostics should be created for the given document
      * @param document The document to check
-     * @returns Whether diagnostics should be allowed for the given document
+     * @returns Whether or not diagnostics should be created for the given document
      */
-    private allowDiagnostics(document: vscode.TextDocument): boolean {
+    protected allowDiagnostics(document: vscode.TextDocument): boolean {
         return true;
     }
 
@@ -78,14 +78,25 @@ class Diagnostics {
      * @param document The document to create diagnostics for
      * @returns The diagnostics for the given document
      */
-    private createProblems(document: vscode.TextDocument): vscode.Diagnostic[] {
-        return [{
-            code: '',
-            message: 'This is a test',
-            range: new vscode.Range(0, 0, 0, 0),
-            severity: vscode.DiagnosticSeverity.Error,
-            source: this.name
-        }];
+    protected createProblems(document: vscode.TextDocument): vscode.Diagnostic[] {
+        return [];
+    }
+
+}
+
+class ModSettingsLsxDiagnostics extends Diagnostics {
+
+    constructor(context: vscode.ExtensionContext) {
+        super("BG3XML", context);
+    }
+
+    override allowDiagnostics(document: vscode.TextDocument): boolean {
+        return document.languageId === "xml" && document.fileName.endsWith("modsettings.lsx");
+    }
+
+    override createProblems(document: vscode.TextDocument): vscode.Diagnostic[] {
+        const problems: vscode.Diagnostic[] = [];
+        return problems;
     }
 
 }
