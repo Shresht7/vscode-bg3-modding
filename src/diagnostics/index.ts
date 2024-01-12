@@ -1,0 +1,5 @@
+// -----------
+// DIAGNOSTICS
+// -----------
+
+export * from './LocalizationXMLDiagnostics';
