@@ -65,18 +65,14 @@ export abstract class Diagnostics {
      * @param document The document to check
      * @returns Whether or not diagnostics should be created for the given document
      */
-    protected allowDiagnostics(document: vscode.TextDocument): boolean {
-        return true;
-    }
+    protected abstract allowDiagnostics(document: vscode.TextDocument): boolean;
 
     /**
      * Create the diagnostics for the given document
      * @param document The document to create diagnostics for
      * @returns The diagnostics for the given document
      */
-    protected createProblems(document: vscode.TextDocument): vscode.Diagnostic[] {
-        return [];
-    }
+    protected abstract createProblems(document: vscode.TextDocument): vscode.Diagnostic[];
 
     /**
  * Determine the line of the document that the property corresponds to
