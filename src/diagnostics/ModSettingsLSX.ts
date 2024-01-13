@@ -4,8 +4,8 @@ import { XMLDiagnostics } from "./_base";
 import { XMLParser } from 'fast-xml-parser';
 import { Validator } from "jsonschema";
 
-// Constants
-import * as constants from '../constants';
+// Helpers
+import { xml } from "../helpers";
 
 // Schemas
 import { modsettingsLSXSchema } from '../library/bg3/schema';
@@ -30,14 +30,14 @@ export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
         const problems: vscode.Diagnostic[] = [];
 
         const text = document.getText();
-        const xml = new XMLParser({
+        const parsedXML = new XMLParser({
             ignoreAttributes: false,
             attributeNamePrefix: "",
-            attributesGroupName: constants.INTERNAL.attributesGroupName,
+            attributesGroupName: xml.attributesGroupName,
             parseAttributeValue: true,
         }).parse(text);
 
-        const results = new Validator().validate(xml, modsettingsLSXSchema);
+        const results = new Validator().validate(parsedXML, modsettingsLSXSchema);
 
         if (!results.valid) {
             results.errors.forEach(error => {

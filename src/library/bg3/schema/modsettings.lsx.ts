@@ -1,6 +1,5 @@
-// Constants
-import { INTERNAL } from "../../../constants";
-const attributesGroupName = INTERNAL.attributesGroupName;
+// Helpers
+import { attributesGroupName } from "../../../helpers/xml";
 
 // Type Definitions
 import type { Schema } from "jsonschema";

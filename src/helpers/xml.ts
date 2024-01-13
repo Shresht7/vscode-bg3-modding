@@ -9,6 +9,9 @@ import { XMLBuilder, XMLParser, X2jOptions, XmlBuilderOptions } from "fast-xml-p
 // DEFAULT OPTIONS
 // ---------------
 
+/** The key name of the attributes group to be used with the XML parser */
+export const attributesGroupName = "_@_";
+
 /** Default options for the XML parser */
 const defaultParserOptions: Partial<X2jOptions> = {
     ignoreAttributes: false,
