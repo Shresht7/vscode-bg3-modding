@@ -1,5 +1,6 @@
 // Constants
-import { attributeGroupName } from "./_constants";
+import { INTERNAL } from "../../../constants";
+const attributesGroupName = INTERNAL.attributesGroupName;
 
 // Type Definitions
 import type { Schema } from "jsonschema";
@@ -12,7 +13,7 @@ export const localizationXMLSchema: Schema = {
         "?xml": {
             type: "object",
             properties: {
-                [attributeGroupName]: {
+                [attributesGroupName]: {
                     type: "object",
                     required: ["version", "encoding"],
                     properties: {
@@ -31,7 +32,7 @@ export const localizationXMLSchema: Schema = {
                     items: {
                         type: "object",
                         properties: {
-                            [attributeGroupName]: {
+                            [attributesGroupName]: {
                                 type: "object",
                                 required: ["contentuid", "version"],
                                 properties: {

@@ -1,5 +1,6 @@
 // Constants
-import { attributeGroupName } from "./_constants";
+import { INTERNAL } from "../../../constants";
+const attributesGroupName = INTERNAL.attributesGroupName;
 
 // Type Definitions
 import type { Schema } from "jsonschema";
@@ -7,7 +8,7 @@ import type { Schema } from "jsonschema";
 const xmlDeclarationSchema: Schema = {
     type: "object",
     properties: {
-        [attributeGroupName]: {
+        [attributesGroupName]: {
             type: "object",
             required: ["version", "encoding"],
             properties: {
@@ -20,9 +21,9 @@ const xmlDeclarationSchema: Schema = {
 
 const versionSchema: Schema = {
     type: "object",
-    required: [attributeGroupName],
+    required: [attributesGroupName],
     properties: {
-        [attributeGroupName]: {
+        [attributesGroupName]: {
             type: "object",
             required: ["major", "minor", "revision", "build"],
             properties: {
@@ -37,9 +38,9 @@ const versionSchema: Schema = {
 
 const ModOrderSchema: Schema = {
     type: "object",
-    required: [attributeGroupName, "children"],
+    required: [attributesGroupName, "children"],
     properties: {
-        [attributeGroupName]: {
+        [attributesGroupName]: {
             type: "object",
             required: ["id"],
             properties: {
@@ -54,9 +55,9 @@ const ModOrderSchema: Schema = {
                     type: "array",
                     items: {
                         type: "object",
-                        required: [attributeGroupName, "attribute"],
+                        required: [attributesGroupName, "attribute"],
                         properties: {
-                            [attributeGroupName]: {
+                            [attributesGroupName]: {
                                 type: "object",
                                 required: ["id"],
                                 properties: {
@@ -65,9 +66,9 @@ const ModOrderSchema: Schema = {
                             },
                             attribute: {
                                 type: "object",
-                                required: [attributeGroupName],
+                                required: [attributesGroupName],
                                 properties: {
-                                    [attributeGroupName]: {
+                                    [attributesGroupName]: {
                                         type: "object",
                                         required: ["id", "value", "type"],
                                         properties: {
@@ -88,9 +89,9 @@ const ModOrderSchema: Schema = {
 
 const ModsSchema: Schema = {
     type: "object",
-    required: [attributeGroupName, "children"],
+    required: [attributesGroupName, "children"],
     properties: {
-        [attributeGroupName]: {
+        [attributesGroupName]: {
             type: "object",
             required: ["id"],
             properties: {
@@ -105,9 +106,9 @@ const ModsSchema: Schema = {
                     type: "array",
                     items: {
                         type: "object",
-                        required: [attributeGroupName, "attribute"],
+                        required: [attributesGroupName, "attribute"],
                         properties: {
-                            [attributeGroupName]: {
+                            [attributesGroupName]: {
                                 type: "object",
                                 required: ["id"],
                                 properties: {
@@ -120,9 +121,9 @@ const ModsSchema: Schema = {
                                     anyOf: [
                                         {
                                             type: "object",
-                                            required: [attributeGroupName],
+                                            required: [attributesGroupName],
                                             properties: {
-                                                [attributeGroupName]: {
+                                                [attributesGroupName]: {
                                                     type: "object",
                                                     required: ["id", "value", "type"],
                                                     properties: {
@@ -135,9 +136,9 @@ const ModsSchema: Schema = {
                                         },
                                         {
                                             type: "object",
-                                            required: [attributeGroupName],
+                                            required: [attributesGroupName],
                                             properties: {
-                                                [attributeGroupName]: {
+                                                [attributesGroupName]: {
                                                     type: "object",
                                                     required: ["id", "value", "type"],
                                                     properties: {
@@ -150,9 +151,9 @@ const ModsSchema: Schema = {
                                         },
                                         {
                                             type: "object",
-                                            required: [attributeGroupName],
+                                            required: [attributesGroupName],
                                             properties: {
-                                                [attributeGroupName]: {
+                                                [attributesGroupName]: {
                                                     type: "object",
                                                     required: ["id", "value", "type"],
                                                     properties: {
@@ -187,9 +188,9 @@ export const modsettingsLSXSchema: Schema = {
                 version: versionSchema,
                 region: {
                     type: "object",
-                    required: [attributeGroupName, "node"],
+                    required: [attributesGroupName, "node"],
                     properties: {
-                        [attributeGroupName]: {
+                        [attributesGroupName]: {
                             type: "object",
                             required: ["id"],
                             properties: {
@@ -198,9 +199,9 @@ export const modsettingsLSXSchema: Schema = {
                         },
                         node: {
                             type: "object",
-                            required: [attributeGroupName, "children"],
+                            required: [attributesGroupName, "children"],
                             properties: {
-                                [attributeGroupName]: {
+                                [attributesGroupName]: {
                                     type: "object",
                                     required: ["id"],
                                     properties: {
