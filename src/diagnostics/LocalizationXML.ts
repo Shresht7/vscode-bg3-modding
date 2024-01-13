@@ -1,7 +1,8 @@
 // Library
 import * as vscode from "vscode";
-import { Diagnostics } from "./_base";
+import { XMLDiagnostics } from "./_base";
 import { XMLParser } from 'fast-xml-parser';
+import { Validator } from "jsonschema";
 
 // Schemas
 import { localizationXMLSchema } from '../library/bg3/schema';
@@ -10,7 +11,7 @@ import { localizationXMLSchema } from '../library/bg3/schema';
 // LOCALIZATION XML DIAGNOSTICS
 // ----------------------------
 
-export class LocalizationXMLDiagnostics extends Diagnostics {
+export class LocalizationXMLDiagnostics extends XMLDiagnostics {
 
     constructor(context: vscode.ExtensionContext) {
         super("BG3XML", context);
@@ -34,7 +35,7 @@ export class LocalizationXMLDiagnostics extends Diagnostics {
             isArray: (tagName) => tagName === "content",
         }).parse(text);
 
-        const results = this.jsonValidator.validate(xml, localizationXMLSchema);
+        const results = new Validator().validate(xml, localizationXMLSchema);
 
         if (!results.valid) {
             results.errors.forEach(error => {

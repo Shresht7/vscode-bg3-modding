@@ -1,6 +1,6 @@
 // Library
 import * as vscode from 'vscode';
-import { Validator } from 'jsonschema';
+import { XMLValidator } from 'fast-xml-parser';
 
 // -----------
 // DIAGNOSTICS
@@ -9,10 +9,7 @@ import { Validator } from 'jsonschema';
 export abstract class Diagnostics {
 
     /** The diagnostics collection */
-    private diagnostics: vscode.DiagnosticCollection;
-
-    /** The JSON validator */
-    protected jsonValidator = new Validator();
+    protected diagnostics: vscode.DiagnosticCollection;
 
     constructor(
         /** The name of the diagnostics collection */
@@ -47,7 +44,7 @@ export abstract class Diagnostics {
      * Update the diagnostics for the given document
      * @param document The document to update diagnostics for
      */
-    private updateDiagnostics(document: vscode.TextDocument) {
+    protected updateDiagnostics(document: vscode.TextDocument) {
         if (document && this.allowDiagnostics(document)) {
             const diagnostics: vscode.Diagnostic[] = [];
 
@@ -121,6 +118,61 @@ export abstract class Diagnostics {
 
         // Return the line
         return line;
+    }
+
+}
+
+// ---------------
+// XML DIAGNOSTICS
+// ---------------
+
+export abstract class XMLDiagnostics extends Diagnostics {
+
+    constructor(
+        /** The name of the diagnostics collection */
+        protected name: string,
+        context: vscode.ExtensionContext,
+    ) {
+        super(name, context);
+    }
+
+    /**
+     * Create the diagnostics for the given document using the XML Validator
+     * @param document The document to create diagnostics for
+     * @returns The diagnostics for the given document
+     */
+    private validateXML(document: vscode.TextDocument): vscode.Diagnostic | undefined {
+        const response = XMLValidator.validate(document.getText());
+        if (response !== true) {
+            const { code, col, line, msg } = response.err;
+            const range = new vscode.Range(line - 1, col, line - 1, Number.MAX_VALUE);
+            const diagnostic: vscode.Diagnostic = {
+                code,
+                message: msg,
+                range,
+                severity: vscode.DiagnosticSeverity.Error,
+                source: this.name,
+            };
+            return diagnostic;
+        }
+    }
+
+    protected override updateDiagnostics(document: vscode.TextDocument) {
+        if (document && this.allowDiagnostics(document)) {
+            const diagnostics: vscode.Diagnostic[] = [];
+
+            const xmlValidationProblem = this.validateXML(document);
+            if (xmlValidationProblem) {
+                diagnostics.push(xmlValidationProblem);
+            }
+
+            const problems = this.createProblems(document);
+            diagnostics.push(...problems);
+
+            this.diagnostics.set(document.uri, diagnostics);
+        } else {
+            this.diagnostics.clear();
+        }
     }
 
 }
