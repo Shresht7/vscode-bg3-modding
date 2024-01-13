@@ -97,7 +97,80 @@ const ModsSchema: Schema = {
                 id: { type: "string", const: "Mods" },
             }
         },
-        children: {}
+        children: {
+            type: "object",
+            required: ["node"],
+            properties: {
+                node: {
+                    type: "array",
+                    items: {
+                        type: "object",
+                        required: [attributeGroupName, "attribute"],
+                        properties: {
+                            [attributeGroupName]: {
+                                type: "object",
+                                required: ["id"],
+                                properties: {
+                                    id: { type: "string", const: "ModuleShortDesc" },
+                                }
+                            },
+                            attribute: {
+                                type: "array",
+                                items: {
+                                    anyOf: [
+                                        {
+                                            type: "object",
+                                            required: [attributeGroupName],
+                                            properties: {
+                                                [attributeGroupName]: {
+                                                    type: "object",
+                                                    required: ["id", "value", "type"],
+                                                    properties: {
+                                                        id: { type: "string", enum: ["Folder", "MD5", "Name"] },
+                                                        value: { type: "string" },
+                                                        type: { type: "string", const: "LSString" },
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            type: "object",
+                                            required: [attributeGroupName],
+                                            properties: {
+                                                [attributeGroupName]: {
+                                                    type: "object",
+                                                    required: ["id", "value", "type"],
+                                                    properties: {
+                                                        id: { type: "string", const: "UUID" },
+                                                        value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" },
+                                                        type: { type: "string", const: "FixedString" },
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            type: "object",
+                                            required: [attributeGroupName],
+                                            properties: {
+                                                [attributeGroupName]: {
+                                                    type: "object",
+                                                    required: ["id", "value", "type"],
+                                                    properties: {
+                                                        id: { type: "string", const: "Version64" },
+                                                        value: { type: "string" },
+                                                        type: { type: "string", const: "int64" },
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 };
 
