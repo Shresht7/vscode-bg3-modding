@@ -2,5 +2,5 @@
 // DIAGNOSTICS
 // -----------
 
-export * from './LocalizationXMLDiagnostics';
+export * from './LocalizationXML';
 export * from './ModSettingsLSX';
