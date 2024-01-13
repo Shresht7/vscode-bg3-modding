@@ -31,7 +31,6 @@ export class ModSettingsLSXDiagnostics extends Diagnostics {
             attributeNamePrefix: "",
             attributesGroupName: "_@_",
             parseAttributeValue: true,
-            isArray: (tagName) => tagName === "children",
         }).parse(text);
 
         const results = this.jsonValidator.validate(xml, modsettingsLSXSchema);
