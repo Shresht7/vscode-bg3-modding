@@ -1,7 +1,8 @@
 // Library
 import * as vscode from "vscode";
-import { Diagnostics } from "./_base";
+import { XMLDiagnostics } from "./_base";
 import { XMLParser } from 'fast-xml-parser';
+import { Validator } from "jsonschema";
 
 // Schemas
 import { modsettingsLSXSchema } from '../library/bg3/schema';
@@ -10,7 +11,7 @@ import { modsettingsLSXSchema } from '../library/bg3/schema';
 // MOD-SETTINGS LSX DIAGNOSTICS
 // ----------------------------
 
-export class ModSettingsLSXDiagnostics extends Diagnostics {
+export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
 
     constructor(context: vscode.ExtensionContext) {
         super("BG3XML", context);
@@ -33,7 +34,7 @@ export class ModSettingsLSXDiagnostics extends Diagnostics {
             parseAttributeValue: true,
         }).parse(text);
 
-        const results = this.jsonValidator.validate(xml, modsettingsLSXSchema);
+        const results = new Validator().validate(xml, modsettingsLSXSchema);
 
         if (!results.valid) {
             results.errors.forEach(error => {
