@@ -2,5 +2,5 @@
 // SCHEMAS
 // -------
 
-export * from './localization.schema';
+export * from './localization.xml';
 export * from './modsettings.lsx';
