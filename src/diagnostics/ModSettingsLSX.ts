@@ -1,6 +1,6 @@
 // Library
 import * as vscode from "vscode";
-import { XMLDiagnostics } from "./_base";
+import { XMLDiagnostics } from "./base";
 import { XMLParser } from 'fast-xml-parser';
 import { Validator } from "jsonschema";
 
