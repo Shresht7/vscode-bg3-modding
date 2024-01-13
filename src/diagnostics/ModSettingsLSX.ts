@@ -47,13 +47,13 @@ export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
                     Number.MAX_VALUE
                 );
 
-                const message = error.message;
-
-                const problem = new vscode.Diagnostic(
+                const problem: vscode.Diagnostic = {
                     range,
-                    message,
-                    vscode.DiagnosticSeverity.Error
-                );
+                    message: error.message,
+                    severity: vscode.DiagnosticSeverity.Error,
+                    source: this.name,
+                };
+
                 problems.push(problem);
             });
         }
