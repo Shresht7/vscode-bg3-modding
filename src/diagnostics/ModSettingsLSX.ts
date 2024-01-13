@@ -4,6 +4,9 @@ import { XMLDiagnostics } from "./_base";
 import { XMLParser } from 'fast-xml-parser';
 import { Validator } from "jsonschema";
 
+// Constants
+import * as constants from '../constants';
+
 // Schemas
 import { modsettingsLSXSchema } from '../library/bg3/schema';
 
@@ -30,7 +33,7 @@ export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
         const xml = new XMLParser({
             ignoreAttributes: false,
             attributeNamePrefix: "",
-            attributesGroupName: "_@_",
+            attributesGroupName: constants.INTERNAL.attributesGroupName,
             parseAttributeValue: true,
         }).parse(text);
 

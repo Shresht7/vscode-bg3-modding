@@ -2,6 +2,9 @@
 import * as vscode from 'vscode';
 import { XMLValidator } from 'fast-xml-parser';
 
+// Constants
+import * as constants from '../constants';
+
 // -----------
 // DIAGNOSTICS
 // -----------
@@ -85,8 +88,8 @@ export abstract class Diagnostics {
         /** The current part of the property path */
         let part = path.shift();
         for (let i = 0; i < document.lineCount; i++) {
-            // If the part is undefined or "_@_", then we break out of the loop and return the latest line
-            if (part === undefined || part === "_@_") { break; }
+            // If the part is `undefined` or the `attributesGroupName`, then we break out of the loop and return the latest line
+            if (part === undefined || part === constants.INTERNAL.attributesGroupName) { break; }
 
             /** The text corresponding to the current line */
             const text = document.lineAt(i).text;
