@@ -136,7 +136,8 @@ export abstract class XMLDiagnostics extends Diagnostics {
      * @param document The document to create diagnostics for
      * @returns The diagnostics for the given document
      */
-    private validateXML(document: vscode.TextDocument): vscode.Diagnostic | undefined {
+    private validateXML(document: vscode.TextDocument): vscode.Diagnostic[] {
+        const diagnostics: vscode.Diagnostic[] = [];
         const response = XMLValidator.validate(document.getText());
         if (response !== true) {
             const { code, col, line, msg } = response.err;
@@ -148,8 +149,9 @@ export abstract class XMLDiagnostics extends Diagnostics {
                 severity: vscode.DiagnosticSeverity.Error,
                 source: this.name,
             };
-            return diagnostic;
+            diagnostics.push(diagnostic);
         }
+        return diagnostics;
     }
 
     protected override updateDiagnostics(document: vscode.TextDocument) {
@@ -157,9 +159,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
             const diagnostics: vscode.Diagnostic[] = [];
 
             const xmlValidationProblem = this.validateXML(document);
-            if (xmlValidationProblem) {
-                diagnostics.push(xmlValidationProblem);
-            }
+            diagnostics.push(...xmlValidationProblem);
 
             const problems = this.createProblems(document);
             diagnostics.push(...problems);
