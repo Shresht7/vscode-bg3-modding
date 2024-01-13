@@ -39,7 +39,7 @@ export class LocalizationXMLDiagnostics extends XMLDiagnostics {
 
         if (!results.valid) {
             results.errors.forEach(error => {
-                const line = this.determineLineFromProperty(document, error.property);
+                const line = this.determineLineFromPath(document, error.path);
 
                 const range = new vscode.Range(
                     line,
