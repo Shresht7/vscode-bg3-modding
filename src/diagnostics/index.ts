@@ -3,3 +3,4 @@
 // -----------
 
 export * from './LocalizationXMLDiagnostics';
+export * from './ModSettingsLSX';
