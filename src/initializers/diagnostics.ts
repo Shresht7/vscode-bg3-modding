@@ -1,6 +1,6 @@
 // Library
 import * as vscode from 'vscode';
-import { LocalizationXMLDiagnostics } from '../diagnostics';
+import { LocalizationXMLDiagnostics, ModSettingsLSXDiagnostics } from '../diagnostics';
 
 // -----------
 // DIAGNOSTICS
@@ -8,5 +8,6 @@ import { LocalizationXMLDiagnostics } from '../diagnostics';
 
 /** Initializes the diagnostics contributions provided by the extension */
 export function initializeDiagnostics(context: vscode.ExtensionContext) {
-    return new LocalizationXMLDiagnostics(context);
+    new LocalizationXMLDiagnostics(context);
+    new ModSettingsLSXDiagnostics(context);
 }
