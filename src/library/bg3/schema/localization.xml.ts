@@ -41,6 +41,7 @@ export const localizationXMLSchema: Schema = {
                                     },
                                     version: {
                                         type: "number",
+                                        minimum: 0,
                                     },
                                     "#text": {
                                         type: "string",
