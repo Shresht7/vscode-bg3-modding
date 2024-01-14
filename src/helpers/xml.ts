@@ -24,6 +24,9 @@ const defaultBuilderOptions: Partial<XmlBuilderOptions> = {
     attributeNamePrefix: "",
 };
 
+// FILE-SYSTEM OPERATIONS
+// ----------------------
+
 /**
  * Reads the xml file at the given path and parses it as an object
  * @param path The path (vscode.Uri) of the xml file to read
@@ -54,6 +57,9 @@ export async function write<T extends Record<string, any>>(
     const buf = Buffer.from(contents, 'utf8');
     return vscode.workspace.fs.writeFile(path, buf);
 }
+
+// DETERMINE POSITION FROM PATH
+// ----------------------------
 
 /**
  * Determines the line number, column-start and column-end numbers of the {@linkcode path} in the {@linkcode document}

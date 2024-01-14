@@ -100,10 +100,8 @@ export abstract class XMLDiagnostics extends Diagnostics {
         if (!results.valid) {
             results.errors.forEach(error => {
 
-                // Determine the line of the error from the path
+                // Determine the range for the error
                 const { line, colStart, colEnd } = xml.determinePositionFromPath(text.split(/\r?\n/), error.path);
-
-                // Create a range for the error
                 const range = new vscode.Range(
                     line,
                     colStart ?? document.lineAt(line).firstNonWhitespaceCharacterIndex,
