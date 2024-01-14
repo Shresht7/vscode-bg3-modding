@@ -52,14 +52,14 @@ export abstract class Diagnostics {
     /**
      * Updates the {@link diagnostics} for the given {@link vscode.TextDocument | text document}
      * 
-     * If diagnostics for the given {@link vscode.TextDocument | text document} are {@link allowDiagnostics | allowed},
+     * If diagnostics for the given {@link vscode.TextDocument | text document} are {@link shouldAllowDiagnostics | allowed},
      * then {@link diagnostics | diagnostics collection} is updated with the {@link createProblems | problems}. Otherwise,
      * the {@link diagnostics | diagnostics collection} is cleared. 
      * 
      * @param document The {@link vscode.TextDocument | text document} to update diagnostics for. (see {@linkcode vscode.TextDocument})
      */
     protected updateDiagnostics(document: vscode.TextDocument) {
-        if (document && this.allowDiagnostics(document)) {
+        if (document && this.shouldAllowDiagnostics(document)) {
             const diagnostics: vscode.Diagnostic[] = this.createProblems(document);
             this.diagnostics.set(document.uri, diagnostics);
         } else {
@@ -72,7 +72,7 @@ export abstract class Diagnostics {
      * @param document The {@link vscode.TextDocument | text document} to check ({@linkcode vscode.TextDocument})
      * @returns `true` if {@link diagnostics} are allowed for the given {@link vscode.TextDocument | text document}, `false` otherwise
      */
-    protected abstract allowDiagnostics(document: vscode.TextDocument): boolean;
+    protected abstract shouldAllowDiagnostics(document: vscode.TextDocument): boolean;
 
 
     /**
