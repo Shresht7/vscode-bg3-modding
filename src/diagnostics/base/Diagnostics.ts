@@ -94,12 +94,16 @@ export abstract class Diagnostics {
     protected abstract createProblems(document: vscode.TextDocument): vscode.Diagnostic[];
 
     /**
-     * Determines the line number of the {@linkcode path} in the {@linkcode document}
+     * Determines the line number, column-start and column-end numbers of the {@linkcode path} in the {@linkcode document}
      * @param document The {@link vscode.TextDocument | text document} (see {@linkcode vscode.TextDocument})
      * @param path The path to the property represented as an array (e.g. `["root", "property", 1, "value"]`)
-     * @returns The line number corresponding to the {@linkcode path} in the {@linkcode document}
+     * @returns The line number, column start and column end numbers (if possible) corresponding to the {@linkcode path}
      */
-    protected determineLineFromPath(document: vscode.TextDocument, path: (string | number)[]): number {
+    protected determinePositionFromPath(document: vscode.TextDocument, path: (string | number)[]): {
+        line: number,
+        colStart?: number,
+        colEnd?: number,
+    } {
 
         /**
          * The line of the {@linkcode document} that the {@linkcode path} corresponds to
@@ -108,6 +112,11 @@ export abstract class Diagnostics {
          * and we adjust the line number as we iterate through the document lines and find the appropriate text
          */
         let line = 0;
+
+        /** The column-start number at the given line */
+        let colStart: number | undefined;
+        /** The column-end number at the given line */
+        let colEnd: number | undefined;
 
         /**
          * The current {@link part} of the property {@linkcode path}
@@ -125,11 +134,18 @@ export abstract class Diagnostics {
         // Iterate through the lines of the document to find the line that the path corresponds to
         for (let i = 0; i < document.lineCount; i++) {
 
-            // If the part is `undefined` or the `attributesGroupName`, then we break out of the loop and return the latest line
-            if (part === undefined || part === xml.attributesGroupName) { break; }
+            // If the part is `undefined`, then we break out of the loop and return the latest line
+            if (part === undefined) { break; }
 
             /** The text corresponding to the current line index in the {@linkcode document} */
             const text = document.lineAt(i).text;
+
+            // If the text includes the part, then we set the line to the current line and move on to the next part
+            if (text.includes("<" + part)) {
+                line = i;
+                parentPart = part;
+                part = path.shift();
+            }
 
             // If the part is an array...
             if (typeof part === "number") {
@@ -139,24 +155,33 @@ export abstract class Diagnostics {
                     continue;
                 } else {
                     // .. then we select the next occurrence of the part
-                    line = i - 1;
+                    line = i;
                     parentPart = part;
                     part = path.shift();
-                    continue;
                 }
             }
 
-            // If the text includes the part, then we set the line to the current line and move on to the next part
-            if (text.includes("<" + part)) {
-                line = i;
-                parentPart = part;
-                part = path.shift();
+            // If we have found a particular attribute, then we set the colStart and colEnd values
+            if (part === xml.attributesGroupName) {
+                const attributeName = path.shift();
+                // If the attribute name is incorrect, we break out of the loop as usual
+                if (!attributeName || !text.includes(attributeName.toString())) {
+                    break;
+                }
+                // Otherwise, we try to find the colStart and colEnd values
+                const matches = text.match(new RegExp(`${attributeName}=".*?"`));
+                if (matches?.length) {
+                    colStart = text.indexOf(matches[0]);
+                    colEnd = colStart + matches[0].length;
+                }
+                // We break out of the loop as usual
+                break;
             }
 
         }
 
         // Return the line number corresponding to the given path
-        return line;
+        return { line, colStart, colEnd };
     }
 
 }
