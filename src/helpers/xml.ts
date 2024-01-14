@@ -122,6 +122,8 @@ export function determinePositionFromPath(document: string[], path: (string | nu
                 // ...continue until we find the correct index
                 part--;
                 continue;
+            } else if (!text.includes("<" + parentPart)) {
+                continue;
             } else {
                 // .. then we select the next occurrence of the part
                 line = i;
