@@ -15,12 +15,15 @@ import { modsettingsLSXSchema } from '../library/bg3/schema';
  */
 export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
 
+    /** The name of the diagnostics collection (see {@link vscode.Diagnostics}) */
+    protected static name = "BG3XML";
+
     /**
      * @param context - The extension context ({@linkcode vscode.ExtensionContext})
      * @returns A new instance of the {@linkcode ModSettingsLSXDiagnostics} class
      */
     constructor(context: vscode.ExtensionContext) {
-        super("BG3XML", context, modsettingsLSXSchema);
+        super(ModSettingsLSXDiagnostics.name, context, modsettingsLSXSchema);
     }
 
     /**
