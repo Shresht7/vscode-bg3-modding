@@ -20,10 +20,12 @@ import type { Schema } from "jsonschema";
 const versionSchema: Schema = {
     type: "object",
     required: [attributesGroupName],
+    additionalProperties: false,
     properties: {
         [attributesGroupName]: {
             type: "object",
             required: ["major", "minor", "revision", "build"],
+            additionalProperties: false,
             properties: {
                 major: { type: "number", minimum: 0 },
                 minor: { type: "number", minimum: 0 },
@@ -53,10 +55,12 @@ const versionSchema: Schema = {
 const ModOrderSchema: Schema = {
     type: "object",
     required: [attributesGroupName, "children"],
+    additionalProperties: false,
     properties: {
         [attributesGroupName]: {
             type: "object",
             required: ["id"],
+            additionalProperties: false,
             properties: {
                 id: { type: "string", const: "ModOrder" },
             }
@@ -64,16 +68,19 @@ const ModOrderSchema: Schema = {
         children: {
             type: "object",
             required: ["node"],
+            additionalProperties: false,
             properties: {
                 node: {
                     type: "array",
                     items: {
                         type: "object",
                         required: [attributesGroupName, "attribute"],
+                        additionalProperties: false,
                         properties: {
                             [attributesGroupName]: {
                                 type: "object",
                                 required: ["id"],
+                                additionalProperties: false,
                                 properties: {
                                     id: { type: "string", const: "Module" },
                                 }
@@ -81,10 +88,12 @@ const ModOrderSchema: Schema = {
                             attribute: {
                                 type: "object",
                                 required: [attributesGroupName],
+                                additionalProperties: false,
                                 properties: {
                                     [attributesGroupName]: {
                                         type: "object",
                                         required: ["id", "value", "type"],
+                                        additionalProperties: false,
                                         properties: {
                                             id: { type: "string", const: "UUID" },
                                             value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" },
@@ -121,10 +130,12 @@ const ModOrderSchema: Schema = {
 const ModsSchema: Schema = {
     type: "object",
     required: [attributesGroupName, "children"],
+    additionalProperties: false,
     properties: {
         [attributesGroupName]: {
             type: "object",
             required: ["id"],
+            additionalProperties: false,
             properties: {
                 id: { type: "string", const: "Mods" },
             }
@@ -132,16 +143,19 @@ const ModsSchema: Schema = {
         children: {
             type: "object",
             required: ["node"],
+            additionalProperties: false,
             properties: {
                 node: {
                     type: "array",
                     items: {
                         type: "object",
                         required: [attributesGroupName, "attribute"],
+                        additionalProperties: false,
                         properties: {
                             [attributesGroupName]: {
                                 type: "object",
                                 required: ["id"],
+                                additionalProperties: false,
                                 properties: {
                                     id: { type: "string", const: "ModuleShortDesc" },
                                 }
@@ -153,10 +167,12 @@ const ModsSchema: Schema = {
                                         {
                                             type: "object",
                                             required: [attributesGroupName],
+                                            additionalProperties: false,
                                             properties: {
                                                 [attributesGroupName]: {
                                                     type: "object",
                                                     required: ["id", "value", "type"],
+                                                    additionalProperties: false,
                                                     properties: {
                                                         id: { type: "string", enum: ["Folder", "MD5", "Name"] },
                                                         value: { type: "string" },
@@ -168,10 +184,12 @@ const ModsSchema: Schema = {
                                         {
                                             type: "object",
                                             required: [attributesGroupName],
+                                            additionalProperties: false,
                                             properties: {
                                                 [attributesGroupName]: {
                                                     type: "object",
                                                     required: ["id", "value", "type"],
+                                                    additionalProperties: false,
                                                     properties: {
                                                         id: { type: "string", const: "UUID" },
                                                         value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" },
@@ -183,10 +201,12 @@ const ModsSchema: Schema = {
                                         {
                                             type: "object",
                                             required: [attributesGroupName],
+                                            additionalProperties: false,
                                             properties: {
                                                 [attributesGroupName]: {
                                                     type: "object",
                                                     required: ["id", "value", "type"],
+                                                    additionalProperties: false,
                                                     properties: {
                                                         id: { type: "string", const: "Version64" },
                                                         value: { type: "string" },
@@ -214,20 +234,24 @@ const ModsSchema: Schema = {
 export const modsettingsLSXSchema: Schema = {
     type: "object",
     required: ["?xml", "save"],
+    additionalProperties: false,
     properties: {
         "?xml": xmlDeclarationSchema,
         save: {
             type: "object",
             required: ["version"],
+            additionalProperties: false,
             properties: {
                 version: versionSchema,
                 region: {
                     type: "object",
                     required: [attributesGroupName, "node"],
+                    additionalProperties: false,
                     properties: {
                         [attributesGroupName]: {
                             type: "object",
                             required: ["id"],
+                            additionalProperties: false,
                             properties: {
                                 id: { type: "string", const: "ModuleSettings" },
                             }
@@ -235,10 +259,12 @@ export const modsettingsLSXSchema: Schema = {
                         node: {
                             type: "object",
                             required: [attributesGroupName, "children"],
+                            additionalProperties: false,
                             properties: {
                                 [attributesGroupName]: {
                                     type: "object",
                                     required: ["id"],
+                                    additionalProperties: false,
                                     properties: {
                                         id: { type: "string", const: "root" },
                                     }
@@ -246,6 +272,7 @@ export const modsettingsLSXSchema: Schema = {
                                 children: {
                                     type: "object",
                                     required: ["node"],
+                                    additionalProperties: false,
                                     properties: {
                                         node: {
                                             type: "array",

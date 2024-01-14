@@ -16,6 +16,8 @@ import type { Schema } from "jsonschema";
 */
 export const xmlDeclarationSchema: Schema = {
     type: "object",
+    required: [attributesGroupName],
+    additionalProperties: false,
     properties: {
         [attributesGroupName]: {
             type: "object",

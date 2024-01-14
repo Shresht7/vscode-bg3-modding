@@ -21,10 +21,13 @@ const contentSchema: Schema = {
     type: "array",
     items: {
         type: "object",
+        required: [attributesGroupName, "#text"],
+        additionalProperties: false,
         properties: {
             [attributesGroupName]: {
                 type: "object",
                 required: ["contentuid", "version"],
+                additionalProperties: false,
                 properties: {
                     contentuid: {
                         type: "string",
@@ -33,11 +36,11 @@ const contentSchema: Schema = {
                     version: {
                         type: "number",
                         minimum: 0,
-                    },
-                    "#text": {
-                        type: "string",
                     }
                 }
+            },
+            "#text": {
+                type: "string",
             }
         }
     }
