@@ -41,18 +41,21 @@ export abstract class Diagnostics {
 
         // Subscribe to events
         context.subscriptions.push(
+            // Update diagnostics when the active editor changes
             vscode.window.onDidChangeActiveTextEditor(editor => {
                 if (!editor) { return; }
                 this.updateDiagnostics(editor.document);
             }),
 
+            // Update diagnostics when the document is changed
             vscode.workspace.onDidChangeTextDocument(event => {
                 this.updateDiagnostics(event.document);
             }),
 
-            vscode.workspace.onDidCloseTextDocument(document => {
-                this.diagnostics.delete(document.uri);
-            })
+            // // Clear diagnostics when a document is closed
+            // vscode.workspace.onDidCloseTextDocument(document => {
+            //     this.diagnostics.delete(document.uri);
+            // })
         );
     }
 
@@ -69,8 +72,6 @@ export abstract class Diagnostics {
         if (document && this.shouldAllowDiagnostics(document)) {
             const diagnostics: vscode.Diagnostic[] = this.createProblems(document);
             this.diagnostics.set(document.uri, diagnostics);
-        } else {
-            this.diagnostics.clear();
         }
     }
 
