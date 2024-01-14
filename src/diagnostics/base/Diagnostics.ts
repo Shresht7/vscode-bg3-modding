@@ -12,7 +12,10 @@ import * as vscode from 'vscode';
  */
 export abstract class Diagnostics {
 
-    /** @see {@link vscode.DiagnosticCollection} */
+    /**
+     * This collection of diagnostics, once registered with vscode, will be displayed in the Problems panel
+     * @see {@link vscode.DiagnosticCollection}
+     */
     protected diagnostics: vscode.DiagnosticCollection;
 
     /**
@@ -20,7 +23,6 @@ export abstract class Diagnostics {
      * @returns A new instance of the {@linkcode Diagnostics} class
      */
     constructor(protected name: string) {
-        // Create the diagnostics collection
         this.diagnostics = vscode.languages.createDiagnosticCollection(this.name);
     }
 
@@ -49,10 +51,10 @@ export abstract class Diagnostics {
                 this.updateDiagnostics(event.document);
             }),
 
-            // // Clear diagnostics when a document is closed
-            // vscode.workspace.onDidCloseTextDocument(document => {
-            //     this.diagnostics.delete(document.uri);
-            // })
+            // ~~ // Clear diagnostics when a document is closed
+            // ~~ vscode.workspace.onDidCloseTextDocument(document => {
+            // ~~     this.diagnostics.delete(document.uri);
+            // ~~ })
         );
     }
 
@@ -76,7 +78,6 @@ export abstract class Diagnostics {
      * Determines whether {@link diagnostics} are allowed for the given {@link vscode.TextDocument | text document}
      * @param document The {@link vscode.TextDocument | text document} to check ({@linkcode vscode.TextDocument})
      * @returns `true` if {@link diagnostics} are allowed for the given {@link vscode.TextDocument | text document}, `false` otherwise
-     * @private
      */
     protected abstract shouldAllowDiagnostics(document: vscode.TextDocument): boolean;
 
