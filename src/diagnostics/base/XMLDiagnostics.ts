@@ -180,7 +180,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
                 return `\`${propertyName}\` value ${error.message}`;
 
             default:
-                return `${propertyName} ${error.message}`;
+                return `\`${propertyName}\` ${error.message}`;
 
         }
 
