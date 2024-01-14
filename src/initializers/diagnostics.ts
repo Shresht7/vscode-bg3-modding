@@ -8,6 +8,6 @@ import { LocalizationXMLDiagnostics, ModSettingsLSXDiagnostics } from '../diagno
 
 /** Initializes the diagnostics contributions provided by the extension */
 export function initializeDiagnostics(context: vscode.ExtensionContext) {
-    new LocalizationXMLDiagnostics(context);
-    new ModSettingsLSXDiagnostics(context);
+    new LocalizationXMLDiagnostics().initialize(context);
+    new ModSettingsLSXDiagnostics().initialize(context);
 }

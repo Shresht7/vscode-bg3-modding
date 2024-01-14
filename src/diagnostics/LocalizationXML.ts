@@ -19,14 +19,11 @@ export class LocalizationXMLDiagnostics extends XMLDiagnostics {
     protected static name = "BG3XML";
 
     /** The JSON Schema to validate the XML document against */
-    protected static schema = localizationXMLSchema;
+    protected schema = localizationXMLSchema;
 
-    /**
-     * @param context - The extension context ({@linkcode vscode.ExtensionContext})
-     * @returns A new instance of the {@linkcode LocalizationXMLDiagnostics} class
-     */
-    constructor(context: vscode.ExtensionContext) {
-        super(LocalizationXMLDiagnostics.name, context, LocalizationXMLDiagnostics.schema);
+    /** @returns A new instance of the {@linkcode LocalizationXMLDiagnostics} class */
+    constructor() {
+        super(LocalizationXMLDiagnostics.name);
     }
 
     /**
