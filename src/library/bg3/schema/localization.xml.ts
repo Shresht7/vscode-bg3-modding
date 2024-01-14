@@ -14,7 +14,7 @@ import type { Schema } from "jsonschema";
 /**
  * The schema for the content element
  * ```xml
- * <content contentuid="_uuid_" version="1">_Localized-text_</content>
+ * <content contentuid="UUID" version="1">_Localized-text_</content>
  * ```
  */
 const contentSchema: Schema = {
