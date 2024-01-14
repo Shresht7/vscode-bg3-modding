@@ -1,7 +1,7 @@
 // Library
 import * as vscode from 'vscode';
 import { XMLValidator, XMLParser } from 'fast-xml-parser';
-import { Validator, Schema } from 'jsonschema';
+import { Validator, Schema, ValidationError } from 'jsonschema';
 
 // Classes
 import { Diagnostics } from './Diagnostics';
@@ -109,10 +109,13 @@ export abstract class XMLDiagnostics extends Diagnostics {
                     colEnd ?? Number.MAX_VALUE
                 );
 
+                // Determine friendly diagnostics message
+                const message = this.getFriendlyMessage(error);
+
                 // Create the diagnostic object and add it to the collection
                 const problem: vscode.Diagnostic = {
                     range,
-                    message: error.message,
+                    message,
                     severity: vscode.DiagnosticSeverity.Error,
                     source: this.name,
                 };
@@ -122,6 +125,43 @@ export abstract class XMLDiagnostics extends Diagnostics {
         }
 
         return diagnostics;
+    }
+
+    /**
+     * Determines the friendly message for the given error
+     * @param error The error to determine the friendly message for
+     * @returns The friendly message for the given error
+     * @see {@link ValidationError | jsonschema.ValidationError}
+     */
+    private getFriendlyMessage(error: ValidationError): string {
+
+        // Determine the property name
+        let propertyName = error.property.split(".").pop();
+        if (propertyName === "_@_") {
+            propertyName = "attributes";
+        }
+
+        // Generate the friendly message for the error
+        switch (error.name) {
+
+            case "required":
+                const entity = propertyName === "attributes" ? "attribute" : "element";
+                return `Missing required ${entity}: \`${error.argument}\``;
+
+            case "type":
+                return `\`${propertyName}\` value is not of valid type: ${error.argument}`;
+
+            case "minimum":
+                return `\`${propertyName}\` value ${error.message}`;
+
+            case "pattern":
+                return `\`${propertyName}\` value ${error.message}`;
+
+            default:
+                return `${propertyName} ${error.message}`;
+
+        }
+
     }
 
 }
