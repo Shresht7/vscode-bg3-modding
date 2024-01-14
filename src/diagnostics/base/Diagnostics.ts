@@ -91,18 +91,34 @@ export abstract class Diagnostics {
      * @returns The line number corresponding to the {@linkcode path} in the {@linkcode document}
      */
     protected determineLineFromPath(document: vscode.TextDocument, path: (string | number)[]): number {
-        /** The line of the {@linkcode document} that the {@linkcode path} corresponds to */
+
+        /**
+         * The line of the {@linkcode document} that the {@linkcode path} corresponds to
+         * 
+         * We start at `0` (the first line of the document)
+         * and we adjust the line number as we iterate through the document lines and find the appropriate text
+         */
         let line = 0;
 
-        // Iterate through the lines of the document to find the line that the path corresponds to
-        /** The current {@link part} of the property {@linkcode path} */
+        /**
+         * The current {@link part} of the property {@linkcode path}
+         * 
+         * We start with the first part of the {@linkcode path} and iterate through the lines of the document
+         * until we find the line that the {@linkcode part} corresponds to. Then we move on to the next part
+         * of the {@linkcode path} and so on.
+         * 
+         * This can be a string (e.g. `"root"`) or a number (e.g. `1`) if the part is in an array.
+         * If the part is `undefined`, it means we are done traversing the {@linkcode path}.
+         */
         let part = path.shift();
+
+        // Iterate through the lines of the document to find the line that the path corresponds to
         for (let i = 0; i < document.lineCount; i++) {
 
             // If the part is `undefined` or the `attributesGroupName`, then we break out of the loop and return the latest line
             if (part === undefined || part === xml.attributesGroupName) { break; }
 
-            /** The text corresponding to the current line in the {@linkcode document} */
+            /** The text corresponding to the current line index in the {@linkcode document} */
             const text = document.lineAt(i).text;
 
             // If the part is an array...
@@ -123,7 +139,7 @@ export abstract class Diagnostics {
 
         }
 
-        // Return the line
+        // Return the line number corresponding to the given path
         return line;
     }
 
