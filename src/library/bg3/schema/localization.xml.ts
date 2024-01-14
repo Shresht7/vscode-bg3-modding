@@ -1,6 +1,9 @@
 // Helpers
 import { attributesGroupName } from "../../../helpers/xml";
 
+// Schemas
+import { xmlDeclarationSchema } from "./partials";
+
 // Type Definitions
 import type { Schema } from "jsonschema";
 
@@ -9,19 +12,7 @@ export const localizationXMLSchema: Schema = {
     type: "object",
     required: ["?xml", "contentList"],
     properties: {
-        "?xml": {
-            type: "object",
-            properties: {
-                [attributesGroupName]: {
-                    type: "object",
-                    required: ["version", "encoding"],
-                    properties: {
-                        version: { type: "number" },
-                        encoding: { type: "string" },
-                    }
-                }
-            }
-        },
+        "?xml": xmlDeclarationSchema,
         contentList: {
             type: "object",
             required: ["content"],

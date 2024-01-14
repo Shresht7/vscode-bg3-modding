@@ -1,22 +1,11 @@
 // Helpers
 import { attributesGroupName } from "../../../helpers/xml";
 
+// Schemas
+import { xmlDeclarationSchema } from "./partials";
+
 // Type Definitions
 import type { Schema } from "jsonschema";
-
-const xmlDeclarationSchema: Schema = {
-    type: "object",
-    properties: {
-        [attributesGroupName]: {
-            type: "object",
-            required: ["version", "encoding"],
-            properties: {
-                version: { type: "number" },
-                encoding: { type: "string" },
-            }
-        }
-    }
-};
 
 const versionSchema: Schema = {
     type: "object",
