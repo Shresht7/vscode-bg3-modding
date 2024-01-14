@@ -7,6 +7,16 @@ import { xmlDeclarationSchema } from "./partials";
 // Type Definitions
 import type { Schema } from "jsonschema";
 
+// --------
+// PARTIALS
+// --------
+
+/**
+ * The schema for the version element
+ * ```xml
+ * <version major="1" minor="0" revision="0" build="0" />
+ * ```
+ */
 const versionSchema: Schema = {
     type: "object",
     required: [attributesGroupName],
@@ -24,6 +34,22 @@ const versionSchema: Schema = {
     }
 };
 
+/**
+ * The schema for the ModOrder node
+ * ```xml
+ * <node id="ModOrder">
+ *   <children>
+ *    <node id="Module">
+ *      <attribute id="UUID1" type="FixedString" />
+ *    </node>
+ *    <node id="Module">
+ *      <attribute id="UUID2" type="FixedString" />
+ *    </node>
+ *    ...
+ *  </children>
+ * </node>
+ * ```
+ */
 const ModOrderSchema: Schema = {
     type: "object",
     required: [attributesGroupName, "children"],
@@ -75,6 +101,23 @@ const ModOrderSchema: Schema = {
     }
 };
 
+/**
+ * The schema for the Mods node
+ * ```xml
+ * <node id="Mods">
+ *   <children>
+ *     <node id="ModuleShortDesc">
+ *       <attribute id="Folder" value="string" type="LSString" />
+ *       <attribute id="MD5" value="string" type="LSString" />
+ *       <attribute id="Name" value="string" type="LSString" />
+ *       <attribute id="UUID" value="UUID" type="FixedString" />
+ *       <attribute id="Version" value="string" type="Version64" />
+ *     </node>
+ *     ...
+ *   </children>
+ * </node>
+ * ```
+ */
 const ModsSchema: Schema = {
     type: "object",
     required: [attributesGroupName, "children"],
@@ -162,6 +205,10 @@ const ModsSchema: Schema = {
         }
     }
 };
+
+// -----------------------
+// MOD SETTINGS LSX SCHEMA
+// -----------------------
 
 /** The schema for `modsettings.lsx` file */
 export const modsettingsLSXSchema: Schema = {
