@@ -66,6 +66,10 @@ export async function write<T extends Record<string, any>>(
  * @param document The document to search through (as an array of strings)
  * @param path The path to the property represented as an array (e.g. `["root", "property", 1, "value"]`)
  * @returns The line number, column start and column end numbers (if possible) corresponding to the {@linkcode path}
+ * 
+ * @see
+ * This function is an **abomination**. It works for the most part, but it is not perfect. Especially when it comes to
+ * arrays. It needs some refactoring, and a lot of unit tests. But it works and I am done for now.
  */
 export function determinePositionFromPath(document: string[], path: (string | number)[]): {
     line: number,
