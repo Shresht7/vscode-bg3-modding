@@ -29,7 +29,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
     constructor(
         protected name: string,
         context: vscode.ExtensionContext,
-        private schema: Schema,
+        protected schema: Schema
     ) {
         super(name, context);
     }
@@ -96,7 +96,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
         }).parse(text);
 
         // Validate the document using the JSON Schema
-        const results = new Validator().validate(parsedXML, this.schema);
+        const results = new Validator().validate(parsedXML, this.schema ?? {});
 
 
         // If the document is not valid, then we create a diagnostic for the error
