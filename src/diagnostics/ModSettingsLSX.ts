@@ -29,7 +29,7 @@ export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
      * @returns `true` if diagnostics should be created for this file, `false` otherwise
      * @override
      */
-    override allowDiagnostics(document: vscode.TextDocument): boolean {
+    override shouldAllowDiagnostics(document: vscode.TextDocument): boolean {
         return document
             && document.languageId === "xml"
             && document.fileName.endsWith("modsettings.lsx");
