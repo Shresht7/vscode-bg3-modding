@@ -119,6 +119,7 @@ export abstract class Diagnostics {
          * If the part is `undefined`, it means we are done traversing the {@linkcode path}.
          */
         let part = path.shift();
+        let parentPart: string | number | undefined;
 
         // Iterate through the lines of the document to find the line that the path corresponds to
         for (let i = 0; i < document.lineCount; i++) {
@@ -131,17 +132,23 @@ export abstract class Diagnostics {
 
             // If the part is an array...
             if (typeof part === "number") {
-                part--;
-                if (part > 0) {
+                if (part > 0 && text.includes("<" + parentPart)) {
                     // ...continue until we find the correct index
+                    part--;
+                    continue;
+                } else {
+                    // .. then we select the next occurrence of the part
+                    line = i - 1;
+                    parentPart = part;
+                    part = path.shift();
                     continue;
                 }
-                // .. then we select the next occurrence of the part
             }
 
             // If the text includes the part, then we set the line to the current line and move on to the next part
             if (text.includes("<" + part)) {
                 line = i;
+                parentPart = part;
                 part = path.shift();
             }
 
