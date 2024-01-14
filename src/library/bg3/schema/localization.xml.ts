@@ -25,6 +25,7 @@ export const localizationXMLSchema: Schema = {
         contentList: {
             type: "object",
             required: ["content"],
+            additionalProperties: false,
             properties: {
                 content: {
                     type: "array",
