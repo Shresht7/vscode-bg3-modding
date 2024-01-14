@@ -23,6 +23,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
     /**
      * @param name - The name of the {@linkcode diagnostics} collection
      * @param context - The extension context ({@linkcode vscode.ExtensionContext})
+     * @param schema - The {@link Schema| JSON Schema} to validate the XML document against
      * @returns A new instance of the {@linkcode XMLDiagnostics} class
      */
     constructor(
@@ -35,10 +36,10 @@ export abstract class XMLDiagnostics extends Diagnostics {
 
 
     /**
-     * Creates diagnostic problems for the given document.
+     * Creates diagnostic problems for the given document
      * 
      * @param document The text document to create diagnostic problems for. (see {@linkcode vscode.TextDocument})
-     * @returns An array of diagnostic problems. (see {@linkcode vscode.Diagnostic})
+     * @returns An array of diagnostic problems (see {@linkcode vscode.Diagnostic})
      */
     protected override createProblems(document: vscode.TextDocument): vscode.Diagnostic[] {
         // Validate the document using the XML Validator from `fast-xml-parser`
@@ -78,9 +79,9 @@ export abstract class XMLDiagnostics extends Diagnostics {
     }
 
     /**
-     * Validates the XML document against the JSON Schema and returns an array of diagnostics for any errors found.
-     * @param document The TextDocument to validate.
-     * @returns An array of vscode.Diagnostic objects representing the errors found in the document.
+     * Validates the XML document against the JSON Schema and returns an array of diagnostics for any errors found
+     * @param document The TextDocument to validate. (see {@linkcode vscode.TextDocument})
+     * @returns An array of {@link vscode.Diagnostic} objects representing the errors found in the document.
      */
     private validateJSONSchema(document: vscode.TextDocument): vscode.Diagnostic[] {
         const diagnostics: vscode.Diagnostic[] = [];

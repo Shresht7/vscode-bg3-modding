@@ -10,7 +10,7 @@ import { localizationXMLSchema } from '../library/bg3/schema';
 // ----------------------------
 
 /**
- * Represents a class that provides diagnostics for localization XML files.
+ * Represents a class that provides diagnostics for localization XML files
  * @extends XMLDiagnostics {@link XMLDiagnostics}
  */
 export class LocalizationXMLDiagnostics extends XMLDiagnostics {

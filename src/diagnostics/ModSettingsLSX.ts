@@ -10,7 +10,7 @@ import { modsettingsLSXSchema } from '../library/bg3/schema';
 // ----------------------------
 
 /**
- * Represents a class that provides diagnostics for `modsettings.lsx` file.
+ * Represents a class that provides diagnostics for `modsettings.lsx` file
  * @extends XMLDiagnostics {@link XMLDiagnostics}
  */
 export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
