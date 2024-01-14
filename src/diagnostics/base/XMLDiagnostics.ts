@@ -20,18 +20,15 @@ import { xml } from '../../helpers';
  */
 export abstract class XMLDiagnostics extends Diagnostics {
 
+    protected abstract schema: Schema;
+
     /**
      * @param name - The name of the {@linkcode diagnostics} collection
-     * @param context - The extension context ({@linkcode vscode.ExtensionContext})
      * @param schema - The {@link Schema| JSON Schema} to validate the XML document against
      * @returns A new instance of the {@linkcode XMLDiagnostics} class
      */
-    constructor(
-        protected name: string,
-        context: vscode.ExtensionContext,
-        protected schema: Schema
-    ) {
-        super(name, context);
+    constructor(protected name: string) {
+        super(name);
     }
 
 
@@ -96,7 +93,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
         }).parse(text);
 
         // Validate the document using the JSON Schema
-        const results = new Validator().validate(parsedXML, this.schema ?? {});
+        const results = new Validator().validate(parsedXML, this.schema);
 
 
         // If the document is not valid, then we create a diagnostic for the error

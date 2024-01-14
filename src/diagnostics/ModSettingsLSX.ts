@@ -19,14 +19,11 @@ export class ModSettingsLSXDiagnostics extends XMLDiagnostics {
     protected static name = "BG3XML";
 
     /** The JSON Schema to validate the XML document against */
-    protected static schema = modsettingsLSXSchema;
+    protected schema = modsettingsLSXSchema;
 
-    /**
-     * @param context - The extension context ({@linkcode vscode.ExtensionContext})
-     * @returns A new instance of the {@linkcode ModSettingsLSXDiagnostics} class
-     */
-    constructor(context: vscode.ExtensionContext) {
-        super(ModSettingsLSXDiagnostics.name, context, ModSettingsLSXDiagnostics.schema);
+    /** @returns A new instance of the {@linkcode ModSettingsLSXDiagnostics} class */
+    constructor() {
+        super(ModSettingsLSXDiagnostics.name);
     }
 
     /**

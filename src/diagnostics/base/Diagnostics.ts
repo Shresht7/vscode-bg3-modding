@@ -20,13 +20,20 @@ export abstract class Diagnostics {
 
     /**
      * @param name - The name of the {@linkcode diagnostics} collection
-     * @param context - The extension context ({@linkcode vscode.ExtensionContext})
      * @returns A new instance of the {@linkcode Diagnostics} class
      */
-    constructor(protected name: string, context: vscode.ExtensionContext) {
+    constructor(protected name: string) {
         // Create the diagnostics collection
         this.diagnostics = vscode.languages.createDiagnosticCollection(this.name);
+    }
 
+    /**
+     * Initializes the {@linkcode diagnostics} collection and subscribes to events.
+     * This happens after the object has been created using the constructor, so that
+     * all the properties have been properly initialized before they are used.
+     * @param context The extension context ({@linkcode vscode.ExtensionContext})
+     */
+    initialize(context: vscode.ExtensionContext) {
         // Update diagnostics for the active editor
         if (vscode.window.activeTextEditor) {
             this.updateDiagnostics(vscode.window.activeTextEditor.document);
@@ -58,7 +65,7 @@ export abstract class Diagnostics {
      * 
      * @param document The {@link vscode.TextDocument | text document} to update diagnostics for. (see {@linkcode vscode.TextDocument})
      */
-    protected updateDiagnostics(document: vscode.TextDocument) {
+    private updateDiagnostics(document: vscode.TextDocument) {
         if (document && this.shouldAllowDiagnostics(document)) {
             const diagnostics: vscode.Diagnostic[] = this.createProblems(document);
             this.diagnostics.set(document.uri, diagnostics);
@@ -71,6 +78,7 @@ export abstract class Diagnostics {
      * Determines whether {@link diagnostics} are allowed for the given {@link vscode.TextDocument | text document}
      * @param document The {@link vscode.TextDocument | text document} to check ({@linkcode vscode.TextDocument})
      * @returns `true` if {@link diagnostics} are allowed for the given {@link vscode.TextDocument | text document}, `false` otherwise
+     * @private
      */
     protected abstract shouldAllowDiagnostics(document: vscode.TextDocument): boolean;
 
