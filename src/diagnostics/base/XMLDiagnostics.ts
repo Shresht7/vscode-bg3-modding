@@ -101,7 +101,8 @@ export abstract class XMLDiagnostics extends Diagnostics {
             results.errors.forEach(error => {
 
                 // Determine the range for the error
-                const { line, colStart, colEnd } = xml.determinePositionFromPath(text.split(/\r?\n/), error.path);
+                const path = this.determinePath(error);
+                const { line, colStart, colEnd } = xml.determinePositionFromPath(text.split(/\r?\n/), path);
                 const range = new vscode.Range(
                     line,
                     colStart ?? document.lineAt(line).firstNonWhitespaceCharacterIndex,
@@ -128,6 +129,24 @@ export abstract class XMLDiagnostics extends Diagnostics {
     }
 
     /**
+     * Determines the path for the given error
+     * @param error The error to determine the path for
+     * @returns The path for the given error
+     * @see {@link ValidationError | jsonschema.ValidationError}
+     */
+    private determinePath(error: ValidationError): (string | number)[] {
+        if (error.path.length > 0) {
+            return error.path;
+        } else {
+            return error.property
+                .replaceAll(/\[(\d+)\]/g, ".$1") // Replace all `[n]` with `.n`
+                .split(".")
+                .slice(1)
+                .map(part => isNaN(Number(part)) ? part : Number(part)); // Parse numbers as actual numbers
+        }
+    }
+
+    /**
      * Determines the friendly message for the given error
      * @param error The error to determine the friendly message for
      * @returns The friendly message for the given error
@@ -140,13 +159,16 @@ export abstract class XMLDiagnostics extends Diagnostics {
         if (propertyName === "_@_") {
             propertyName = "attributes";
         }
+        const entity = propertyName === "attributes" ? "attribute" : "element";
 
         // Generate the friendly message for the error
         switch (error.name) {
 
             case "required":
-                const entity = propertyName === "attributes" ? "attribute" : "element";
                 return `Missing required ${entity}: \`${error.argument}\``;
+
+            case "additionalProperties":
+                return `Unknown ${entity}: \`${error.argument}\``;
 
             case "type":
                 return `\`${propertyName}\` value is not of valid type: ${error.argument}`;
