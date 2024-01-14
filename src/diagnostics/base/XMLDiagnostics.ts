@@ -101,14 +101,14 @@ export abstract class XMLDiagnostics extends Diagnostics {
             results.errors.forEach(error => {
 
                 // Determine the line of the error from the path
-                const line = this.determineLineFromPath(document, error.path);
+                const { line, colStart, colEnd } = this.determinePositionFromPath(document, error.path);
 
                 // Create a range for the error
                 const range = new vscode.Range(
                     line,
-                    document.lineAt(line).firstNonWhitespaceCharacterIndex,
+                    colStart ?? document.lineAt(line).firstNonWhitespaceCharacterIndex,
                     line,
-                    Number.MAX_VALUE
+                    colEnd ?? Number.MAX_VALUE
                 );
 
                 // Create the diagnostic object and add it to the collection
