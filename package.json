@@ -66,6 +66,20 @@
         "*.lsx": "xml",
         "*.lsj": "json"
       },
+      "xml.fileAssociations": [
+        {
+          "pattern": "**/meta.lsx",
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/meta.lsx.schema.xsd"
+        },
+        {
+          "pattern": "**/Localization/**/*.xml",
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/localization.xml.schema.xsd"
+        },
+        {
+          "pattern": "modsettings.lsx",
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/modsettings.lsx.schema.xsd"
+        }
+      ],
       "search.exclude": {
         "**/*.raw": true,
         "**/Story/*.div": true,
@@ -94,6 +108,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "fast-xml-parser": "^4.3.2"
+    "fast-xml-parser": "^4.3.2",
+    "jsonschema": "^1.4.1"
   }
 }
