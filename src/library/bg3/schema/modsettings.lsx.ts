@@ -2,7 +2,7 @@
 import { attributesGroupName } from "../../../helpers/xml";
 
 // Schemas
-import { xmlDeclarationSchema } from "./partials";
+import { xmlDeclarationSchema, versionSchema, id, attribute } from "./partials";
 
 // Type Definitions
 import type { Schema } from "jsonschema";
@@ -10,31 +10,6 @@ import type { Schema } from "jsonschema";
 // --------
 // PARTIALS
 // --------
-
-/**
- * The schema for the version element
- * ```xml
- * <version major="1" minor="0" revision="0" build="0" />
- * ```
- */
-const versionSchema: Schema = {
-    type: "object",
-    required: [attributesGroupName],
-    additionalProperties: false,
-    properties: {
-        [attributesGroupName]: {
-            type: "object",
-            required: ["major", "minor", "revision", "build"],
-            additionalProperties: false,
-            properties: {
-                major: { type: "number", minimum: 0 },
-                minor: { type: "number", minimum: 0 },
-                revision: { type: "number", minimum: 0 },
-                build: { type: "number", minimum: 0 },
-            }
-        }
-    }
-};
 
 /**
  * The schema for the ModOrder node
@@ -57,14 +32,7 @@ const ModOrderSchema: Schema = {
     required: [attributesGroupName, "children"],
     additionalProperties: false,
     properties: {
-        [attributesGroupName]: {
-            type: "object",
-            required: ["id"],
-            additionalProperties: false,
-            properties: {
-                id: { type: "string", const: "ModOrder" },
-            }
-        },
+        [attributesGroupName]: id("ModOrder"),
         children: {
             type: "object",
             required: ["node"],
@@ -77,31 +45,12 @@ const ModOrderSchema: Schema = {
                         required: [attributesGroupName, "attribute"],
                         additionalProperties: false,
                         properties: {
-                            [attributesGroupName]: {
-                                type: "object",
-                                required: ["id"],
-                                additionalProperties: false,
-                                properties: {
-                                    id: { type: "string", const: "Module" },
-                                }
-                            },
-                            attribute: {
-                                type: "object",
-                                required: [attributesGroupName],
-                                additionalProperties: false,
-                                properties: {
-                                    [attributesGroupName]: {
-                                        type: "object",
-                                        required: ["id", "value", "type"],
-                                        additionalProperties: false,
-                                        properties: {
-                                            id: { type: "string", const: "UUID" },
-                                            value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" },
-                                            type: { type: "string", const: "FixedString" },
-                                        }
-                                    }
-                                }
-                            }
+                            [attributesGroupName]: id("Module"),
+                            attribute: attribute({
+                                id: "UUID",
+                                type: "FixedString",
+                                value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" }
+                            })
                         }
                     }
                 }
@@ -132,14 +81,7 @@ const ModsSchema: Schema = {
     required: [attributesGroupName, "children"],
     additionalProperties: false,
     properties: {
-        [attributesGroupName]: {
-            type: "object",
-            required: ["id"],
-            additionalProperties: false,
-            properties: {
-                id: { type: "string", const: "Mods" },
-            }
-        },
+        [attributesGroupName]: id("Mods"),
         children: {
             type: "object",
             required: ["node"],
@@ -152,69 +94,16 @@ const ModsSchema: Schema = {
                         required: [attributesGroupName, "attribute"],
                         additionalProperties: false,
                         properties: {
-                            [attributesGroupName]: {
-                                type: "object",
-                                required: ["id"],
-                                additionalProperties: false,
-                                properties: {
-                                    id: { type: "string", const: "ModuleShortDesc" },
-                                }
-                            },
+                            [attributesGroupName]: id("ModuleShortDesc"),
                             attribute: {
                                 type: "array",
                                 items: {
                                     anyOf: [
-                                        {
-                                            type: "object",
-                                            required: [attributesGroupName],
-                                            additionalProperties: false,
-                                            properties: {
-                                                [attributesGroupName]: {
-                                                    type: "object",
-                                                    required: ["id", "value", "type"],
-                                                    additionalProperties: false,
-                                                    properties: {
-                                                        id: { type: "string", enum: ["Folder", "MD5", "Name"] },
-                                                        value: { type: "string" },
-                                                        type: { type: "string", const: "LSString" },
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            type: "object",
-                                            required: [attributesGroupName],
-                                            additionalProperties: false,
-                                            properties: {
-                                                [attributesGroupName]: {
-                                                    type: "object",
-                                                    required: ["id", "value", "type"],
-                                                    additionalProperties: false,
-                                                    properties: {
-                                                        id: { type: "string", const: "UUID" },
-                                                        value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" },
-                                                        type: { type: "string", const: "FixedString" },
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            type: "object",
-                                            required: [attributesGroupName],
-                                            additionalProperties: false,
-                                            properties: {
-                                                [attributesGroupName]: {
-                                                    type: "object",
-                                                    required: ["id", "value", "type"],
-                                                    additionalProperties: false,
-                                                    properties: {
-                                                        id: { type: "string", const: "Version64" },
-                                                        value: { type: "string" },
-                                                        type: { type: "string", const: "int64" },
-                                                    }
-                                                }
-                                            }
-                                        },
+                                        attribute({ id: "Folder", type: "LSString", value: { type: "string" } }),
+                                        attribute({ id: "MD5", type: "LSString", value: { type: "string" } }),
+                                        attribute({ id: "Name", type: "LSString", value: { type: "string" } }),
+                                        attribute({ id: "UUID", type: "FixedString", value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" } }),
+                                        attribute({ id: "Version64", type: "int64", value: { type: "string" } })
                                     ]
                                 }
                             }
@@ -239,7 +128,7 @@ export const modsettingsLSXSchema: Schema = {
         "?xml": xmlDeclarationSchema,
         save: {
             type: "object",
-            required: ["version"],
+            required: ["version", "region"],
             additionalProperties: false,
             properties: {
                 version: versionSchema,
@@ -248,27 +137,13 @@ export const modsettingsLSXSchema: Schema = {
                     required: [attributesGroupName, "node"],
                     additionalProperties: false,
                     properties: {
-                        [attributesGroupName]: {
-                            type: "object",
-                            required: ["id"],
-                            additionalProperties: false,
-                            properties: {
-                                id: { type: "string", const: "ModuleSettings" },
-                            }
-                        },
+                        [attributesGroupName]: id("ModuleSettings"),
                         node: {
                             type: "object",
                             required: [attributesGroupName, "children"],
                             additionalProperties: false,
                             properties: {
-                                [attributesGroupName]: {
-                                    type: "object",
-                                    required: ["id"],
-                                    additionalProperties: false,
-                                    properties: {
-                                        id: { type: "string", const: "root" },
-                                    }
-                                },
+                                [attributesGroupName]: id("root"),
                                 children: {
                                     type: "object",
                                     required: ["node"],
