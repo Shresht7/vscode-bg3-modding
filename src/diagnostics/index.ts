@@ -3,5 +3,5 @@
 // -----------
 
 export * from './LocalizationXML';
-export * from './ModSettingsLSX';
 export * from './MetaLSX';
+export * from './ModSettingsLSX';

@@ -20,6 +20,10 @@ import { xml } from '../../helpers';
  */
 export abstract class XMLDiagnostics extends Diagnostics {
 
+    /**
+     * The JSON Schema to validate the XML document against
+     * @see {@link Schema | jsonschema.Schema}
+     */
     protected abstract schema: Schema;
 
     /**
@@ -85,12 +89,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
 
         // Parse the XML document
         const text = document.getText();
-        const parsedXML = new XMLParser({
-            ignoreAttributes: false,
-            attributeNamePrefix: "",
-            attributesGroupName: xml.attributesGroupName,
-            parseAttributeValue: true,
-        }).parse(text);
+        const parsedXML = new XMLParser(xml.defaultParserOptions).parse(text);
 
         // Validate the document using the JSON Schema
         const results = new Validator().validate(parsedXML, this.schema);
@@ -129,10 +128,12 @@ export abstract class XMLDiagnostics extends Diagnostics {
     }
 
     /**
-     * Determines the path for the given error
+     * Determines the path for the given error.
      * @param error The error to determine the path for
      * @returns The path for the given error
      * @see {@link ValidationError | jsonschema.ValidationError}
+     * @since There was a case where path was empty,
+     * so we use the property to determine the path instead.
      */
     private determinePath(error: ValidationError): (string | number)[] {
         if (error.path.length > 0) {
@@ -156,7 +157,7 @@ export abstract class XMLDiagnostics extends Diagnostics {
 
         // Determine the property name
         let propertyName = error.property.split(".").pop();
-        if (propertyName === "_@_") {
+        if (propertyName === xml.attributesGroupName) {
             propertyName = "attributes";
         }
         const entity = propertyName === "attributes" ? "attribute" : "element";

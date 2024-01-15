@@ -13,15 +13,18 @@ import { XMLBuilder, XMLParser, X2jOptions, XmlBuilderOptions } from "fast-xml-p
 export const attributesGroupName = "_@_";
 
 /** Default options for the XML parser */
-const defaultParserOptions: Partial<X2jOptions> = {
+export const defaultParserOptions: Partial<X2jOptions> = {
     ignoreAttributes: false,
     attributeNamePrefix: "",
+    attributesGroupName,
+    parseAttributeValue: true,
 };
 
 /** Default options for the XML builder */
-const defaultBuilderOptions: Partial<XmlBuilderOptions> = {
+export const defaultBuilderOptions: Partial<XmlBuilderOptions> = {
     ignoreAttributes: false,
     attributeNamePrefix: "",
+    attributesGroupName,
 };
 
 // FILE-SYSTEM OPERATIONS

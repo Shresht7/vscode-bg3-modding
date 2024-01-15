@@ -62,8 +62,7 @@ export abstract class Diagnostics {
      * Updates the {@link diagnostics} for the given {@link vscode.TextDocument | text document}
      * 
      * If diagnostics for the given {@link vscode.TextDocument | text document} are {@link shouldAllowDiagnostics | allowed},
-     * then {@link diagnostics | diagnostics collection} is updated with the {@link createProblems | problems}. Otherwise,
-     * the {@link diagnostics | diagnostics collection} is cleared. 
+     * then {@link diagnostics | diagnostics collection} is updated with the {@link createProblems | problems}.
      * 
      * @param document The {@link vscode.TextDocument | text document} to update diagnostics for. (see {@linkcode vscode.TextDocument})
      */
