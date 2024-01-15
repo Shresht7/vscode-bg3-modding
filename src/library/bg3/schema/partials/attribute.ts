@@ -9,12 +9,12 @@ import type { Schema } from 'jsonschema';
 // -----------------
 
 /**
- * Create a schema for an attribute element
- * @param obj The object to use as the schema for the attribute
- * @returns The schema for an attribute element
+ * Create a schema for an element with attributes
+ * @param obj The object to use as the schema for the attributes
+ * @returns The schema for an element with attributes
  * @example
  * ```xml
- * <attribute id="Folder" type="LSString" value="MyMod" />
+ * <element id="Folder" type="LSString" value="MyMod" />
  * ```
  */
 export const attribute = (obj: Record<string, string | Schema>): Schema => ({

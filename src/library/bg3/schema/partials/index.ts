@@ -2,7 +2,7 @@
 // SCHEMA PARTIALS
 // ---------------
 
-export * from './xmlDeclaration';
-export * from './version';
-export * from './id';
 export * from './attribute';
+export * from './id';
+export * from './version';
+export * from './xmlDeclaration';

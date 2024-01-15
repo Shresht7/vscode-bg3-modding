@@ -6,10 +6,14 @@ import { Schema } from "jsonschema";
 // ------------
 
 /**
- * Creates a schema that defines an ID attribute.
- * @param name The name of the ID attribute.
- * @param additionalProps Additional properties to add to the schema.
- * @returns The schema that defines an ID attribute.
+ * Creates a schema that defines the `id` attribute
+ * @param name The value of the `id` attribute to use
+ * @param additionalProps any additional properties to add to the schema
+ * @returns The schema that defines the `id` attribute
+ * @example
+ * ```xml
+ * <element id="Folder" />
+ * ```
  */
 export const id = (name: string, additionalProps?: Partial<Schema>): Schema => ({
     type: "object",
