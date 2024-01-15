@@ -1,5 +1,6 @@
 // Helpers
 import { attributesGroupName } from "../../../helpers/xml";
+import { regex } from "../../../constants";
 
 // Schemas
 import { xmlDeclarationSchema } from "./partials";
@@ -31,7 +32,7 @@ const contentSchema: Schema = {
                 properties: {
                     contentuid: {
                         type: "string",
-                        pattern: "^h[a-f\\d]{8}(g[a-f\\d]{4}){3}g[a-f\\d]{12}$",
+                        pattern: regex.handle.source,
                     },
                     version: {
                         type: "number",

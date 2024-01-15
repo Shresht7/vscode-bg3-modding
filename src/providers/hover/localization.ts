@@ -1,6 +1,7 @@
 // Library
 import * as vscode from 'vscode';
 import { HoverProvider } from './_base';
+import { regex } from '../../constants';
 
 // ---------------------------
 // LOCALIZATION HOVER PROVIDER
@@ -8,11 +9,6 @@ import { HoverProvider } from './_base';
 
 /** Provides hover information for localization handles in xml files */
 export class LocalizationHoverProvider extends HoverProvider {
-
-    /** Regular expression to match localization handles
-     * @example h55e8dd17gb5c8g4d34gac23gd8616a2c1925
-    */
-    private static handleRegex = /h[\da-fA-F]{8}g[\da-fA-F]{4}g[\da-fA-F]{4}g[\da-fA-F]{4}g[\da-fA-F]{12}/;
 
     /** A map from localization handles to their associated content value */
     private static references: Map<string, string> = new Map();
@@ -52,7 +48,7 @@ export class LocalizationHoverProvider extends HoverProvider {
         const word = document.getText(range);
 
         // Return early if the word is not a localization handle
-        if (!LocalizationHoverProvider.handleRegex.test(word)) { return; }
+        if (!regex.handle.test(word)) { return; }
 
         // Get content for the given localization handle
         const content = LocalizationHoverProvider.getContent(word);
