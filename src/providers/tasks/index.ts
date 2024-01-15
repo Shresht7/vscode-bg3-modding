@@ -1,22 +1,23 @@
 // Library
 import * as vscode from 'vscode';
 
+// Tasks
+import { test } from './test';
+
 // --------------
 // TASKS PROVIDER
 // --------------
 
+/** An array of tasks that can be run */
+const tasks: vscode.Task[] = [
+    test
+];
+
+/** A provider that allows tasks to be run */
 export const taskProvider = vscode.tasks.registerTaskProvider('test', {
     provideTasks(token) {
-        const task = new vscode.Task(
-            { type: 'test', task: 'test' },
-            vscode.TaskScope.Workspace,
-            'test',
-            'test',
-            new vscode.ShellExecution('echo "test"')
-        );
-        return [task];
+        return tasks;
     },
-
     resolveTask(task, token) {
         return task;
     }
