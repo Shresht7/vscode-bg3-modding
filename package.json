@@ -69,15 +69,15 @@
       "xml.fileAssociations": [
         {
           "pattern": "**/meta.lsx",
-          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/meta.lsx.schema.xsd"
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/main/Schema/meta.lsx.schema.xsd"
         },
         {
           "pattern": "**/Localization/**/*.xml",
-          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/localization.xml.schema.xsd"
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/main/Schema/localization.xml.schema.xsd"
         },
         {
           "pattern": "modsettings.lsx",
-          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/xsd/Schema/modsettings.lsx.schema.xsd"
+          "systemId": "https://raw.githubusercontent.com/Shresht7/vscode-bg3-modding/main/Schema/modsettings.lsx.schema.xsd"
         }
       ],
       "search.exclude": {
