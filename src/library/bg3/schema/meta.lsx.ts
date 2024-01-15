@@ -1,5 +1,6 @@
 // Helpers
 import { attributesGroupName } from "../../../helpers/xml";
+import { regex } from "../../../constants";
 
 // Partials 
 import {
@@ -34,7 +35,7 @@ const NodeDependenciesAttributes: Schema = {
         attribute({ id: "Folder", type: "LSString", value: { type: "string" } }),
         attribute({ id: "MD5", type: "LSString", value: { type: "string" } }),
         attribute({ id: "Name", type: "LSString", value: { type: "string" } }),
-        attribute({ id: "UUID", type: "FixedString", value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" } }),
+        attribute({ id: "UUID", type: "FixedString", value: { type: "string", pattern: regex.UUID.source } }),
         attribute({ id: "Version64", type: "int64", value: { type: "string" } }),
     ]
 };
@@ -111,7 +112,7 @@ const NodeModuleInfoAttributes: Schema = {
             attribute({ id: "StartupLevelName", type: "FixedString", value: { type: "string" } }),
             attribute({ id: "Tags", type: "LSWString", value: { type: "string" } }),
             attribute({ id: "Type", type: "FixedString", value: { type: "string" } }),
-            attribute({ id: "UUID", type: "FixedString", value: { type: "string", pattern: "^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$" } }),
+            attribute({ id: "UUID", type: "FixedString", value: { type: "string", pattern: regex.UUID.source } }),
             attribute({ id: "Version64", type: "int64", value: { type: "string" } }),
         ]
     }
