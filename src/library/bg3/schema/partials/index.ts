@@ -3,3 +3,4 @@
 // ---------------
 
 export * from './xmlDeclaration';
+export * from './version';
