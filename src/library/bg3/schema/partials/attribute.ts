@@ -17,7 +17,7 @@ import type { Schema } from 'jsonschema';
  * <attribute id="Folder" type="LSString" value="MyMod" />
  * ```
  */
-export const attribute = (obj: Record<string, Schema>): Schema => ({
+export const attribute = (obj: Record<string, string | Schema>): Schema => ({
     type: "object",
     required: [attributesGroupName],
     additionalProperties: false,
@@ -26,7 +26,12 @@ export const attribute = (obj: Record<string, Schema>): Schema => ({
             type: "object",
             required: Object.keys(obj),
             additionalProperties: false,
-            properties: obj,
+            properties: Object.entries(obj).reduce((acc, [key, value]) => {
+                acc[key] = typeof value === "string"
+                    ? { type: "string", const: value }
+                    : value;
+                return acc;
+            }, {} as Record<string, Schema>)
         }
     }
 });
