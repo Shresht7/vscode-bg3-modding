@@ -36,7 +36,7 @@ export async function convertLocalizationTask(context: vscode.ExtensionContext):
     const detail = 'Converts localization `.xml` files to the `.loca` format';
 
     /** The command line to be executed by the convert localization task */
-    const commandLine: string = divine.convertLoca("${file}", "${fileDirname}\\${fileBasenameNoExtension}.loca");
+    const commandLine: string = divine.convertLoca("${file}", "${fileDirname}${pathSeparator}${fileBasenameNoExtension}.loca");
     /** The execution of the convert localization task */
     const execution: vscode.ShellExecution = new vscode.ShellExecution(commandLine);
 
