@@ -5,6 +5,13 @@
 /** ID of the extension. Must match the `package.json` */
 export const EXTENSION_ID = "bg3-modding";
 
+/** Publisher */
+// TODO: This might need to change in the future based on availability of the publisher name on the VS Code Marketplace
+export const PUBLISHER = "Shresht7";
+
+/** The folder name that contains the Lua workspace library references */
+export const LUA_REFERENCES_FOLDER = "references";
+
 /** Regular Expressions */
 export const regex = {
 

@@ -3,6 +3,7 @@
   "displayName": "BG3 Modding",
   "description": "A collection of tools, snippets and helpers for modding Baldur's Gate 3",
   "version": "0.0.1",
+  "publisher": "Shresht7",
   "repository": {
     "type": "git",
     "url": "https://github.com/Shresht7/vscode-bg3-modding.git"
@@ -48,6 +49,11 @@
       {
         "command": "bg3-modding.bumpVersionNumber",
         "title": "Bump Version Number",
+        "category": "BG3"
+      },
+      {
+        "command": "bg3-modding.initializeLuaConfiguration",
+        "title": "Initialize Lua Configuration Settings",
         "category": "BG3"
       }
     ],
