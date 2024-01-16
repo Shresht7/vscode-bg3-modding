@@ -33,7 +33,7 @@ export async function convertLocalizationTask(context: vscode.ExtensionContext):
     const source: string = 'BG3 Modding Extension';
 
     /** A short description about the convert localization task */
-    const detail = 'Converts localization `.xml` files to the `.loca` format';
+    const detail = 'Convert the localization `.xml` file to the `.loca` format';
 
     /** The command line to be executed by the convert localization task */
     const commandLine: string = divine.convertLoca("${file}", "${fileDirname}${pathSeparator}${fileBasenameNoExtension}.loca");
