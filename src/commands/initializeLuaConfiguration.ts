@@ -17,7 +17,7 @@ export async function initializeLuaConfiguration() {
     const configurationTarget = await promptForConfigurationScope();
 
     // Get the path to the extension's lua references folder
-    const luaReferenceLibrary = path.join(context.extensionPath, LUA_REFERENCES_FOLDER);
+    const luaReferenceLibrary = path.join(extensionPath, LUA_REFERENCES_FOLDER);
 
     // Initialize the Lua Configuration
     LuaConfiguration.setup({ luaReferenceLibrary, configurationTarget });
