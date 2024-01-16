@@ -1,6 +1,7 @@
 // Library
 import * as vscode from 'vscode';
 import { getRootFolderUri } from '../../library/bg3/fs';
+import { divine } from '../../library/api/lslib';
 
 // ----------
 // BUILD TASK
@@ -40,18 +41,7 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
 
     // Construct the command line for the build task
     /** The command line to be executed */
-    // ? 💡 Extract this out to the library
-    const commandLine = [
-        "divine.exe",
-        "--game",
-        "bg3",
-        "--action",
-        "create-package",
-        "--source",
-        rootFolderPath,
-        "--destination",
-        outputPath
-    ].join(" ");
+    const commandLine = divine.createPackage(rootFolderPath, outputPath);
 
     /** The execution of the build task */
     const execution: vscode.ShellExecution = new vscode.ShellExecution(commandLine);
