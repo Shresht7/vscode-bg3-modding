@@ -77,6 +77,20 @@ export class LSLIB {
         ]);
     }
 
+    /** `divine.exe --game [game] --action extract-package --source [source] --destination [destination]` */
+    convertLoca(source: string, destination: string): string {
+        return this.createCmdLine([
+            "--game",
+            this.game,
+            "--action",
+            "convert-loca",
+            "--source",
+            source,
+            "--destination",
+            destination
+        ]);
+    }
+
 }
 
 export const divine = new LSLIB();
