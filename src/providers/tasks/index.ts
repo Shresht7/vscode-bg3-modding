@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 
 // Tasks
 import { createBuildTask } from './build';
+import { convertLocalizationTask } from './convertLocalization';
 
 // --------------
 // TASKS PROVIDER
@@ -17,8 +18,10 @@ import { createBuildTask } from './build';
  */
 async function initializeTasks(context: vscode.ExtensionContext): Promise<vscode.Task[]> {
     return [
-        // Test Task
-        await createBuildTask(context)
+        // Build Task
+        await createBuildTask(context),
+        // Convert Localization Task
+        await convertLocalizationTask(context),
     ];
 }
 
