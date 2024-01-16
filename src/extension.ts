@@ -26,6 +26,9 @@ export async function activate(context: vscode.ExtensionContext) {
 	// Initialize Diagnostics
 	initialize.diagnostics(context);
 
+	// Initialize Providers
+	initialize.providers(context);
+
 	// Register all the commands and providers, and subscribe to their disposables
 	context.subscriptions.push(
 		...commands,
