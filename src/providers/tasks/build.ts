@@ -25,10 +25,13 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
     const scope: vscode.TaskScope = vscode.TaskScope.Workspace;
 
     /** The name of the build task */
-    const name: string = 'Build';
+    const name: string = '📦 Build Package';
 
     /** The source of the build task */
     const source: string = 'BG3 Modding Extension';
+
+    /** A short description about the build task */
+    const detail = 'Builds the Mod Project using `divine.exe` (lslib)';
 
     // Determine the paths required for the build task
     // ? This probably needs improvement
@@ -47,11 +50,16 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
     const execution: vscode.ShellExecution = new vscode.ShellExecution(commandLine);
 
     // Instantiate and return the vscode.Task
-    return new vscode.Task(
-        taskDefinition,
-        scope,
+    return {
+        definition: taskDefinition,
+        detail,
         name,
         source,
-        execution
-    );
+        scope,
+        execution,
+        isBackground: false,
+        problemMatchers: [],
+        presentationOptions: {},
+        runOptions: {}
+    };
 }
