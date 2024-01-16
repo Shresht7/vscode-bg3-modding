@@ -63,32 +63,34 @@ export class LSLIB {
         return this.createCmdLine(["--help"]);
     }
 
-    /** `divine.exe --game [game] --action create-package --source [source] --destination [destination]` */
-    createPackage(source: string, destination: string): string {
+    /**
+     * Helper function to create a command-line action
+     * @param action The action to be performed by the lslib cli (`divine.exe`)
+     * @param source The source file or directory
+     * @param destination The destination file or directory
+     * @returns The command line to be executed by the lslib cli (`divine.exe`)
+     */
+    private action(action: string, source: string, destination: string): string {
         return this.createCmdLine([
             "--game",
             this.game,
             "--action",
-            "create-package",
+            action,
             "--source",
             source,
             "--destination",
-            destination
+            destination,
         ]);
     }
 
-    /** `divine.exe --game [game] --action extract-package --source [source] --destination [destination]` */
+    /** `divine.exe --game [game] --action create-package --source [source] --destination [destination]` */
+    createPackage(source: string, destination: string): string {
+        return this.action("create-package", source, destination);
+    }
+
+    /** `divine.exe --game [game] --action convert-loca --source [source] --destination [destination]` */
     convertLoca(source: string, destination: string): string {
-        return this.createCmdLine([
-            "--game",
-            this.game,
-            "--action",
-            "convert-loca",
-            "--source",
-            source,
-            "--destination",
-            destination
-        ]);
+        return this.action("convert-loca", source, destination);
     }
 
 }
