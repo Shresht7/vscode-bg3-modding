@@ -24,6 +24,9 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
     /** The scope of the build task */
     const scope: vscode.TaskScope = vscode.TaskScope.Workspace;
 
+    /** The group of the build task */
+    const group: vscode.TaskGroup = vscode.TaskGroup.Build;
+
     /** The name of the build task */
     const name: string = '📦 Build Package';
 
@@ -49,7 +52,8 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
         isBackground: false,
         problemMatchers: [],
         presentationOptions: {},
-        runOptions: {}
+        runOptions: {},
+        group,
     };
 }
 
