@@ -13,6 +13,8 @@
     // List of words to be considered correct by the spell checker
     "cSpell.words": [
         "contentuid",
+        "dosee",
+        "LSLIB",
         "modsettings"
     ]
 }
