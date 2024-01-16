@@ -1,5 +1,6 @@
 // Library
 import * as vscode from 'vscode';
+import { divine } from '../../library/api/lslib';
 
 // -------------------------
 // CONVERT LOCALIZATION TASK
@@ -28,18 +29,10 @@ export async function convertLocalizationTask(context: vscode.ExtensionContext):
     /** A short description about the convert localization task */
     const detail = 'Converts localization `.xml` files to the `.loca` format';
 
+    /** The command line to be executed by the convert localization task */
+    const commandLine: string = divine.convertLoca("${file}", "${fileDirname}\\${fileBasenameNoExtension}.loca");
     /** The execution of the convert localization task */
-    const execution: vscode.ShellExecution = new vscode.ShellExecution([
-        "divine.exe",
-        "--game",
-        "bg3",
-        "--action",
-        "convert-loca",
-        "--source",
-        "${file}",
-        "--destination",
-        "${fileDirname}\\${fileBasenameNoExtension}.loca",
-    ].join(" "));
+    const execution: vscode.ShellExecution = new vscode.ShellExecution(commandLine);
 
     // Instantiate and return the vscode.Task
     return {
