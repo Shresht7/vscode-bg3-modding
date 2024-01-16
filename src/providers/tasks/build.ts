@@ -33,19 +33,8 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
     /** A short description about the build task */
     const detail = 'Builds the Mod Project using `divine.exe` (lslib)';
 
-    // Determine the paths required for the build task
-    // ? This probably needs improvement
-    const rootFolderUri = await getRootFolderUri();
-    const rootFolderPath = rootFolderUri.fsPath;
-    const parentFolderPath = rootFolderPath.split('\\').slice(0, -1).join('\\');
-    const rootFolderName = rootFolderPath.split('\\').pop();
-    // TODO: Make this configurable in the settings
-    const outputPath = `${parentFolderPath}\\${rootFolderName}.pak`;
-
-    // Construct the command line for the build task
-    /** The command line to be executed */
-    const commandLine = divine.createPackage(rootFolderPath, outputPath);
-
+    /** The command line for the build task */
+    const commandLine: string = await getCommandLine();
     /** The execution of the build task */
     const execution: vscode.ShellExecution = new vscode.ShellExecution(commandLine);
 
@@ -62,4 +51,29 @@ export async function createBuildTask(context: vscode.ExtensionContext): Promise
         presentationOptions: {},
         runOptions: {}
     };
+}
+
+// -------
+// HELPERS
+// -------
+
+/**
+ * Gets the command line for the build task
+ * @returns A promise that resolves to the command line for the build task
+ * @see {@link divine.createPackage}
+ * @example
+ * `divine.exe --game [game] --source [source] --destination [destination]`
+ */
+async function getCommandLine() {
+    // Determine the paths required for the build task
+    // ? This probably needs improvement
+    const rootFolderUri = await getRootFolderUri();
+    const rootFolderPath = rootFolderUri.fsPath;
+    const parentFolderPath = rootFolderPath.split('\\').slice(0, -1).join('\\');
+    const rootFolderName = rootFolderPath.split('\\').pop();
+    // TODO: Make this configurable in the settings
+    const outputPath = `${parentFolderPath}\\${rootFolderName}.pak`;
+
+    // Construct the command line for the build task
+    return divine.createPackage(rootFolderPath, outputPath);
 }
