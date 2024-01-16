@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 
 // Tasks
-import { createTestTask } from './test';
+import { createBuildTask } from './build';
 
 // --------------
 // TASKS PROVIDER
@@ -18,7 +18,7 @@ import { createTestTask } from './test';
 async function initializeTasks(context: vscode.ExtensionContext): Promise<vscode.Task[]> {
     return [
         // Test Task
-        await createTestTask(context)
+        await createBuildTask(context)
     ];
 }
 
@@ -34,7 +34,7 @@ export async function initializeTaskProvider(context: vscode.ExtensionContext) {
 
     // Register the task provider
     context.subscriptions.push(
-        vscode.tasks.registerTaskProvider('test', {
+        vscode.tasks.registerTaskProvider('build', {
             provideTasks(token) {
                 return tasks;
             },
