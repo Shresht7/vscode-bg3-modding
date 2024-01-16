@@ -5,29 +5,38 @@ import * as vscode from 'vscode';
 // TEST TASK
 // ---------
 
-/** The definition of the test task */
-const taskDefinition: vscode.TaskDefinition = {
-    type: 'test',
-    task: 'test'
-};
+/**
+ * Creates a test {@link vscode.Task | task}
+ * @param context The extension context (see {@linkcode vscode.ExtensionContext})
+ * @returns A promise that resolves to a test {@link vscode.Task | task}
+ * @see {@link vscode.Task}
+ */
+export async function createTestTask(context: vscode.ExtensionContext): Promise<vscode.Task> {
 
-/** The scope of the test task */
-const scope: vscode.TaskScope = vscode.TaskScope.Workspace;
+    /** The definition of the test task */
+    const taskDefinition: vscode.TaskDefinition = {
+        type: 'test',
+        task: 'test'
+    };
 
-/** The name of the test task */
-const name: string = 'test';
+    /** The scope of the test task */
+    const scope: vscode.TaskScope = vscode.TaskScope.Workspace;
 
-/** The source of the test task */
-const source: string = 'test';
+    /** The name of the test task */
+    const name: string = 'test';
 
-/** The execution of the test task */
-const execution: vscode.ShellExecution = new vscode.ShellExecution('echo "test"');
+    /** The source of the test task */
+    const source: string = 'test';
 
-/** A task that can be run to test the extension */
-export const test: vscode.Task = new vscode.Task(
-    taskDefinition,
-    scope,
-    name,
-    source,
-    execution
-);
+    /** The execution of the test task */
+    const execution: vscode.ShellExecution = new vscode.ShellExecution('echo "test"');
+
+    // Instantiate and return the vscode.Task
+    return new vscode.Task(
+        taskDefinition,
+        scope,
+        name,
+        source,
+        execution
+    );
+}
