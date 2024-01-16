@@ -6,6 +6,12 @@ import { divine } from '../../library/api/lslib';
 // CONVERT LOCALIZATION TASK
 // -------------------------
 
+/**
+ * Creates a new convert localization {@link vscode.Task | task}
+ * @param context The extension context (see {@linkcode vscode.ExtensionContext})
+ * @returns A new convert localization {@link vscode.Task | task}
+ * @see {@link vscode.Task}
+ */
 export async function convertLocalizationTask(context: vscode.ExtensionContext): Promise<vscode.Task> {
 
     /** The definition of the convert localization task */
